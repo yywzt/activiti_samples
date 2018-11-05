@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.activiti.ActHiActinstMapper">
+  <resultMap id="BaseResultMap" type="com.example.model.activiti.ActHiActinst">
+    <id column="ID_" jdbcType="VARCHAR" property="ID_" />
+    <result column="PROC_DEF_ID_" jdbcType="VARCHAR" property="PROC_DEF_ID_" />
+    <result column="PROC_INST_ID_" jdbcType="VARCHAR" property="PROC_INST_ID_" />
+    <result column="EXECUTION_ID_" jdbcType="VARCHAR" property="EXECUTION_ID_" />
+    <result column="ACT_ID_" jdbcType="VARCHAR" property="ACT_ID_" />
+    <result column="TASK_ID_" jdbcType="VARCHAR" property="TASK_ID_" />
+    <result column="CALL_PROC_INST_ID_" jdbcType="VARCHAR" property="CALL_PROC_INST_ID_" />
+    <result column="ACT_NAME_" jdbcType="VARCHAR" property="ACT_NAME_" />
+    <result column="ACT_TYPE_" jdbcType="VARCHAR" property="ACT_TYPE_" />
+    <result column="ASSIGNEE_" jdbcType="VARCHAR" property="ASSIGNEE_" />
+    <result column="START_TIME_" jdbcType="TIMESTAMP" property="START_TIME_" />
+    <result column="END_TIME_" jdbcType="TIMESTAMP" property="END_TIME_" />
+    <result column="DURATION_" jdbcType="BIGINT" property="DURATION_" />
+    <result column="DELETE_REASON_" jdbcType="VARCHAR" property="DELETE_REASON_" />
+    <result column="TENANT_ID_" jdbcType="VARCHAR" property="TENANT_ID_" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID_, PROC_DEF_ID_, PROC_INST_ID_, EXECUTION_ID_, ACT_ID_, TASK_ID_, CALL_PROC_INST_ID_, 
+    ACT_NAME_, ACT_TYPE_, ASSIGNEE_, START_TIME_, END_TIME_, DURATION_, DELETE_REASON_, 
+    TENANT_ID_
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from act_hi_actinst
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from act_hi_actinst
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.model.activiti.ActHiActinst">
+    insert into act_hi_actinst (ID_, PROC_DEF_ID_, PROC_INST_ID_, 
+      EXECUTION_ID_, ACT_ID_, TASK_ID_, 
+      CALL_PROC_INST_ID_, ACT_NAME_, ACT_TYPE_, 
+      ASSIGNEE_, START_TIME_, END_TIME_, 
+      DURATION_, DELETE_REASON_, TENANT_ID_
+      )
+    values (#{ID_,jdbcType=VARCHAR}, #{PROC_DEF_ID_,jdbcType=VARCHAR}, #{PROC_INST_ID_,jdbcType=VARCHAR}, 
+      #{EXECUTION_ID_,jdbcType=VARCHAR}, #{ACT_ID_,jdbcType=VARCHAR}, #{TASK_ID_,jdbcType=VARCHAR}, 
+      #{CALL_PROC_INST_ID_,jdbcType=VARCHAR}, #{ACT_NAME_,jdbcType=VARCHAR}, #{ACT_TYPE_,jdbcType=VARCHAR}, 
+      #{ASSIGNEE_,jdbcType=VARCHAR}, #{START_TIME_,jdbcType=TIMESTAMP}, #{END_TIME_,jdbcType=TIMESTAMP}, 
+      #{DURATION_,jdbcType=BIGINT}, #{DELETE_REASON_,jdbcType=VARCHAR}, #{TENANT_ID_,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.model.activiti.ActHiActinst">
+    insert into act_hi_actinst
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ID_ != null">
+        ID_,
+      </if>
+      <if test="PROC_DEF_ID_ != null">
+        PROC_DEF_ID_,
+      </if>
+      <if test="PROC_INST_ID_ != null">
+        PROC_INST_ID_,
+      </if>
+      <if test="EXECUTION_ID_ != null">
+        EXECUTION_ID_,
+      </if>
+      <if test="ACT_ID_ != null">
+        ACT_ID_,
+      </if>
+      <if test="TASK_ID_ != null">
+        TASK_ID_,
+      </if>
+      <if test="CALL_PROC_INST_ID_ != null">
+        CALL_PROC_INST_ID_,
+      </if>
+      <if test="ACT_NAME_ != null">
+        ACT_NAME_,
+      </if>
+      <if test="ACT_TYPE_ != null">
+        ACT_TYPE_,
+      </if>
+      <if test="ASSIGNEE_ != null">
+        ASSIGNEE_,
+      </if>
+      <if test="START_TIME_ != null">
+        START_TIME_,
+      </if>
+      <if test="END_TIME_ != null">
+        END_TIME_,
+      </if>
+      <if test="DURATION_ != null">
+        DURATION_,
+      </if>
+      <if test="DELETE_REASON_ != null">
+        DELETE_REASON_,
+      </if>
+      <if test="TENANT_ID_ != null">
+        TENANT_ID_,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ID_ != null">
+        #{ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="PROC_DEF_ID_ != null">
+        #{PROC_DEF_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="PROC_INST_ID_ != null">
+        #{PROC_INST_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="EXECUTION_ID_ != null">
+        #{EXECUTION_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="ACT_ID_ != null">
+        #{ACT_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="TASK_ID_ != null">
+        #{TASK_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="CALL_PROC_INST_ID_ != null">
+        #{CALL_PROC_INST_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="ACT_NAME_ != null">
+        #{ACT_NAME_,jdbcType=VARCHAR},
+      </if>
+      <if test="ACT_TYPE_ != null">
+        #{ACT_TYPE_,jdbcType=VARCHAR},
+      </if>
+      <if test="ASSIGNEE_ != null">
+        #{ASSIGNEE_,jdbcType=VARCHAR},
+      </if>
+      <if test="START_TIME_ != null">
+        #{START_TIME_,jdbcType=TIMESTAMP},
+      </if>
+      <if test="END_TIME_ != null">
+        #{END_TIME_,jdbcType=TIMESTAMP},
+      </if>
+      <if test="DURATION_ != null">
+        #{DURATION_,jdbcType=BIGINT},
+      </if>
+      <if test="DELETE_REASON_ != null">
+        #{DELETE_REASON_,jdbcType=VARCHAR},
+      </if>
+      <if test="TENANT_ID_ != null">
+        #{TENANT_ID_,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.model.activiti.ActHiActinst">
+    update act_hi_actinst
+    <set>
+      <if test="PROC_DEF_ID_ != null">
+        PROC_DEF_ID_ = #{PROC_DEF_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="PROC_INST_ID_ != null">
+        PROC_INST_ID_ = #{PROC_INST_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="EXECUTION_ID_ != null">
+        EXECUTION_ID_ = #{EXECUTION_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="ACT_ID_ != null">
+        ACT_ID_ = #{ACT_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="TASK_ID_ != null">
+        TASK_ID_ = #{TASK_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="CALL_PROC_INST_ID_ != null">
+        CALL_PROC_INST_ID_ = #{CALL_PROC_INST_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="ACT_NAME_ != null">
+        ACT_NAME_ = #{ACT_NAME_,jdbcType=VARCHAR},
+      </if>
+      <if test="ACT_TYPE_ != null">
+        ACT_TYPE_ = #{ACT_TYPE_,jdbcType=VARCHAR},
+      </if>
+      <if test="ASSIGNEE_ != null">
+        ASSIGNEE_ = #{ASSIGNEE_,jdbcType=VARCHAR},
+      </if>
+      <if test="START_TIME_ != null">
+        START_TIME_ = #{START_TIME_,jdbcType=TIMESTAMP},
+      </if>
+      <if test="END_TIME_ != null">
+        END_TIME_ = #{END_TIME_,jdbcType=TIMESTAMP},
+      </if>
+      <if test="DURATION_ != null">
+        DURATION_ = #{DURATION_,jdbcType=BIGINT},
+      </if>
+      <if test="DELETE_REASON_ != null">
+        DELETE_REASON_ = #{DELETE_REASON_,jdbcType=VARCHAR},
+      </if>
+      <if test="TENANT_ID_ != null">
+        TENANT_ID_ = #{TENANT_ID_,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.model.activiti.ActHiActinst">
+    update act_hi_actinst
+    set PROC_DEF_ID_ = #{PROC_DEF_ID_,jdbcType=VARCHAR},
+      PROC_INST_ID_ = #{PROC_INST_ID_,jdbcType=VARCHAR},
+      EXECUTION_ID_ = #{EXECUTION_ID_,jdbcType=VARCHAR},
+      ACT_ID_ = #{ACT_ID_,jdbcType=VARCHAR},
+      TASK_ID_ = #{TASK_ID_,jdbcType=VARCHAR},
+      CALL_PROC_INST_ID_ = #{CALL_PROC_INST_ID_,jdbcType=VARCHAR},
+      ACT_NAME_ = #{ACT_NAME_,jdbcType=VARCHAR},
+      ACT_TYPE_ = #{ACT_TYPE_,jdbcType=VARCHAR},
+      ASSIGNEE_ = #{ASSIGNEE_,jdbcType=VARCHAR},
+      START_TIME_ = #{START_TIME_,jdbcType=TIMESTAMP},
+      END_TIME_ = #{END_TIME_,jdbcType=TIMESTAMP},
+      DURATION_ = #{DURATION_,jdbcType=BIGINT},
+      DELETE_REASON_ = #{DELETE_REASON_,jdbcType=VARCHAR},
+      TENANT_ID_ = #{TENANT_ID_,jdbcType=VARCHAR}
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </update>
+</mapper>

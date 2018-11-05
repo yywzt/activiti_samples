@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.activiti.ActIdGroupMapper">
+  <resultMap id="BaseResultMap" type="com.example.model.activiti.ActIdGroup">
+    <id column="ID_" jdbcType="VARCHAR" property="ID_" />
+    <result column="REV_" jdbcType="INTEGER" property="REV_" />
+    <result column="NAME_" jdbcType="VARCHAR" property="NAME_" />
+    <result column="TYPE_" jdbcType="VARCHAR" property="TYPE_" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID_, REV_, NAME_, TYPE_
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from act_id_group
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from act_id_group
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.model.activiti.ActIdGroup">
+    insert into act_id_group (ID_, REV_, NAME_, 
+      TYPE_)
+    values (#{ID_,jdbcType=VARCHAR}, #{REV_,jdbcType=INTEGER}, #{NAME_,jdbcType=VARCHAR}, 
+      #{TYPE_,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.model.activiti.ActIdGroup">
+    insert into act_id_group
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ID_ != null">
+        ID_,
+      </if>
+      <if test="REV_ != null">
+        REV_,
+      </if>
+      <if test="NAME_ != null">
+        NAME_,
+      </if>
+      <if test="TYPE_ != null">
+        TYPE_,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ID_ != null">
+        #{ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="REV_ != null">
+        #{REV_,jdbcType=INTEGER},
+      </if>
+      <if test="NAME_ != null">
+        #{NAME_,jdbcType=VARCHAR},
+      </if>
+      <if test="TYPE_ != null">
+        #{TYPE_,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.model.activiti.ActIdGroup">
+    update act_id_group
+    <set>
+      <if test="REV_ != null">
+        REV_ = #{REV_,jdbcType=INTEGER},
+      </if>
+      <if test="NAME_ != null">
+        NAME_ = #{NAME_,jdbcType=VARCHAR},
+      </if>
+      <if test="TYPE_ != null">
+        TYPE_ = #{TYPE_,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.model.activiti.ActIdGroup">
+    update act_id_group
+    set REV_ = #{REV_,jdbcType=INTEGER},
+      NAME_ = #{NAME_,jdbcType=VARCHAR},
+      TYPE_ = #{TYPE_,jdbcType=VARCHAR}
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </update>
+</mapper>

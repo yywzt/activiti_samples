@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.activiti.ActGeBytearrayMapper">
+  <resultMap id="BaseResultMap" type="com.example.model.activiti.ActGeBytearray">
+    <id column="ID_" jdbcType="VARCHAR" property="ID_" />
+    <result column="REV_" jdbcType="INTEGER" property="REV_" />
+    <result column="NAME_" jdbcType="VARCHAR" property="NAME_" />
+    <result column="DEPLOYMENT_ID_" jdbcType="VARCHAR" property="DEPLOYMENT_ID_" />
+    <result column="GENERATED_" jdbcType="TINYINT" property="GENERATED_" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.example.model.activiti.ActGeBytearray">
+    <result column="BYTES_" jdbcType="LONGVARBINARY" property="BYTES_" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID_, REV_, NAME_, DEPLOYMENT_ID_, GENERATED_
+  </sql>
+  <sql id="Blob_Column_List">
+    BYTES_
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from act_ge_bytearray
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from act_ge_bytearray
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.model.activiti.ActGeBytearray">
+    insert into act_ge_bytearray (ID_, REV_, NAME_, 
+      DEPLOYMENT_ID_, GENERATED_, BYTES_
+      )
+    values (#{ID_,jdbcType=VARCHAR}, #{REV_,jdbcType=INTEGER}, #{NAME_,jdbcType=VARCHAR}, 
+      #{DEPLOYMENT_ID_,jdbcType=VARCHAR}, #{GENERATED_,jdbcType=TINYINT}, #{BYTES_,jdbcType=LONGVARBINARY}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.model.activiti.ActGeBytearray">
+    insert into act_ge_bytearray
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ID_ != null">
+        ID_,
+      </if>
+      <if test="REV_ != null">
+        REV_,
+      </if>
+      <if test="NAME_ != null">
+        NAME_,
+      </if>
+      <if test="DEPLOYMENT_ID_ != null">
+        DEPLOYMENT_ID_,
+      </if>
+      <if test="GENERATED_ != null">
+        GENERATED_,
+      </if>
+      <if test="BYTES_ != null">
+        BYTES_,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ID_ != null">
+        #{ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="REV_ != null">
+        #{REV_,jdbcType=INTEGER},
+      </if>
+      <if test="NAME_ != null">
+        #{NAME_,jdbcType=VARCHAR},
+      </if>
+      <if test="DEPLOYMENT_ID_ != null">
+        #{DEPLOYMENT_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="GENERATED_ != null">
+        #{GENERATED_,jdbcType=TINYINT},
+      </if>
+      <if test="BYTES_ != null">
+        #{BYTES_,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.model.activiti.ActGeBytearray">
+    update act_ge_bytearray
+    <set>
+      <if test="REV_ != null">
+        REV_ = #{REV_,jdbcType=INTEGER},
+      </if>
+      <if test="NAME_ != null">
+        NAME_ = #{NAME_,jdbcType=VARCHAR},
+      </if>
+      <if test="DEPLOYMENT_ID_ != null">
+        DEPLOYMENT_ID_ = #{DEPLOYMENT_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="GENERATED_ != null">
+        GENERATED_ = #{GENERATED_,jdbcType=TINYINT},
+      </if>
+      <if test="BYTES_ != null">
+        BYTES_ = #{BYTES_,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.example.model.activiti.ActGeBytearray">
+    update act_ge_bytearray
+    set REV_ = #{REV_,jdbcType=INTEGER},
+      NAME_ = #{NAME_,jdbcType=VARCHAR},
+      DEPLOYMENT_ID_ = #{DEPLOYMENT_ID_,jdbcType=VARCHAR},
+      GENERATED_ = #{GENERATED_,jdbcType=TINYINT},
+      BYTES_ = #{BYTES_,jdbcType=LONGVARBINARY}
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.model.activiti.ActGeBytearray">
+    update act_ge_bytearray
+    set REV_ = #{REV_,jdbcType=INTEGER},
+      NAME_ = #{NAME_,jdbcType=VARCHAR},
+      DEPLOYMENT_ID_ = #{DEPLOYMENT_ID_,jdbcType=VARCHAR},
+      GENERATED_ = #{GENERATED_,jdbcType=TINYINT}
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </update>
+</mapper>

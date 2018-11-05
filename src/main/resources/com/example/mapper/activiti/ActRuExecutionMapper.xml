@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.activiti.ActRuExecutionMapper">
+  <resultMap id="BaseResultMap" type="com.example.model.activiti.ActRuExecution">
+    <id column="ID_" jdbcType="VARCHAR" property="ID_" />
+    <result column="REV_" jdbcType="INTEGER" property="REV_" />
+    <result column="PROC_INST_ID_" jdbcType="VARCHAR" property="PROC_INST_ID_" />
+    <result column="BUSINESS_KEY_" jdbcType="VARCHAR" property="BUSINESS_KEY_" />
+    <result column="PARENT_ID_" jdbcType="VARCHAR" property="PARENT_ID_" />
+    <result column="PROC_DEF_ID_" jdbcType="VARCHAR" property="PROC_DEF_ID_" />
+    <result column="SUPER_EXEC_" jdbcType="VARCHAR" property="SUPER_EXEC_" />
+    <result column="ROOT_PROC_INST_ID_" jdbcType="VARCHAR" property="ROOT_PROC_INST_ID_" />
+    <result column="ACT_ID_" jdbcType="VARCHAR" property="ACT_ID_" />
+    <result column="IS_ACTIVE_" jdbcType="TINYINT" property="IS_ACTIVE_" />
+    <result column="IS_CONCURRENT_" jdbcType="TINYINT" property="IS_CONCURRENT_" />
+    <result column="IS_SCOPE_" jdbcType="TINYINT" property="IS_SCOPE_" />
+    <result column="IS_EVENT_SCOPE_" jdbcType="TINYINT" property="IS_EVENT_SCOPE_" />
+    <result column="IS_MI_ROOT_" jdbcType="TINYINT" property="IS_MI_ROOT_" />
+    <result column="SUSPENSION_STATE_" jdbcType="INTEGER" property="SUSPENSION_STATE_" />
+    <result column="CACHED_ENT_STATE_" jdbcType="INTEGER" property="CACHED_ENT_STATE_" />
+    <result column="TENANT_ID_" jdbcType="VARCHAR" property="TENANT_ID_" />
+    <result column="NAME_" jdbcType="VARCHAR" property="NAME_" />
+    <result column="START_TIME_" jdbcType="TIMESTAMP" property="START_TIME_" />
+    <result column="START_USER_ID_" jdbcType="VARCHAR" property="START_USER_ID_" />
+    <result column="LOCK_TIME_" jdbcType="TIMESTAMP" property="LOCK_TIME_" />
+    <result column="IS_COUNT_ENABLED_" jdbcType="TINYINT" property="IS_COUNT_ENABLED_" />
+    <result column="EVT_SUBSCR_COUNT_" jdbcType="INTEGER" property="EVT_SUBSCR_COUNT_" />
+    <result column="TASK_COUNT_" jdbcType="INTEGER" property="TASK_COUNT_" />
+    <result column="JOB_COUNT_" jdbcType="INTEGER" property="JOB_COUNT_" />
+    <result column="TIMER_JOB_COUNT_" jdbcType="INTEGER" property="TIMER_JOB_COUNT_" />
+    <result column="SUSP_JOB_COUNT_" jdbcType="INTEGER" property="SUSP_JOB_COUNT_" />
+    <result column="DEADLETTER_JOB_COUNT_" jdbcType="INTEGER" property="DEADLETTER_JOB_COUNT_" />
+    <result column="VAR_COUNT_" jdbcType="INTEGER" property="VAR_COUNT_" />
+    <result column="ID_LINK_COUNT_" jdbcType="INTEGER" property="ID_LINK_COUNT_" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID_, REV_, PROC_INST_ID_, BUSINESS_KEY_, PARENT_ID_, PROC_DEF_ID_, SUPER_EXEC_, ROOT_PROC_INST_ID_, 
+    ACT_ID_, IS_ACTIVE_, IS_CONCURRENT_, IS_SCOPE_, IS_EVENT_SCOPE_, IS_MI_ROOT_, SUSPENSION_STATE_, 
+    CACHED_ENT_STATE_, TENANT_ID_, NAME_, START_TIME_, START_USER_ID_, LOCK_TIME_, IS_COUNT_ENABLED_, 
+    EVT_SUBSCR_COUNT_, TASK_COUNT_, JOB_COUNT_, TIMER_JOB_COUNT_, SUSP_JOB_COUNT_, DEADLETTER_JOB_COUNT_, 
+    VAR_COUNT_, ID_LINK_COUNT_
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from act_ru_execution
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from act_ru_execution
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.model.activiti.ActRuExecution">
+    insert into act_ru_execution (ID_, REV_, PROC_INST_ID_, 
+      BUSINESS_KEY_, PARENT_ID_, PROC_DEF_ID_, 
+      SUPER_EXEC_, ROOT_PROC_INST_ID_, ACT_ID_, 
+      IS_ACTIVE_, IS_CONCURRENT_, IS_SCOPE_, 
+      IS_EVENT_SCOPE_, IS_MI_ROOT_, SUSPENSION_STATE_, 
+      CACHED_ENT_STATE_, TENANT_ID_, NAME_, 
+      START_TIME_, START_USER_ID_, LOCK_TIME_, 
+      IS_COUNT_ENABLED_, EVT_SUBSCR_COUNT_, TASK_COUNT_, 
+      JOB_COUNT_, TIMER_JOB_COUNT_, SUSP_JOB_COUNT_, 
+      DEADLETTER_JOB_COUNT_, VAR_COUNT_, ID_LINK_COUNT_
+      )
+    values (#{ID_,jdbcType=VARCHAR}, #{REV_,jdbcType=INTEGER}, #{PROC_INST_ID_,jdbcType=VARCHAR}, 
+      #{BUSINESS_KEY_,jdbcType=VARCHAR}, #{PARENT_ID_,jdbcType=VARCHAR}, #{PROC_DEF_ID_,jdbcType=VARCHAR}, 
+      #{SUPER_EXEC_,jdbcType=VARCHAR}, #{ROOT_PROC_INST_ID_,jdbcType=VARCHAR}, #{ACT_ID_,jdbcType=VARCHAR}, 
+      #{IS_ACTIVE_,jdbcType=TINYINT}, #{IS_CONCURRENT_,jdbcType=TINYINT}, #{IS_SCOPE_,jdbcType=TINYINT}, 
+      #{IS_EVENT_SCOPE_,jdbcType=TINYINT}, #{IS_MI_ROOT_,jdbcType=TINYINT}, #{SUSPENSION_STATE_,jdbcType=INTEGER}, 
+      #{CACHED_ENT_STATE_,jdbcType=INTEGER}, #{TENANT_ID_,jdbcType=VARCHAR}, #{NAME_,jdbcType=VARCHAR}, 
+      #{START_TIME_,jdbcType=TIMESTAMP}, #{START_USER_ID_,jdbcType=VARCHAR}, #{LOCK_TIME_,jdbcType=TIMESTAMP}, 
+      #{IS_COUNT_ENABLED_,jdbcType=TINYINT}, #{EVT_SUBSCR_COUNT_,jdbcType=INTEGER}, #{TASK_COUNT_,jdbcType=INTEGER}, 
+      #{JOB_COUNT_,jdbcType=INTEGER}, #{TIMER_JOB_COUNT_,jdbcType=INTEGER}, #{SUSP_JOB_COUNT_,jdbcType=INTEGER}, 
+      #{DEADLETTER_JOB_COUNT_,jdbcType=INTEGER}, #{VAR_COUNT_,jdbcType=INTEGER}, #{ID_LINK_COUNT_,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.model.activiti.ActRuExecution">
+    insert into act_ru_execution
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ID_ != null">
+        ID_,
+      </if>
+      <if test="REV_ != null">
+        REV_,
+      </if>
+      <if test="PROC_INST_ID_ != null">
+        PROC_INST_ID_,
+      </if>
+      <if test="BUSINESS_KEY_ != null">
+        BUSINESS_KEY_,
+      </if>
+      <if test="PARENT_ID_ != null">
+        PARENT_ID_,
+      </if>
+      <if test="PROC_DEF_ID_ != null">
+        PROC_DEF_ID_,
+      </if>
+      <if test="SUPER_EXEC_ != null">
+        SUPER_EXEC_,
+      </if>
+      <if test="ROOT_PROC_INST_ID_ != null">
+        ROOT_PROC_INST_ID_,
+      </if>
+      <if test="ACT_ID_ != null">
+        ACT_ID_,
+      </if>
+      <if test="IS_ACTIVE_ != null">
+        IS_ACTIVE_,
+      </if>
+      <if test="IS_CONCURRENT_ != null">
+        IS_CONCURRENT_,
+      </if>
+      <if test="IS_SCOPE_ != null">
+        IS_SCOPE_,
+      </if>
+      <if test="IS_EVENT_SCOPE_ != null">
+        IS_EVENT_SCOPE_,
+      </if>
+      <if test="IS_MI_ROOT_ != null">
+        IS_MI_ROOT_,
+      </if>
+      <if test="SUSPENSION_STATE_ != null">
+        SUSPENSION_STATE_,
+      </if>
+      <if test="CACHED_ENT_STATE_ != null">
+        CACHED_ENT_STATE_,
+      </if>
+      <if test="TENANT_ID_ != null">
+        TENANT_ID_,
+      </if>
+      <if test="NAME_ != null">
+        NAME_,
+      </if>
+      <if test="START_TIME_ != null">
+        START_TIME_,
+      </if>
+      <if test="START_USER_ID_ != null">
+        START_USER_ID_,
+      </if>
+      <if test="LOCK_TIME_ != null">
+        LOCK_TIME_,
+      </if>
+      <if test="IS_COUNT_ENABLED_ != null">
+        IS_COUNT_ENABLED_,
+      </if>
+      <if test="EVT_SUBSCR_COUNT_ != null">
+        EVT_SUBSCR_COUNT_,
+      </if>
+      <if test="TASK_COUNT_ != null">
+        TASK_COUNT_,
+      </if>
+      <if test="JOB_COUNT_ != null">
+        JOB_COUNT_,
+      </if>
+      <if test="TIMER_JOB_COUNT_ != null">
+        TIMER_JOB_COUNT_,
+      </if>
+      <if test="SUSP_JOB_COUNT_ != null">
+        SUSP_JOB_COUNT_,
+      </if>
+      <if test="DEADLETTER_JOB_COUNT_ != null">
+        DEADLETTER_JOB_COUNT_,
+      </if>
+      <if test="VAR_COUNT_ != null">
+        VAR_COUNT_,
+      </if>
+      <if test="ID_LINK_COUNT_ != null">
+        ID_LINK_COUNT_,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ID_ != null">
+        #{ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="REV_ != null">
+        #{REV_,jdbcType=INTEGER},
+      </if>
+      <if test="PROC_INST_ID_ != null">
+        #{PROC_INST_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="BUSINESS_KEY_ != null">
+        #{BUSINESS_KEY_,jdbcType=VARCHAR},
+      </if>
+      <if test="PARENT_ID_ != null">
+        #{PARENT_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="PROC_DEF_ID_ != null">
+        #{PROC_DEF_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="SUPER_EXEC_ != null">
+        #{SUPER_EXEC_,jdbcType=VARCHAR},
+      </if>
+      <if test="ROOT_PROC_INST_ID_ != null">
+        #{ROOT_PROC_INST_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="ACT_ID_ != null">
+        #{ACT_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="IS_ACTIVE_ != null">
+        #{IS_ACTIVE_,jdbcType=TINYINT},
+      </if>
+      <if test="IS_CONCURRENT_ != null">
+        #{IS_CONCURRENT_,jdbcType=TINYINT},
+      </if>
+      <if test="IS_SCOPE_ != null">
+        #{IS_SCOPE_,jdbcType=TINYINT},
+      </if>
+      <if test="IS_EVENT_SCOPE_ != null">
+        #{IS_EVENT_SCOPE_,jdbcType=TINYINT},
+      </if>
+      <if test="IS_MI_ROOT_ != null">
+        #{IS_MI_ROOT_,jdbcType=TINYINT},
+      </if>
+      <if test="SUSPENSION_STATE_ != null">
+        #{SUSPENSION_STATE_,jdbcType=INTEGER},
+      </if>
+      <if test="CACHED_ENT_STATE_ != null">
+        #{CACHED_ENT_STATE_,jdbcType=INTEGER},
+      </if>
+      <if test="TENANT_ID_ != null">
+        #{TENANT_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="NAME_ != null">
+        #{NAME_,jdbcType=VARCHAR},
+      </if>
+      <if test="START_TIME_ != null">
+        #{START_TIME_,jdbcType=TIMESTAMP},
+      </if>
+      <if test="START_USER_ID_ != null">
+        #{START_USER_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="LOCK_TIME_ != null">
+        #{LOCK_TIME_,jdbcType=TIMESTAMP},
+      </if>
+      <if test="IS_COUNT_ENABLED_ != null">
+        #{IS_COUNT_ENABLED_,jdbcType=TINYINT},
+      </if>
+      <if test="EVT_SUBSCR_COUNT_ != null">
+        #{EVT_SUBSCR_COUNT_,jdbcType=INTEGER},
+      </if>
+      <if test="TASK_COUNT_ != null">
+        #{TASK_COUNT_,jdbcType=INTEGER},
+      </if>
+      <if test="JOB_COUNT_ != null">
+        #{JOB_COUNT_,jdbcType=INTEGER},
+      </if>
+      <if test="TIMER_JOB_COUNT_ != null">
+        #{TIMER_JOB_COUNT_,jdbcType=INTEGER},
+      </if>
+      <if test="SUSP_JOB_COUNT_ != null">
+        #{SUSP_JOB_COUNT_,jdbcType=INTEGER},
+      </if>
+      <if test="DEADLETTER_JOB_COUNT_ != null">
+        #{DEADLETTER_JOB_COUNT_,jdbcType=INTEGER},
+      </if>
+      <if test="VAR_COUNT_ != null">
+        #{VAR_COUNT_,jdbcType=INTEGER},
+      </if>
+      <if test="ID_LINK_COUNT_ != null">
+        #{ID_LINK_COUNT_,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.model.activiti.ActRuExecution">
+    update act_ru_execution
+    <set>
+      <if test="REV_ != null">
+        REV_ = #{REV_,jdbcType=INTEGER},
+      </if>
+      <if test="PROC_INST_ID_ != null">
+        PROC_INST_ID_ = #{PROC_INST_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="BUSINESS_KEY_ != null">
+        BUSINESS_KEY_ = #{BUSINESS_KEY_,jdbcType=VARCHAR},
+      </if>
+      <if test="PARENT_ID_ != null">
+        PARENT_ID_ = #{PARENT_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="PROC_DEF_ID_ != null">
+        PROC_DEF_ID_ = #{PROC_DEF_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="SUPER_EXEC_ != null">
+        SUPER_EXEC_ = #{SUPER_EXEC_,jdbcType=VARCHAR},
+      </if>
+      <if test="ROOT_PROC_INST_ID_ != null">
+        ROOT_PROC_INST_ID_ = #{ROOT_PROC_INST_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="ACT_ID_ != null">
+        ACT_ID_ = #{ACT_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="IS_ACTIVE_ != null">
+        IS_ACTIVE_ = #{IS_ACTIVE_,jdbcType=TINYINT},
+      </if>
+      <if test="IS_CONCURRENT_ != null">
+        IS_CONCURRENT_ = #{IS_CONCURRENT_,jdbcType=TINYINT},
+      </if>
+      <if test="IS_SCOPE_ != null">
+        IS_SCOPE_ = #{IS_SCOPE_,jdbcType=TINYINT},
+      </if>
+      <if test="IS_EVENT_SCOPE_ != null">
+        IS_EVENT_SCOPE_ = #{IS_EVENT_SCOPE_,jdbcType=TINYINT},
+      </if>
+      <if test="IS_MI_ROOT_ != null">
+        IS_MI_ROOT_ = #{IS_MI_ROOT_,jdbcType=TINYINT},
+      </if>
+      <if test="SUSPENSION_STATE_ != null">
+        SUSPENSION_STATE_ = #{SUSPENSION_STATE_,jdbcType=INTEGER},
+      </if>
+      <if test="CACHED_ENT_STATE_ != null">
+        CACHED_ENT_STATE_ = #{CACHED_ENT_STATE_,jdbcType=INTEGER},
+      </if>
+      <if test="TENANT_ID_ != null">
+        TENANT_ID_ = #{TENANT_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="NAME_ != null">
+        NAME_ = #{NAME_,jdbcType=VARCHAR},
+      </if>
+      <if test="START_TIME_ != null">
+        START_TIME_ = #{START_TIME_,jdbcType=TIMESTAMP},
+      </if>
+      <if test="START_USER_ID_ != null">
+        START_USER_ID_ = #{START_USER_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="LOCK_TIME_ != null">
+        LOCK_TIME_ = #{LOCK_TIME_,jdbcType=TIMESTAMP},
+      </if>
+      <if test="IS_COUNT_ENABLED_ != null">
+        IS_COUNT_ENABLED_ = #{IS_COUNT_ENABLED_,jdbcType=TINYINT},
+      </if>
+      <if test="EVT_SUBSCR_COUNT_ != null">
+        EVT_SUBSCR_COUNT_ = #{EVT_SUBSCR_COUNT_,jdbcType=INTEGER},
+      </if>
+      <if test="TASK_COUNT_ != null">
+        TASK_COUNT_ = #{TASK_COUNT_,jdbcType=INTEGER},
+      </if>
+      <if test="JOB_COUNT_ != null">
+        JOB_COUNT_ = #{JOB_COUNT_,jdbcType=INTEGER},
+      </if>
+      <if test="TIMER_JOB_COUNT_ != null">
+        TIMER_JOB_COUNT_ = #{TIMER_JOB_COUNT_,jdbcType=INTEGER},
+      </if>
+      <if test="SUSP_JOB_COUNT_ != null">
+        SUSP_JOB_COUNT_ = #{SUSP_JOB_COUNT_,jdbcType=INTEGER},
+      </if>
+      <if test="DEADLETTER_JOB_COUNT_ != null">
+        DEADLETTER_JOB_COUNT_ = #{DEADLETTER_JOB_COUNT_,jdbcType=INTEGER},
+      </if>
+      <if test="VAR_COUNT_ != null">
+        VAR_COUNT_ = #{VAR_COUNT_,jdbcType=INTEGER},
+      </if>
+      <if test="ID_LINK_COUNT_ != null">
+        ID_LINK_COUNT_ = #{ID_LINK_COUNT_,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.model.activiti.ActRuExecution">
+    update act_ru_execution
+    set REV_ = #{REV_,jdbcType=INTEGER},
+      PROC_INST_ID_ = #{PROC_INST_ID_,jdbcType=VARCHAR},
+      BUSINESS_KEY_ = #{BUSINESS_KEY_,jdbcType=VARCHAR},
+      PARENT_ID_ = #{PARENT_ID_,jdbcType=VARCHAR},
+      PROC_DEF_ID_ = #{PROC_DEF_ID_,jdbcType=VARCHAR},
+      SUPER_EXEC_ = #{SUPER_EXEC_,jdbcType=VARCHAR},
+      ROOT_PROC_INST_ID_ = #{ROOT_PROC_INST_ID_,jdbcType=VARCHAR},
+      ACT_ID_ = #{ACT_ID_,jdbcType=VARCHAR},
+      IS_ACTIVE_ = #{IS_ACTIVE_,jdbcType=TINYINT},
+      IS_CONCURRENT_ = #{IS_CONCURRENT_,jdbcType=TINYINT},
+      IS_SCOPE_ = #{IS_SCOPE_,jdbcType=TINYINT},
+      IS_EVENT_SCOPE_ = #{IS_EVENT_SCOPE_,jdbcType=TINYINT},
+      IS_MI_ROOT_ = #{IS_MI_ROOT_,jdbcType=TINYINT},
+      SUSPENSION_STATE_ = #{SUSPENSION_STATE_,jdbcType=INTEGER},
+      CACHED_ENT_STATE_ = #{CACHED_ENT_STATE_,jdbcType=INTEGER},
+      TENANT_ID_ = #{TENANT_ID_,jdbcType=VARCHAR},
+      NAME_ = #{NAME_,jdbcType=VARCHAR},
+      START_TIME_ = #{START_TIME_,jdbcType=TIMESTAMP},
+      START_USER_ID_ = #{START_USER_ID_,jdbcType=VARCHAR},
+      LOCK_TIME_ = #{LOCK_TIME_,jdbcType=TIMESTAMP},
+      IS_COUNT_ENABLED_ = #{IS_COUNT_ENABLED_,jdbcType=TINYINT},
+      EVT_SUBSCR_COUNT_ = #{EVT_SUBSCR_COUNT_,jdbcType=INTEGER},
+      TASK_COUNT_ = #{TASK_COUNT_,jdbcType=INTEGER},
+      JOB_COUNT_ = #{JOB_COUNT_,jdbcType=INTEGER},
+      TIMER_JOB_COUNT_ = #{TIMER_JOB_COUNT_,jdbcType=INTEGER},
+      SUSP_JOB_COUNT_ = #{SUSP_JOB_COUNT_,jdbcType=INTEGER},
+      DEADLETTER_JOB_COUNT_ = #{DEADLETTER_JOB_COUNT_,jdbcType=INTEGER},
+      VAR_COUNT_ = #{VAR_COUNT_,jdbcType=INTEGER},
+      ID_LINK_COUNT_ = #{ID_LINK_COUNT_,jdbcType=INTEGER}
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.activiti.ActRuSuspendedJobMapper">
+  <resultMap id="BaseResultMap" type="com.example.model.activiti.ActRuSuspendedJob">
+    <id column="ID_" jdbcType="VARCHAR" property="ID_" />
+    <result column="REV_" jdbcType="INTEGER" property="REV_" />
+    <result column="TYPE_" jdbcType="VARCHAR" property="TYPE_" />
+    <result column="EXCLUSIVE_" jdbcType="BIT" property="EXCLUSIVE_" />
+    <result column="EXECUTION_ID_" jdbcType="VARCHAR" property="EXECUTION_ID_" />
+    <result column="PROCESS_INSTANCE_ID_" jdbcType="VARCHAR" property="PROCESS_INSTANCE_ID_" />
+    <result column="PROC_DEF_ID_" jdbcType="VARCHAR" property="PROC_DEF_ID_" />
+    <result column="RETRIES_" jdbcType="INTEGER" property="RETRIES_" />
+    <result column="EXCEPTION_STACK_ID_" jdbcType="VARCHAR" property="EXCEPTION_STACK_ID_" />
+    <result column="EXCEPTION_MSG_" jdbcType="VARCHAR" property="EXCEPTION_MSG_" />
+    <result column="DUEDATE_" jdbcType="TIMESTAMP" property="DUEDATE_" />
+    <result column="REPEAT_" jdbcType="VARCHAR" property="REPEAT_" />
+    <result column="HANDLER_TYPE_" jdbcType="VARCHAR" property="HANDLER_TYPE_" />
+    <result column="HANDLER_CFG_" jdbcType="VARCHAR" property="HANDLER_CFG_" />
+    <result column="TENANT_ID_" jdbcType="VARCHAR" property="TENANT_ID_" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID_, REV_, TYPE_, EXCLUSIVE_, EXECUTION_ID_, PROCESS_INSTANCE_ID_, PROC_DEF_ID_, 
+    RETRIES_, EXCEPTION_STACK_ID_, EXCEPTION_MSG_, DUEDATE_, REPEAT_, HANDLER_TYPE_, 
+    HANDLER_CFG_, TENANT_ID_
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from act_ru_suspended_job
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from act_ru_suspended_job
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.model.activiti.ActRuSuspendedJob">
+    insert into act_ru_suspended_job (ID_, REV_, TYPE_, 
+      EXCLUSIVE_, EXECUTION_ID_, PROCESS_INSTANCE_ID_, 
+      PROC_DEF_ID_, RETRIES_, EXCEPTION_STACK_ID_, 
+      EXCEPTION_MSG_, DUEDATE_, REPEAT_, 
+      HANDLER_TYPE_, HANDLER_CFG_, TENANT_ID_
+      )
+    values (#{ID_,jdbcType=VARCHAR}, #{REV_,jdbcType=INTEGER}, #{TYPE_,jdbcType=VARCHAR}, 
+      #{EXCLUSIVE_,jdbcType=BIT}, #{EXECUTION_ID_,jdbcType=VARCHAR}, #{PROCESS_INSTANCE_ID_,jdbcType=VARCHAR}, 
+      #{PROC_DEF_ID_,jdbcType=VARCHAR}, #{RETRIES_,jdbcType=INTEGER}, #{EXCEPTION_STACK_ID_,jdbcType=VARCHAR}, 
+      #{EXCEPTION_MSG_,jdbcType=VARCHAR}, #{DUEDATE_,jdbcType=TIMESTAMP}, #{REPEAT_,jdbcType=VARCHAR}, 
+      #{HANDLER_TYPE_,jdbcType=VARCHAR}, #{HANDLER_CFG_,jdbcType=VARCHAR}, #{TENANT_ID_,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.model.activiti.ActRuSuspendedJob">
+    insert into act_ru_suspended_job
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ID_ != null">
+        ID_,
+      </if>
+      <if test="REV_ != null">
+        REV_,
+      </if>
+      <if test="TYPE_ != null">
+        TYPE_,
+      </if>
+      <if test="EXCLUSIVE_ != null">
+        EXCLUSIVE_,
+      </if>
+      <if test="EXECUTION_ID_ != null">
+        EXECUTION_ID_,
+      </if>
+      <if test="PROCESS_INSTANCE_ID_ != null">
+        PROCESS_INSTANCE_ID_,
+      </if>
+      <if test="PROC_DEF_ID_ != null">
+        PROC_DEF_ID_,
+      </if>
+      <if test="RETRIES_ != null">
+        RETRIES_,
+      </if>
+      <if test="EXCEPTION_STACK_ID_ != null">
+        EXCEPTION_STACK_ID_,
+      </if>
+      <if test="EXCEPTION_MSG_ != null">
+        EXCEPTION_MSG_,
+      </if>
+      <if test="DUEDATE_ != null">
+        DUEDATE_,
+      </if>
+      <if test="REPEAT_ != null">
+        REPEAT_,
+      </if>
+      <if test="HANDLER_TYPE_ != null">
+        HANDLER_TYPE_,
+      </if>
+      <if test="HANDLER_CFG_ != null">
+        HANDLER_CFG_,
+      </if>
+      <if test="TENANT_ID_ != null">
+        TENANT_ID_,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ID_ != null">
+        #{ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="REV_ != null">
+        #{REV_,jdbcType=INTEGER},
+      </if>
+      <if test="TYPE_ != null">
+        #{TYPE_,jdbcType=VARCHAR},
+      </if>
+      <if test="EXCLUSIVE_ != null">
+        #{EXCLUSIVE_,jdbcType=BIT},
+      </if>
+      <if test="EXECUTION_ID_ != null">
+        #{EXECUTION_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="PROCESS_INSTANCE_ID_ != null">
+        #{PROCESS_INSTANCE_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="PROC_DEF_ID_ != null">
+        #{PROC_DEF_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="RETRIES_ != null">
+        #{RETRIES_,jdbcType=INTEGER},
+      </if>
+      <if test="EXCEPTION_STACK_ID_ != null">
+        #{EXCEPTION_STACK_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="EXCEPTION_MSG_ != null">
+        #{EXCEPTION_MSG_,jdbcType=VARCHAR},
+      </if>
+      <if test="DUEDATE_ != null">
+        #{DUEDATE_,jdbcType=TIMESTAMP},
+      </if>
+      <if test="REPEAT_ != null">
+        #{REPEAT_,jdbcType=VARCHAR},
+      </if>
+      <if test="HANDLER_TYPE_ != null">
+        #{HANDLER_TYPE_,jdbcType=VARCHAR},
+      </if>
+      <if test="HANDLER_CFG_ != null">
+        #{HANDLER_CFG_,jdbcType=VARCHAR},
+      </if>
+      <if test="TENANT_ID_ != null">
+        #{TENANT_ID_,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.model.activiti.ActRuSuspendedJob">
+    update act_ru_suspended_job
+    <set>
+      <if test="REV_ != null">
+        REV_ = #{REV_,jdbcType=INTEGER},
+      </if>
+      <if test="TYPE_ != null">
+        TYPE_ = #{TYPE_,jdbcType=VARCHAR},
+      </if>
+      <if test="EXCLUSIVE_ != null">
+        EXCLUSIVE_ = #{EXCLUSIVE_,jdbcType=BIT},
+      </if>
+      <if test="EXECUTION_ID_ != null">
+        EXECUTION_ID_ = #{EXECUTION_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="PROCESS_INSTANCE_ID_ != null">
+        PROCESS_INSTANCE_ID_ = #{PROCESS_INSTANCE_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="PROC_DEF_ID_ != null">
+        PROC_DEF_ID_ = #{PROC_DEF_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="RETRIES_ != null">
+        RETRIES_ = #{RETRIES_,jdbcType=INTEGER},
+      </if>
+      <if test="EXCEPTION_STACK_ID_ != null">
+        EXCEPTION_STACK_ID_ = #{EXCEPTION_STACK_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="EXCEPTION_MSG_ != null">
+        EXCEPTION_MSG_ = #{EXCEPTION_MSG_,jdbcType=VARCHAR},
+      </if>
+      <if test="DUEDATE_ != null">
+        DUEDATE_ = #{DUEDATE_,jdbcType=TIMESTAMP},
+      </if>
+      <if test="REPEAT_ != null">
+        REPEAT_ = #{REPEAT_,jdbcType=VARCHAR},
+      </if>
+      <if test="HANDLER_TYPE_ != null">
+        HANDLER_TYPE_ = #{HANDLER_TYPE_,jdbcType=VARCHAR},
+      </if>
+      <if test="HANDLER_CFG_ != null">
+        HANDLER_CFG_ = #{HANDLER_CFG_,jdbcType=VARCHAR},
+      </if>
+      <if test="TENANT_ID_ != null">
+        TENANT_ID_ = #{TENANT_ID_,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.model.activiti.ActRuSuspendedJob">
+    update act_ru_suspended_job
+    set REV_ = #{REV_,jdbcType=INTEGER},
+      TYPE_ = #{TYPE_,jdbcType=VARCHAR},
+      EXCLUSIVE_ = #{EXCLUSIVE_,jdbcType=BIT},
+      EXECUTION_ID_ = #{EXECUTION_ID_,jdbcType=VARCHAR},
+      PROCESS_INSTANCE_ID_ = #{PROCESS_INSTANCE_ID_,jdbcType=VARCHAR},
+      PROC_DEF_ID_ = #{PROC_DEF_ID_,jdbcType=VARCHAR},
+      RETRIES_ = #{RETRIES_,jdbcType=INTEGER},
+      EXCEPTION_STACK_ID_ = #{EXCEPTION_STACK_ID_,jdbcType=VARCHAR},
+      EXCEPTION_MSG_ = #{EXCEPTION_MSG_,jdbcType=VARCHAR},
+      DUEDATE_ = #{DUEDATE_,jdbcType=TIMESTAMP},
+      REPEAT_ = #{REPEAT_,jdbcType=VARCHAR},
+      HANDLER_TYPE_ = #{HANDLER_TYPE_,jdbcType=VARCHAR},
+      HANDLER_CFG_ = #{HANDLER_CFG_,jdbcType=VARCHAR},
+      TENANT_ID_ = #{TENANT_ID_,jdbcType=VARCHAR}
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </update>
+</mapper>

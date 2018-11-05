@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.activiti.ActIdUserMapper">
+  <resultMap id="BaseResultMap" type="com.example.model.activiti.ActIdUser">
+    <id column="ID_" jdbcType="VARCHAR" property="ID_" />
+    <result column="REV_" jdbcType="INTEGER" property="REV_" />
+    <result column="FIRST_" jdbcType="VARCHAR" property="FIRST_" />
+    <result column="LAST_" jdbcType="VARCHAR" property="LAST_" />
+    <result column="EMAIL_" jdbcType="VARCHAR" property="EMAIL_" />
+    <result column="PWD_" jdbcType="VARCHAR" property="PWD_" />
+    <result column="PICTURE_ID_" jdbcType="VARCHAR" property="PICTURE_ID_" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID_, REV_, FIRST_, LAST_, EMAIL_, PWD_, PICTURE_ID_
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from act_id_user
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from act_id_user
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.model.activiti.ActIdUser">
+    insert into act_id_user (ID_, REV_, FIRST_, 
+      LAST_, EMAIL_, PWD_, 
+      PICTURE_ID_)
+    values (#{ID_,jdbcType=VARCHAR}, #{REV_,jdbcType=INTEGER}, #{FIRST_,jdbcType=VARCHAR}, 
+      #{LAST_,jdbcType=VARCHAR}, #{EMAIL_,jdbcType=VARCHAR}, #{PWD_,jdbcType=VARCHAR}, 
+      #{PICTURE_ID_,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.model.activiti.ActIdUser">
+    insert into act_id_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ID_ != null">
+        ID_,
+      </if>
+      <if test="REV_ != null">
+        REV_,
+      </if>
+      <if test="FIRST_ != null">
+        FIRST_,
+      </if>
+      <if test="LAST_ != null">
+        LAST_,
+      </if>
+      <if test="EMAIL_ != null">
+        EMAIL_,
+      </if>
+      <if test="PWD_ != null">
+        PWD_,
+      </if>
+      <if test="PICTURE_ID_ != null">
+        PICTURE_ID_,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ID_ != null">
+        #{ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="REV_ != null">
+        #{REV_,jdbcType=INTEGER},
+      </if>
+      <if test="FIRST_ != null">
+        #{FIRST_,jdbcType=VARCHAR},
+      </if>
+      <if test="LAST_ != null">
+        #{LAST_,jdbcType=VARCHAR},
+      </if>
+      <if test="EMAIL_ != null">
+        #{EMAIL_,jdbcType=VARCHAR},
+      </if>
+      <if test="PWD_ != null">
+        #{PWD_,jdbcType=VARCHAR},
+      </if>
+      <if test="PICTURE_ID_ != null">
+        #{PICTURE_ID_,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.model.activiti.ActIdUser">
+    update act_id_user
+    <set>
+      <if test="REV_ != null">
+        REV_ = #{REV_,jdbcType=INTEGER},
+      </if>
+      <if test="FIRST_ != null">
+        FIRST_ = #{FIRST_,jdbcType=VARCHAR},
+      </if>
+      <if test="LAST_ != null">
+        LAST_ = #{LAST_,jdbcType=VARCHAR},
+      </if>
+      <if test="EMAIL_ != null">
+        EMAIL_ = #{EMAIL_,jdbcType=VARCHAR},
+      </if>
+      <if test="PWD_ != null">
+        PWD_ = #{PWD_,jdbcType=VARCHAR},
+      </if>
+      <if test="PICTURE_ID_ != null">
+        PICTURE_ID_ = #{PICTURE_ID_,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.model.activiti.ActIdUser">
+    update act_id_user
+    set REV_ = #{REV_,jdbcType=INTEGER},
+      FIRST_ = #{FIRST_,jdbcType=VARCHAR},
+      LAST_ = #{LAST_,jdbcType=VARCHAR},
+      EMAIL_ = #{EMAIL_,jdbcType=VARCHAR},
+      PWD_ = #{PWD_,jdbcType=VARCHAR},
+      PICTURE_ID_ = #{PICTURE_ID_,jdbcType=VARCHAR}
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </update>
+</mapper>

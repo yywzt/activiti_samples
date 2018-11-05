@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.activiti.ActRuTaskMapper">
+  <resultMap id="BaseResultMap" type="com.example.model.activiti.ActRuTask">
+    <id column="ID_" jdbcType="VARCHAR" property="ID_" />
+    <result column="REV_" jdbcType="INTEGER" property="REV_" />
+    <result column="EXECUTION_ID_" jdbcType="VARCHAR" property="EXECUTION_ID_" />
+    <result column="PROC_INST_ID_" jdbcType="VARCHAR" property="PROC_INST_ID_" />
+    <result column="PROC_DEF_ID_" jdbcType="VARCHAR" property="PROC_DEF_ID_" />
+    <result column="NAME_" jdbcType="VARCHAR" property="NAME_" />
+    <result column="PARENT_TASK_ID_" jdbcType="VARCHAR" property="PARENT_TASK_ID_" />
+    <result column="DESCRIPTION_" jdbcType="VARCHAR" property="DESCRIPTION_" />
+    <result column="TASK_DEF_KEY_" jdbcType="VARCHAR" property="TASK_DEF_KEY_" />
+    <result column="OWNER_" jdbcType="VARCHAR" property="OWNER_" />
+    <result column="ASSIGNEE_" jdbcType="VARCHAR" property="ASSIGNEE_" />
+    <result column="DELEGATION_" jdbcType="VARCHAR" property="DELEGATION_" />
+    <result column="PRIORITY_" jdbcType="INTEGER" property="PRIORITY_" />
+    <result column="CREATE_TIME_" jdbcType="TIMESTAMP" property="CREATE_TIME_" />
+    <result column="DUE_DATE_" jdbcType="TIMESTAMP" property="DUE_DATE_" />
+    <result column="CATEGORY_" jdbcType="VARCHAR" property="CATEGORY_" />
+    <result column="SUSPENSION_STATE_" jdbcType="INTEGER" property="SUSPENSION_STATE_" />
+    <result column="TENANT_ID_" jdbcType="VARCHAR" property="TENANT_ID_" />
+    <result column="FORM_KEY_" jdbcType="VARCHAR" property="FORM_KEY_" />
+    <result column="CLAIM_TIME_" jdbcType="TIMESTAMP" property="CLAIM_TIME_" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID_, REV_, EXECUTION_ID_, PROC_INST_ID_, PROC_DEF_ID_, NAME_, PARENT_TASK_ID_, DESCRIPTION_, 
+    TASK_DEF_KEY_, OWNER_, ASSIGNEE_, DELEGATION_, PRIORITY_, CREATE_TIME_, DUE_DATE_, 
+    CATEGORY_, SUSPENSION_STATE_, TENANT_ID_, FORM_KEY_, CLAIM_TIME_
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from act_ru_task
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from act_ru_task
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.model.activiti.ActRuTask">
+    insert into act_ru_task (ID_, REV_, EXECUTION_ID_, 
+      PROC_INST_ID_, PROC_DEF_ID_, NAME_, 
+      PARENT_TASK_ID_, DESCRIPTION_, TASK_DEF_KEY_, 
+      OWNER_, ASSIGNEE_, DELEGATION_, 
+      PRIORITY_, CREATE_TIME_, DUE_DATE_, 
+      CATEGORY_, SUSPENSION_STATE_, TENANT_ID_, 
+      FORM_KEY_, CLAIM_TIME_)
+    values (#{ID_,jdbcType=VARCHAR}, #{REV_,jdbcType=INTEGER}, #{EXECUTION_ID_,jdbcType=VARCHAR}, 
+      #{PROC_INST_ID_,jdbcType=VARCHAR}, #{PROC_DEF_ID_,jdbcType=VARCHAR}, #{NAME_,jdbcType=VARCHAR}, 
+      #{PARENT_TASK_ID_,jdbcType=VARCHAR}, #{DESCRIPTION_,jdbcType=VARCHAR}, #{TASK_DEF_KEY_,jdbcType=VARCHAR}, 
+      #{OWNER_,jdbcType=VARCHAR}, #{ASSIGNEE_,jdbcType=VARCHAR}, #{DELEGATION_,jdbcType=VARCHAR}, 
+      #{PRIORITY_,jdbcType=INTEGER}, #{CREATE_TIME_,jdbcType=TIMESTAMP}, #{DUE_DATE_,jdbcType=TIMESTAMP}, 
+      #{CATEGORY_,jdbcType=VARCHAR}, #{SUSPENSION_STATE_,jdbcType=INTEGER}, #{TENANT_ID_,jdbcType=VARCHAR}, 
+      #{FORM_KEY_,jdbcType=VARCHAR}, #{CLAIM_TIME_,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.model.activiti.ActRuTask">
+    insert into act_ru_task
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ID_ != null">
+        ID_,
+      </if>
+      <if test="REV_ != null">
+        REV_,
+      </if>
+      <if test="EXECUTION_ID_ != null">
+        EXECUTION_ID_,
+      </if>
+      <if test="PROC_INST_ID_ != null">
+        PROC_INST_ID_,
+      </if>
+      <if test="PROC_DEF_ID_ != null">
+        PROC_DEF_ID_,
+      </if>
+      <if test="NAME_ != null">
+        NAME_,
+      </if>
+      <if test="PARENT_TASK_ID_ != null">
+        PARENT_TASK_ID_,
+      </if>
+      <if test="DESCRIPTION_ != null">
+        DESCRIPTION_,
+      </if>
+      <if test="TASK_DEF_KEY_ != null">
+        TASK_DEF_KEY_,
+      </if>
+      <if test="OWNER_ != null">
+        OWNER_,
+      </if>
+      <if test="ASSIGNEE_ != null">
+        ASSIGNEE_,
+      </if>
+      <if test="DELEGATION_ != null">
+        DELEGATION_,
+      </if>
+      <if test="PRIORITY_ != null">
+        PRIORITY_,
+      </if>
+      <if test="CREATE_TIME_ != null">
+        CREATE_TIME_,
+      </if>
+      <if test="DUE_DATE_ != null">
+        DUE_DATE_,
+      </if>
+      <if test="CATEGORY_ != null">
+        CATEGORY_,
+      </if>
+      <if test="SUSPENSION_STATE_ != null">
+        SUSPENSION_STATE_,
+      </if>
+      <if test="TENANT_ID_ != null">
+        TENANT_ID_,
+      </if>
+      <if test="FORM_KEY_ != null">
+        FORM_KEY_,
+      </if>
+      <if test="CLAIM_TIME_ != null">
+        CLAIM_TIME_,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ID_ != null">
+        #{ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="REV_ != null">
+        #{REV_,jdbcType=INTEGER},
+      </if>
+      <if test="EXECUTION_ID_ != null">
+        #{EXECUTION_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="PROC_INST_ID_ != null">
+        #{PROC_INST_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="PROC_DEF_ID_ != null">
+        #{PROC_DEF_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="NAME_ != null">
+        #{NAME_,jdbcType=VARCHAR},
+      </if>
+      <if test="PARENT_TASK_ID_ != null">
+        #{PARENT_TASK_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="DESCRIPTION_ != null">
+        #{DESCRIPTION_,jdbcType=VARCHAR},
+      </if>
+      <if test="TASK_DEF_KEY_ != null">
+        #{TASK_DEF_KEY_,jdbcType=VARCHAR},
+      </if>
+      <if test="OWNER_ != null">
+        #{OWNER_,jdbcType=VARCHAR},
+      </if>
+      <if test="ASSIGNEE_ != null">
+        #{ASSIGNEE_,jdbcType=VARCHAR},
+      </if>
+      <if test="DELEGATION_ != null">
+        #{DELEGATION_,jdbcType=VARCHAR},
+      </if>
+      <if test="PRIORITY_ != null">
+        #{PRIORITY_,jdbcType=INTEGER},
+      </if>
+      <if test="CREATE_TIME_ != null">
+        #{CREATE_TIME_,jdbcType=TIMESTAMP},
+      </if>
+      <if test="DUE_DATE_ != null">
+        #{DUE_DATE_,jdbcType=TIMESTAMP},
+      </if>
+      <if test="CATEGORY_ != null">
+        #{CATEGORY_,jdbcType=VARCHAR},
+      </if>
+      <if test="SUSPENSION_STATE_ != null">
+        #{SUSPENSION_STATE_,jdbcType=INTEGER},
+      </if>
+      <if test="TENANT_ID_ != null">
+        #{TENANT_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="FORM_KEY_ != null">
+        #{FORM_KEY_,jdbcType=VARCHAR},
+      </if>
+      <if test="CLAIM_TIME_ != null">
+        #{CLAIM_TIME_,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.model.activiti.ActRuTask">
+    update act_ru_task
+    <set>
+      <if test="REV_ != null">
+        REV_ = #{REV_,jdbcType=INTEGER},
+      </if>
+      <if test="EXECUTION_ID_ != null">
+        EXECUTION_ID_ = #{EXECUTION_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="PROC_INST_ID_ != null">
+        PROC_INST_ID_ = #{PROC_INST_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="PROC_DEF_ID_ != null">
+        PROC_DEF_ID_ = #{PROC_DEF_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="NAME_ != null">
+        NAME_ = #{NAME_,jdbcType=VARCHAR},
+      </if>
+      <if test="PARENT_TASK_ID_ != null">
+        PARENT_TASK_ID_ = #{PARENT_TASK_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="DESCRIPTION_ != null">
+        DESCRIPTION_ = #{DESCRIPTION_,jdbcType=VARCHAR},
+      </if>
+      <if test="TASK_DEF_KEY_ != null">
+        TASK_DEF_KEY_ = #{TASK_DEF_KEY_,jdbcType=VARCHAR},
+      </if>
+      <if test="OWNER_ != null">
+        OWNER_ = #{OWNER_,jdbcType=VARCHAR},
+      </if>
+      <if test="ASSIGNEE_ != null">
+        ASSIGNEE_ = #{ASSIGNEE_,jdbcType=VARCHAR},
+      </if>
+      <if test="DELEGATION_ != null">
+        DELEGATION_ = #{DELEGATION_,jdbcType=VARCHAR},
+      </if>
+      <if test="PRIORITY_ != null">
+        PRIORITY_ = #{PRIORITY_,jdbcType=INTEGER},
+      </if>
+      <if test="CREATE_TIME_ != null">
+        CREATE_TIME_ = #{CREATE_TIME_,jdbcType=TIMESTAMP},
+      </if>
+      <if test="DUE_DATE_ != null">
+        DUE_DATE_ = #{DUE_DATE_,jdbcType=TIMESTAMP},
+      </if>
+      <if test="CATEGORY_ != null">
+        CATEGORY_ = #{CATEGORY_,jdbcType=VARCHAR},
+      </if>
+      <if test="SUSPENSION_STATE_ != null">
+        SUSPENSION_STATE_ = #{SUSPENSION_STATE_,jdbcType=INTEGER},
+      </if>
+      <if test="TENANT_ID_ != null">
+        TENANT_ID_ = #{TENANT_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="FORM_KEY_ != null">
+        FORM_KEY_ = #{FORM_KEY_,jdbcType=VARCHAR},
+      </if>
+      <if test="CLAIM_TIME_ != null">
+        CLAIM_TIME_ = #{CLAIM_TIME_,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.model.activiti.ActRuTask">
+    update act_ru_task
+    set REV_ = #{REV_,jdbcType=INTEGER},
+      EXECUTION_ID_ = #{EXECUTION_ID_,jdbcType=VARCHAR},
+      PROC_INST_ID_ = #{PROC_INST_ID_,jdbcType=VARCHAR},
+      PROC_DEF_ID_ = #{PROC_DEF_ID_,jdbcType=VARCHAR},
+      NAME_ = #{NAME_,jdbcType=VARCHAR},
+      PARENT_TASK_ID_ = #{PARENT_TASK_ID_,jdbcType=VARCHAR},
+      DESCRIPTION_ = #{DESCRIPTION_,jdbcType=VARCHAR},
+      TASK_DEF_KEY_ = #{TASK_DEF_KEY_,jdbcType=VARCHAR},
+      OWNER_ = #{OWNER_,jdbcType=VARCHAR},
+      ASSIGNEE_ = #{ASSIGNEE_,jdbcType=VARCHAR},
+      DELEGATION_ = #{DELEGATION_,jdbcType=VARCHAR},
+      PRIORITY_ = #{PRIORITY_,jdbcType=INTEGER},
+      CREATE_TIME_ = #{CREATE_TIME_,jdbcType=TIMESTAMP},
+      DUE_DATE_ = #{DUE_DATE_,jdbcType=TIMESTAMP},
+      CATEGORY_ = #{CATEGORY_,jdbcType=VARCHAR},
+      SUSPENSION_STATE_ = #{SUSPENSION_STATE_,jdbcType=INTEGER},
+      TENANT_ID_ = #{TENANT_ID_,jdbcType=VARCHAR},
+      FORM_KEY_ = #{FORM_KEY_,jdbcType=VARCHAR},
+      CLAIM_TIME_ = #{CLAIM_TIME_,jdbcType=TIMESTAMP}
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.activiti.ActGePropertyMapper">
+  <resultMap id="BaseResultMap" type="com.example.model.activiti.ActGeProperty">
+    <id column="NAME_" jdbcType="VARCHAR" property="NAME_" />
+    <result column="VALUE_" jdbcType="VARCHAR" property="VALUE_" />
+    <result column="REV_" jdbcType="INTEGER" property="REV_" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    NAME_, VALUE_, REV_
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from act_ge_property
+    where NAME_ = #{NAME_,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from act_ge_property
+    where NAME_ = #{NAME_,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.model.activiti.ActGeProperty">
+    insert into act_ge_property (NAME_, VALUE_, REV_
+      )
+    values (#{NAME_,jdbcType=VARCHAR}, #{VALUE_,jdbcType=VARCHAR}, #{REV_,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.model.activiti.ActGeProperty">
+    insert into act_ge_property
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="NAME_ != null">
+        NAME_,
+      </if>
+      <if test="VALUE_ != null">
+        VALUE_,
+      </if>
+      <if test="REV_ != null">
+        REV_,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="NAME_ != null">
+        #{NAME_,jdbcType=VARCHAR},
+      </if>
+      <if test="VALUE_ != null">
+        #{VALUE_,jdbcType=VARCHAR},
+      </if>
+      <if test="REV_ != null">
+        #{REV_,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.model.activiti.ActGeProperty">
+    update act_ge_property
+    <set>
+      <if test="VALUE_ != null">
+        VALUE_ = #{VALUE_,jdbcType=VARCHAR},
+      </if>
+      <if test="REV_ != null">
+        REV_ = #{REV_,jdbcType=INTEGER},
+      </if>
+    </set>
+    where NAME_ = #{NAME_,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.model.activiti.ActGeProperty">
+    update act_ge_property
+    set VALUE_ = #{VALUE_,jdbcType=VARCHAR},
+      REV_ = #{REV_,jdbcType=INTEGER}
+    where NAME_ = #{NAME_,jdbcType=VARCHAR}
+  </update>
+</mapper>

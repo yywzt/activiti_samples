@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.activiti.ActProcdefInfoMapper">
+  <resultMap id="BaseResultMap" type="com.example.model.activiti.ActProcdefInfo">
+    <id column="ID_" jdbcType="VARCHAR" property="ID_" />
+    <result column="PROC_DEF_ID_" jdbcType="VARCHAR" property="PROC_DEF_ID_" />
+    <result column="REV_" jdbcType="INTEGER" property="REV_" />
+    <result column="INFO_JSON_ID_" jdbcType="VARCHAR" property="INFO_JSON_ID_" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID_, PROC_DEF_ID_, REV_, INFO_JSON_ID_
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from act_procdef_info
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from act_procdef_info
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.model.activiti.ActProcdefInfo">
+    insert into act_procdef_info (ID_, PROC_DEF_ID_, REV_, 
+      INFO_JSON_ID_)
+    values (#{ID_,jdbcType=VARCHAR}, #{PROC_DEF_ID_,jdbcType=VARCHAR}, #{REV_,jdbcType=INTEGER}, 
+      #{INFO_JSON_ID_,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.model.activiti.ActProcdefInfo">
+    insert into act_procdef_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ID_ != null">
+        ID_,
+      </if>
+      <if test="PROC_DEF_ID_ != null">
+        PROC_DEF_ID_,
+      </if>
+      <if test="REV_ != null">
+        REV_,
+      </if>
+      <if test="INFO_JSON_ID_ != null">
+        INFO_JSON_ID_,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ID_ != null">
+        #{ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="PROC_DEF_ID_ != null">
+        #{PROC_DEF_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="REV_ != null">
+        #{REV_,jdbcType=INTEGER},
+      </if>
+      <if test="INFO_JSON_ID_ != null">
+        #{INFO_JSON_ID_,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.model.activiti.ActProcdefInfo">
+    update act_procdef_info
+    <set>
+      <if test="PROC_DEF_ID_ != null">
+        PROC_DEF_ID_ = #{PROC_DEF_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="REV_ != null">
+        REV_ = #{REV_,jdbcType=INTEGER},
+      </if>
+      <if test="INFO_JSON_ID_ != null">
+        INFO_JSON_ID_ = #{INFO_JSON_ID_,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.model.activiti.ActProcdefInfo">
+    update act_procdef_info
+    set PROC_DEF_ID_ = #{PROC_DEF_ID_,jdbcType=VARCHAR},
+      REV_ = #{REV_,jdbcType=INTEGER},
+      INFO_JSON_ID_ = #{INFO_JSON_ID_,jdbcType=VARCHAR}
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </update>
+</mapper>

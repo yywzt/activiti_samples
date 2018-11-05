@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.activiti.ActIdInfoMapper">
+  <resultMap id="BaseResultMap" type="com.example.model.activiti.ActIdInfo">
+    <id column="ID_" jdbcType="VARCHAR" property="ID_" />
+    <result column="REV_" jdbcType="INTEGER" property="REV_" />
+    <result column="USER_ID_" jdbcType="VARCHAR" property="USER_ID_" />
+    <result column="TYPE_" jdbcType="VARCHAR" property="TYPE_" />
+    <result column="KEY_" jdbcType="VARCHAR" property="KEY_" />
+    <result column="VALUE_" jdbcType="VARCHAR" property="VALUE_" />
+    <result column="PARENT_ID_" jdbcType="VARCHAR" property="PARENT_ID_" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.example.model.activiti.ActIdInfo">
+    <result column="PASSWORD_" jdbcType="LONGVARBINARY" property="PASSWORD_" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID_, REV_, USER_ID_, TYPE_, KEY_, VALUE_, PARENT_ID_
+  </sql>
+  <sql id="Blob_Column_List">
+    PASSWORD_
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from act_id_info
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from act_id_info
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.model.activiti.ActIdInfo">
+    insert into act_id_info (ID_, REV_, USER_ID_, 
+      TYPE_, KEY_, VALUE_, 
+      PARENT_ID_, PASSWORD_)
+    values (#{ID_,jdbcType=VARCHAR}, #{REV_,jdbcType=INTEGER}, #{USER_ID_,jdbcType=VARCHAR}, 
+      #{TYPE_,jdbcType=VARCHAR}, #{KEY_,jdbcType=VARCHAR}, #{VALUE_,jdbcType=VARCHAR}, 
+      #{PARENT_ID_,jdbcType=VARCHAR}, #{PASSWORD_,jdbcType=LONGVARBINARY})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.model.activiti.ActIdInfo">
+    insert into act_id_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ID_ != null">
+        ID_,
+      </if>
+      <if test="REV_ != null">
+        REV_,
+      </if>
+      <if test="USER_ID_ != null">
+        USER_ID_,
+      </if>
+      <if test="TYPE_ != null">
+        TYPE_,
+      </if>
+      <if test="KEY_ != null">
+        KEY_,
+      </if>
+      <if test="VALUE_ != null">
+        VALUE_,
+      </if>
+      <if test="PARENT_ID_ != null">
+        PARENT_ID_,
+      </if>
+      <if test="PASSWORD_ != null">
+        PASSWORD_,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ID_ != null">
+        #{ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="REV_ != null">
+        #{REV_,jdbcType=INTEGER},
+      </if>
+      <if test="USER_ID_ != null">
+        #{USER_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="TYPE_ != null">
+        #{TYPE_,jdbcType=VARCHAR},
+      </if>
+      <if test="KEY_ != null">
+        #{KEY_,jdbcType=VARCHAR},
+      </if>
+      <if test="VALUE_ != null">
+        #{VALUE_,jdbcType=VARCHAR},
+      </if>
+      <if test="PARENT_ID_ != null">
+        #{PARENT_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="PASSWORD_ != null">
+        #{PASSWORD_,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.model.activiti.ActIdInfo">
+    update act_id_info
+    <set>
+      <if test="REV_ != null">
+        REV_ = #{REV_,jdbcType=INTEGER},
+      </if>
+      <if test="USER_ID_ != null">
+        USER_ID_ = #{USER_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="TYPE_ != null">
+        TYPE_ = #{TYPE_,jdbcType=VARCHAR},
+      </if>
+      <if test="KEY_ != null">
+        KEY_ = #{KEY_,jdbcType=VARCHAR},
+      </if>
+      <if test="VALUE_ != null">
+        VALUE_ = #{VALUE_,jdbcType=VARCHAR},
+      </if>
+      <if test="PARENT_ID_ != null">
+        PARENT_ID_ = #{PARENT_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="PASSWORD_ != null">
+        PASSWORD_ = #{PASSWORD_,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.example.model.activiti.ActIdInfo">
+    update act_id_info
+    set REV_ = #{REV_,jdbcType=INTEGER},
+      USER_ID_ = #{USER_ID_,jdbcType=VARCHAR},
+      TYPE_ = #{TYPE_,jdbcType=VARCHAR},
+      KEY_ = #{KEY_,jdbcType=VARCHAR},
+      VALUE_ = #{VALUE_,jdbcType=VARCHAR},
+      PARENT_ID_ = #{PARENT_ID_,jdbcType=VARCHAR},
+      PASSWORD_ = #{PASSWORD_,jdbcType=LONGVARBINARY}
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.model.activiti.ActIdInfo">
+    update act_id_info
+    set REV_ = #{REV_,jdbcType=INTEGER},
+      USER_ID_ = #{USER_ID_,jdbcType=VARCHAR},
+      TYPE_ = #{TYPE_,jdbcType=VARCHAR},
+      KEY_ = #{KEY_,jdbcType=VARCHAR},
+      VALUE_ = #{VALUE_,jdbcType=VARCHAR},
+      PARENT_ID_ = #{PARENT_ID_,jdbcType=VARCHAR}
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </update>
+</mapper>

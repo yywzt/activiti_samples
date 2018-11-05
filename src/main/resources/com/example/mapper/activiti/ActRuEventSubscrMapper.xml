@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.activiti.ActRuEventSubscrMapper">
+  <resultMap id="BaseResultMap" type="com.example.model.activiti.ActRuEventSubscr">
+    <id column="ID_" jdbcType="VARCHAR" property="ID_" />
+    <result column="REV_" jdbcType="INTEGER" property="REV_" />
+    <result column="EVENT_TYPE_" jdbcType="VARCHAR" property="EVENT_TYPE_" />
+    <result column="EVENT_NAME_" jdbcType="VARCHAR" property="EVENT_NAME_" />
+    <result column="EXECUTION_ID_" jdbcType="VARCHAR" property="EXECUTION_ID_" />
+    <result column="PROC_INST_ID_" jdbcType="VARCHAR" property="PROC_INST_ID_" />
+    <result column="ACTIVITY_ID_" jdbcType="VARCHAR" property="ACTIVITY_ID_" />
+    <result column="CONFIGURATION_" jdbcType="VARCHAR" property="CONFIGURATION_" />
+    <result column="CREATED_" jdbcType="TIMESTAMP" property="CREATED_" />
+    <result column="PROC_DEF_ID_" jdbcType="VARCHAR" property="PROC_DEF_ID_" />
+    <result column="TENANT_ID_" jdbcType="VARCHAR" property="TENANT_ID_" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID_, REV_, EVENT_TYPE_, EVENT_NAME_, EXECUTION_ID_, PROC_INST_ID_, ACTIVITY_ID_, 
+    CONFIGURATION_, CREATED_, PROC_DEF_ID_, TENANT_ID_
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from act_ru_event_subscr
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from act_ru_event_subscr
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.model.activiti.ActRuEventSubscr">
+    insert into act_ru_event_subscr (ID_, REV_, EVENT_TYPE_, 
+      EVENT_NAME_, EXECUTION_ID_, PROC_INST_ID_, 
+      ACTIVITY_ID_, CONFIGURATION_, CREATED_, 
+      PROC_DEF_ID_, TENANT_ID_)
+    values (#{ID_,jdbcType=VARCHAR}, #{REV_,jdbcType=INTEGER}, #{EVENT_TYPE_,jdbcType=VARCHAR}, 
+      #{EVENT_NAME_,jdbcType=VARCHAR}, #{EXECUTION_ID_,jdbcType=VARCHAR}, #{PROC_INST_ID_,jdbcType=VARCHAR}, 
+      #{ACTIVITY_ID_,jdbcType=VARCHAR}, #{CONFIGURATION_,jdbcType=VARCHAR}, #{CREATED_,jdbcType=TIMESTAMP}, 
+      #{PROC_DEF_ID_,jdbcType=VARCHAR}, #{TENANT_ID_,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.model.activiti.ActRuEventSubscr">
+    insert into act_ru_event_subscr
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ID_ != null">
+        ID_,
+      </if>
+      <if test="REV_ != null">
+        REV_,
+      </if>
+      <if test="EVENT_TYPE_ != null">
+        EVENT_TYPE_,
+      </if>
+      <if test="EVENT_NAME_ != null">
+        EVENT_NAME_,
+      </if>
+      <if test="EXECUTION_ID_ != null">
+        EXECUTION_ID_,
+      </if>
+      <if test="PROC_INST_ID_ != null">
+        PROC_INST_ID_,
+      </if>
+      <if test="ACTIVITY_ID_ != null">
+        ACTIVITY_ID_,
+      </if>
+      <if test="CONFIGURATION_ != null">
+        CONFIGURATION_,
+      </if>
+      <if test="CREATED_ != null">
+        CREATED_,
+      </if>
+      <if test="PROC_DEF_ID_ != null">
+        PROC_DEF_ID_,
+      </if>
+      <if test="TENANT_ID_ != null">
+        TENANT_ID_,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ID_ != null">
+        #{ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="REV_ != null">
+        #{REV_,jdbcType=INTEGER},
+      </if>
+      <if test="EVENT_TYPE_ != null">
+        #{EVENT_TYPE_,jdbcType=VARCHAR},
+      </if>
+      <if test="EVENT_NAME_ != null">
+        #{EVENT_NAME_,jdbcType=VARCHAR},
+      </if>
+      <if test="EXECUTION_ID_ != null">
+        #{EXECUTION_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="PROC_INST_ID_ != null">
+        #{PROC_INST_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="ACTIVITY_ID_ != null">
+        #{ACTIVITY_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="CONFIGURATION_ != null">
+        #{CONFIGURATION_,jdbcType=VARCHAR},
+      </if>
+      <if test="CREATED_ != null">
+        #{CREATED_,jdbcType=TIMESTAMP},
+      </if>
+      <if test="PROC_DEF_ID_ != null">
+        #{PROC_DEF_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="TENANT_ID_ != null">
+        #{TENANT_ID_,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.model.activiti.ActRuEventSubscr">
+    update act_ru_event_subscr
+    <set>
+      <if test="REV_ != null">
+        REV_ = #{REV_,jdbcType=INTEGER},
+      </if>
+      <if test="EVENT_TYPE_ != null">
+        EVENT_TYPE_ = #{EVENT_TYPE_,jdbcType=VARCHAR},
+      </if>
+      <if test="EVENT_NAME_ != null">
+        EVENT_NAME_ = #{EVENT_NAME_,jdbcType=VARCHAR},
+      </if>
+      <if test="EXECUTION_ID_ != null">
+        EXECUTION_ID_ = #{EXECUTION_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="PROC_INST_ID_ != null">
+        PROC_INST_ID_ = #{PROC_INST_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="ACTIVITY_ID_ != null">
+        ACTIVITY_ID_ = #{ACTIVITY_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="CONFIGURATION_ != null">
+        CONFIGURATION_ = #{CONFIGURATION_,jdbcType=VARCHAR},
+      </if>
+      <if test="CREATED_ != null">
+        CREATED_ = #{CREATED_,jdbcType=TIMESTAMP},
+      </if>
+      <if test="PROC_DEF_ID_ != null">
+        PROC_DEF_ID_ = #{PROC_DEF_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="TENANT_ID_ != null">
+        TENANT_ID_ = #{TENANT_ID_,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.model.activiti.ActRuEventSubscr">
+    update act_ru_event_subscr
+    set REV_ = #{REV_,jdbcType=INTEGER},
+      EVENT_TYPE_ = #{EVENT_TYPE_,jdbcType=VARCHAR},
+      EVENT_NAME_ = #{EVENT_NAME_,jdbcType=VARCHAR},
+      EXECUTION_ID_ = #{EXECUTION_ID_,jdbcType=VARCHAR},
+      PROC_INST_ID_ = #{PROC_INST_ID_,jdbcType=VARCHAR},
+      ACTIVITY_ID_ = #{ACTIVITY_ID_,jdbcType=VARCHAR},
+      CONFIGURATION_ = #{CONFIGURATION_,jdbcType=VARCHAR},
+      CREATED_ = #{CREATED_,jdbcType=TIMESTAMP},
+      PROC_DEF_ID_ = #{PROC_DEF_ID_,jdbcType=VARCHAR},
+      TENANT_ID_ = #{TENANT_ID_,jdbcType=VARCHAR}
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </update>
+</mapper>

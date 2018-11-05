@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.activiti.ActReModelMapper">
+  <resultMap id="BaseResultMap" type="com.example.model.activiti.ActReModel">
+    <id column="ID_" jdbcType="VARCHAR" property="ID_" />
+    <result column="REV_" jdbcType="INTEGER" property="REV_" />
+    <result column="NAME_" jdbcType="VARCHAR" property="NAME_" />
+    <result column="KEY_" jdbcType="VARCHAR" property="KEY_" />
+    <result column="CATEGORY_" jdbcType="VARCHAR" property="CATEGORY_" />
+    <result column="CREATE_TIME_" jdbcType="TIMESTAMP" property="CREATE_TIME_" />
+    <result column="LAST_UPDATE_TIME_" jdbcType="TIMESTAMP" property="LAST_UPDATE_TIME_" />
+    <result column="VERSION_" jdbcType="INTEGER" property="VERSION_" />
+    <result column="META_INFO_" jdbcType="VARCHAR" property="META_INFO_" />
+    <result column="DEPLOYMENT_ID_" jdbcType="VARCHAR" property="DEPLOYMENT_ID_" />
+    <result column="EDITOR_SOURCE_VALUE_ID_" jdbcType="VARCHAR" property="EDITOR_SOURCE_VALUE_ID_" />
+    <result column="EDITOR_SOURCE_EXTRA_VALUE_ID_" jdbcType="VARCHAR" property="EDITOR_SOURCE_EXTRA_VALUE_ID_" />
+    <result column="TENANT_ID_" jdbcType="VARCHAR" property="TENANT_ID_" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID_, REV_, NAME_, KEY_, CATEGORY_, CREATE_TIME_, LAST_UPDATE_TIME_, VERSION_, META_INFO_, 
+    DEPLOYMENT_ID_, EDITOR_SOURCE_VALUE_ID_, EDITOR_SOURCE_EXTRA_VALUE_ID_, TENANT_ID_
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from act_re_model
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from act_re_model
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.model.activiti.ActReModel">
+    insert into act_re_model (ID_, REV_, NAME_, 
+      KEY_, CATEGORY_, CREATE_TIME_, 
+      LAST_UPDATE_TIME_, VERSION_, META_INFO_, 
+      DEPLOYMENT_ID_, EDITOR_SOURCE_VALUE_ID_, 
+      EDITOR_SOURCE_EXTRA_VALUE_ID_, TENANT_ID_
+      )
+    values (#{ID_,jdbcType=VARCHAR}, #{REV_,jdbcType=INTEGER}, #{NAME_,jdbcType=VARCHAR}, 
+      #{KEY_,jdbcType=VARCHAR}, #{CATEGORY_,jdbcType=VARCHAR}, #{CREATE_TIME_,jdbcType=TIMESTAMP}, 
+      #{LAST_UPDATE_TIME_,jdbcType=TIMESTAMP}, #{VERSION_,jdbcType=INTEGER}, #{META_INFO_,jdbcType=VARCHAR}, 
+      #{DEPLOYMENT_ID_,jdbcType=VARCHAR}, #{EDITOR_SOURCE_VALUE_ID_,jdbcType=VARCHAR}, 
+      #{EDITOR_SOURCE_EXTRA_VALUE_ID_,jdbcType=VARCHAR}, #{TENANT_ID_,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.model.activiti.ActReModel">
+    insert into act_re_model
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ID_ != null">
+        ID_,
+      </if>
+      <if test="REV_ != null">
+        REV_,
+      </if>
+      <if test="NAME_ != null">
+        NAME_,
+      </if>
+      <if test="KEY_ != null">
+        KEY_,
+      </if>
+      <if test="CATEGORY_ != null">
+        CATEGORY_,
+      </if>
+      <if test="CREATE_TIME_ != null">
+        CREATE_TIME_,
+      </if>
+      <if test="LAST_UPDATE_TIME_ != null">
+        LAST_UPDATE_TIME_,
+      </if>
+      <if test="VERSION_ != null">
+        VERSION_,
+      </if>
+      <if test="META_INFO_ != null">
+        META_INFO_,
+      </if>
+      <if test="DEPLOYMENT_ID_ != null">
+        DEPLOYMENT_ID_,
+      </if>
+      <if test="EDITOR_SOURCE_VALUE_ID_ != null">
+        EDITOR_SOURCE_VALUE_ID_,
+      </if>
+      <if test="EDITOR_SOURCE_EXTRA_VALUE_ID_ != null">
+        EDITOR_SOURCE_EXTRA_VALUE_ID_,
+      </if>
+      <if test="TENANT_ID_ != null">
+        TENANT_ID_,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ID_ != null">
+        #{ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="REV_ != null">
+        #{REV_,jdbcType=INTEGER},
+      </if>
+      <if test="NAME_ != null">
+        #{NAME_,jdbcType=VARCHAR},
+      </if>
+      <if test="KEY_ != null">
+        #{KEY_,jdbcType=VARCHAR},
+      </if>
+      <if test="CATEGORY_ != null">
+        #{CATEGORY_,jdbcType=VARCHAR},
+      </if>
+      <if test="CREATE_TIME_ != null">
+        #{CREATE_TIME_,jdbcType=TIMESTAMP},
+      </if>
+      <if test="LAST_UPDATE_TIME_ != null">
+        #{LAST_UPDATE_TIME_,jdbcType=TIMESTAMP},
+      </if>
+      <if test="VERSION_ != null">
+        #{VERSION_,jdbcType=INTEGER},
+      </if>
+      <if test="META_INFO_ != null">
+        #{META_INFO_,jdbcType=VARCHAR},
+      </if>
+      <if test="DEPLOYMENT_ID_ != null">
+        #{DEPLOYMENT_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="EDITOR_SOURCE_VALUE_ID_ != null">
+        #{EDITOR_SOURCE_VALUE_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="EDITOR_SOURCE_EXTRA_VALUE_ID_ != null">
+        #{EDITOR_SOURCE_EXTRA_VALUE_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="TENANT_ID_ != null">
+        #{TENANT_ID_,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.model.activiti.ActReModel">
+    update act_re_model
+    <set>
+      <if test="REV_ != null">
+        REV_ = #{REV_,jdbcType=INTEGER},
+      </if>
+      <if test="NAME_ != null">
+        NAME_ = #{NAME_,jdbcType=VARCHAR},
+      </if>
+      <if test="KEY_ != null">
+        KEY_ = #{KEY_,jdbcType=VARCHAR},
+      </if>
+      <if test="CATEGORY_ != null">
+        CATEGORY_ = #{CATEGORY_,jdbcType=VARCHAR},
+      </if>
+      <if test="CREATE_TIME_ != null">
+        CREATE_TIME_ = #{CREATE_TIME_,jdbcType=TIMESTAMP},
+      </if>
+      <if test="LAST_UPDATE_TIME_ != null">
+        LAST_UPDATE_TIME_ = #{LAST_UPDATE_TIME_,jdbcType=TIMESTAMP},
+      </if>
+      <if test="VERSION_ != null">
+        VERSION_ = #{VERSION_,jdbcType=INTEGER},
+      </if>
+      <if test="META_INFO_ != null">
+        META_INFO_ = #{META_INFO_,jdbcType=VARCHAR},
+      </if>
+      <if test="DEPLOYMENT_ID_ != null">
+        DEPLOYMENT_ID_ = #{DEPLOYMENT_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="EDITOR_SOURCE_VALUE_ID_ != null">
+        EDITOR_SOURCE_VALUE_ID_ = #{EDITOR_SOURCE_VALUE_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="EDITOR_SOURCE_EXTRA_VALUE_ID_ != null">
+        EDITOR_SOURCE_EXTRA_VALUE_ID_ = #{EDITOR_SOURCE_EXTRA_VALUE_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="TENANT_ID_ != null">
+        TENANT_ID_ = #{TENANT_ID_,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.model.activiti.ActReModel">
+    update act_re_model
+    set REV_ = #{REV_,jdbcType=INTEGER},
+      NAME_ = #{NAME_,jdbcType=VARCHAR},
+      KEY_ = #{KEY_,jdbcType=VARCHAR},
+      CATEGORY_ = #{CATEGORY_,jdbcType=VARCHAR},
+      CREATE_TIME_ = #{CREATE_TIME_,jdbcType=TIMESTAMP},
+      LAST_UPDATE_TIME_ = #{LAST_UPDATE_TIME_,jdbcType=TIMESTAMP},
+      VERSION_ = #{VERSION_,jdbcType=INTEGER},
+      META_INFO_ = #{META_INFO_,jdbcType=VARCHAR},
+      DEPLOYMENT_ID_ = #{DEPLOYMENT_ID_,jdbcType=VARCHAR},
+      EDITOR_SOURCE_VALUE_ID_ = #{EDITOR_SOURCE_VALUE_ID_,jdbcType=VARCHAR},
+      EDITOR_SOURCE_EXTRA_VALUE_ID_ = #{EDITOR_SOURCE_EXTRA_VALUE_ID_,jdbcType=VARCHAR},
+      TENANT_ID_ = #{TENANT_ID_,jdbcType=VARCHAR}
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.activiti.ActHiDetailMapper">
+  <resultMap id="BaseResultMap" type="com.example.model.activiti.ActHiDetail">
+    <id column="ID_" jdbcType="VARCHAR" property="ID_" />
+    <result column="TYPE_" jdbcType="VARCHAR" property="TYPE_" />
+    <result column="PROC_INST_ID_" jdbcType="VARCHAR" property="PROC_INST_ID_" />
+    <result column="EXECUTION_ID_" jdbcType="VARCHAR" property="EXECUTION_ID_" />
+    <result column="TASK_ID_" jdbcType="VARCHAR" property="TASK_ID_" />
+    <result column="ACT_INST_ID_" jdbcType="VARCHAR" property="ACT_INST_ID_" />
+    <result column="NAME_" jdbcType="VARCHAR" property="NAME_" />
+    <result column="VAR_TYPE_" jdbcType="VARCHAR" property="VAR_TYPE_" />
+    <result column="REV_" jdbcType="INTEGER" property="REV_" />
+    <result column="TIME_" jdbcType="TIMESTAMP" property="TIME_" />
+    <result column="BYTEARRAY_ID_" jdbcType="VARCHAR" property="BYTEARRAY_ID_" />
+    <result column="DOUBLE_" jdbcType="DOUBLE" property="DOUBLE_" />
+    <result column="LONG_" jdbcType="BIGINT" property="LONG_" />
+    <result column="TEXT_" jdbcType="VARCHAR" property="TEXT_" />
+    <result column="TEXT2_" jdbcType="VARCHAR" property="TEXT2_" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID_, TYPE_, PROC_INST_ID_, EXECUTION_ID_, TASK_ID_, ACT_INST_ID_, NAME_, VAR_TYPE_, 
+    REV_, TIME_, BYTEARRAY_ID_, DOUBLE_, LONG_, TEXT_, TEXT2_
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from act_hi_detail
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from act_hi_detail
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.model.activiti.ActHiDetail">
+    insert into act_hi_detail (ID_, TYPE_, PROC_INST_ID_, 
+      EXECUTION_ID_, TASK_ID_, ACT_INST_ID_, 
+      NAME_, VAR_TYPE_, REV_, 
+      TIME_, BYTEARRAY_ID_, DOUBLE_, 
+      LONG_, TEXT_, TEXT2_
+      )
+    values (#{ID_,jdbcType=VARCHAR}, #{TYPE_,jdbcType=VARCHAR}, #{PROC_INST_ID_,jdbcType=VARCHAR}, 
+      #{EXECUTION_ID_,jdbcType=VARCHAR}, #{TASK_ID_,jdbcType=VARCHAR}, #{ACT_INST_ID_,jdbcType=VARCHAR}, 
+      #{NAME_,jdbcType=VARCHAR}, #{VAR_TYPE_,jdbcType=VARCHAR}, #{REV_,jdbcType=INTEGER}, 
+      #{TIME_,jdbcType=TIMESTAMP}, #{BYTEARRAY_ID_,jdbcType=VARCHAR}, #{DOUBLE_,jdbcType=DOUBLE}, 
+      #{LONG_,jdbcType=BIGINT}, #{TEXT_,jdbcType=VARCHAR}, #{TEXT2_,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.model.activiti.ActHiDetail">
+    insert into act_hi_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ID_ != null">
+        ID_,
+      </if>
+      <if test="TYPE_ != null">
+        TYPE_,
+      </if>
+      <if test="PROC_INST_ID_ != null">
+        PROC_INST_ID_,
+      </if>
+      <if test="EXECUTION_ID_ != null">
+        EXECUTION_ID_,
+      </if>
+      <if test="TASK_ID_ != null">
+        TASK_ID_,
+      </if>
+      <if test="ACT_INST_ID_ != null">
+        ACT_INST_ID_,
+      </if>
+      <if test="NAME_ != null">
+        NAME_,
+      </if>
+      <if test="VAR_TYPE_ != null">
+        VAR_TYPE_,
+      </if>
+      <if test="REV_ != null">
+        REV_,
+      </if>
+      <if test="TIME_ != null">
+        TIME_,
+      </if>
+      <if test="BYTEARRAY_ID_ != null">
+        BYTEARRAY_ID_,
+      </if>
+      <if test="DOUBLE_ != null">
+        DOUBLE_,
+      </if>
+      <if test="LONG_ != null">
+        LONG_,
+      </if>
+      <if test="TEXT_ != null">
+        TEXT_,
+      </if>
+      <if test="TEXT2_ != null">
+        TEXT2_,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ID_ != null">
+        #{ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="TYPE_ != null">
+        #{TYPE_,jdbcType=VARCHAR},
+      </if>
+      <if test="PROC_INST_ID_ != null">
+        #{PROC_INST_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="EXECUTION_ID_ != null">
+        #{EXECUTION_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="TASK_ID_ != null">
+        #{TASK_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="ACT_INST_ID_ != null">
+        #{ACT_INST_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="NAME_ != null">
+        #{NAME_,jdbcType=VARCHAR},
+      </if>
+      <if test="VAR_TYPE_ != null">
+        #{VAR_TYPE_,jdbcType=VARCHAR},
+      </if>
+      <if test="REV_ != null">
+        #{REV_,jdbcType=INTEGER},
+      </if>
+      <if test="TIME_ != null">
+        #{TIME_,jdbcType=TIMESTAMP},
+      </if>
+      <if test="BYTEARRAY_ID_ != null">
+        #{BYTEARRAY_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="DOUBLE_ != null">
+        #{DOUBLE_,jdbcType=DOUBLE},
+      </if>
+      <if test="LONG_ != null">
+        #{LONG_,jdbcType=BIGINT},
+      </if>
+      <if test="TEXT_ != null">
+        #{TEXT_,jdbcType=VARCHAR},
+      </if>
+      <if test="TEXT2_ != null">
+        #{TEXT2_,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.model.activiti.ActHiDetail">
+    update act_hi_detail
+    <set>
+      <if test="TYPE_ != null">
+        TYPE_ = #{TYPE_,jdbcType=VARCHAR},
+      </if>
+      <if test="PROC_INST_ID_ != null">
+        PROC_INST_ID_ = #{PROC_INST_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="EXECUTION_ID_ != null">
+        EXECUTION_ID_ = #{EXECUTION_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="TASK_ID_ != null">
+        TASK_ID_ = #{TASK_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="ACT_INST_ID_ != null">
+        ACT_INST_ID_ = #{ACT_INST_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="NAME_ != null">
+        NAME_ = #{NAME_,jdbcType=VARCHAR},
+      </if>
+      <if test="VAR_TYPE_ != null">
+        VAR_TYPE_ = #{VAR_TYPE_,jdbcType=VARCHAR},
+      </if>
+      <if test="REV_ != null">
+        REV_ = #{REV_,jdbcType=INTEGER},
+      </if>
+      <if test="TIME_ != null">
+        TIME_ = #{TIME_,jdbcType=TIMESTAMP},
+      </if>
+      <if test="BYTEARRAY_ID_ != null">
+        BYTEARRAY_ID_ = #{BYTEARRAY_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="DOUBLE_ != null">
+        DOUBLE_ = #{DOUBLE_,jdbcType=DOUBLE},
+      </if>
+      <if test="LONG_ != null">
+        LONG_ = #{LONG_,jdbcType=BIGINT},
+      </if>
+      <if test="TEXT_ != null">
+        TEXT_ = #{TEXT_,jdbcType=VARCHAR},
+      </if>
+      <if test="TEXT2_ != null">
+        TEXT2_ = #{TEXT2_,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.model.activiti.ActHiDetail">
+    update act_hi_detail
+    set TYPE_ = #{TYPE_,jdbcType=VARCHAR},
+      PROC_INST_ID_ = #{PROC_INST_ID_,jdbcType=VARCHAR},
+      EXECUTION_ID_ = #{EXECUTION_ID_,jdbcType=VARCHAR},
+      TASK_ID_ = #{TASK_ID_,jdbcType=VARCHAR},
+      ACT_INST_ID_ = #{ACT_INST_ID_,jdbcType=VARCHAR},
+      NAME_ = #{NAME_,jdbcType=VARCHAR},
+      VAR_TYPE_ = #{VAR_TYPE_,jdbcType=VARCHAR},
+      REV_ = #{REV_,jdbcType=INTEGER},
+      TIME_ = #{TIME_,jdbcType=TIMESTAMP},
+      BYTEARRAY_ID_ = #{BYTEARRAY_ID_,jdbcType=VARCHAR},
+      DOUBLE_ = #{DOUBLE_,jdbcType=DOUBLE},
+      LONG_ = #{LONG_,jdbcType=BIGINT},
+      TEXT_ = #{TEXT_,jdbcType=VARCHAR},
+      TEXT2_ = #{TEXT2_,jdbcType=VARCHAR}
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </update>
+</mapper>

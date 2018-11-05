@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.activiti.ActHiCommentMapper">
+  <resultMap id="BaseResultMap" type="com.example.model.activiti.ActHiComment">
+    <id column="ID_" jdbcType="VARCHAR" property="ID_" />
+    <result column="TYPE_" jdbcType="VARCHAR" property="TYPE_" />
+    <result column="TIME_" jdbcType="TIMESTAMP" property="TIME_" />
+    <result column="USER_ID_" jdbcType="VARCHAR" property="USER_ID_" />
+    <result column="TASK_ID_" jdbcType="VARCHAR" property="TASK_ID_" />
+    <result column="PROC_INST_ID_" jdbcType="VARCHAR" property="PROC_INST_ID_" />
+    <result column="ACTION_" jdbcType="VARCHAR" property="ACTION_" />
+    <result column="MESSAGE_" jdbcType="VARCHAR" property="MESSAGE_" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.example.model.activiti.ActHiComment">
+    <result column="FULL_MSG_" jdbcType="LONGVARBINARY" property="FULL_MSG_" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID_, TYPE_, TIME_, USER_ID_, TASK_ID_, PROC_INST_ID_, ACTION_, MESSAGE_
+  </sql>
+  <sql id="Blob_Column_List">
+    FULL_MSG_
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from act_hi_comment
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from act_hi_comment
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.model.activiti.ActHiComment">
+    insert into act_hi_comment (ID_, TYPE_, TIME_, 
+      USER_ID_, TASK_ID_, PROC_INST_ID_, 
+      ACTION_, MESSAGE_, FULL_MSG_
+      )
+    values (#{ID_,jdbcType=VARCHAR}, #{TYPE_,jdbcType=VARCHAR}, #{TIME_,jdbcType=TIMESTAMP}, 
+      #{USER_ID_,jdbcType=VARCHAR}, #{TASK_ID_,jdbcType=VARCHAR}, #{PROC_INST_ID_,jdbcType=VARCHAR}, 
+      #{ACTION_,jdbcType=VARCHAR}, #{MESSAGE_,jdbcType=VARCHAR}, #{FULL_MSG_,jdbcType=LONGVARBINARY}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.model.activiti.ActHiComment">
+    insert into act_hi_comment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ID_ != null">
+        ID_,
+      </if>
+      <if test="TYPE_ != null">
+        TYPE_,
+      </if>
+      <if test="TIME_ != null">
+        TIME_,
+      </if>
+      <if test="USER_ID_ != null">
+        USER_ID_,
+      </if>
+      <if test="TASK_ID_ != null">
+        TASK_ID_,
+      </if>
+      <if test="PROC_INST_ID_ != null">
+        PROC_INST_ID_,
+      </if>
+      <if test="ACTION_ != null">
+        ACTION_,
+      </if>
+      <if test="MESSAGE_ != null">
+        MESSAGE_,
+      </if>
+      <if test="FULL_MSG_ != null">
+        FULL_MSG_,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ID_ != null">
+        #{ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="TYPE_ != null">
+        #{TYPE_,jdbcType=VARCHAR},
+      </if>
+      <if test="TIME_ != null">
+        #{TIME_,jdbcType=TIMESTAMP},
+      </if>
+      <if test="USER_ID_ != null">
+        #{USER_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="TASK_ID_ != null">
+        #{TASK_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="PROC_INST_ID_ != null">
+        #{PROC_INST_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="ACTION_ != null">
+        #{ACTION_,jdbcType=VARCHAR},
+      </if>
+      <if test="MESSAGE_ != null">
+        #{MESSAGE_,jdbcType=VARCHAR},
+      </if>
+      <if test="FULL_MSG_ != null">
+        #{FULL_MSG_,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.model.activiti.ActHiComment">
+    update act_hi_comment
+    <set>
+      <if test="TYPE_ != null">
+        TYPE_ = #{TYPE_,jdbcType=VARCHAR},
+      </if>
+      <if test="TIME_ != null">
+        TIME_ = #{TIME_,jdbcType=TIMESTAMP},
+      </if>
+      <if test="USER_ID_ != null">
+        USER_ID_ = #{USER_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="TASK_ID_ != null">
+        TASK_ID_ = #{TASK_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="PROC_INST_ID_ != null">
+        PROC_INST_ID_ = #{PROC_INST_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="ACTION_ != null">
+        ACTION_ = #{ACTION_,jdbcType=VARCHAR},
+      </if>
+      <if test="MESSAGE_ != null">
+        MESSAGE_ = #{MESSAGE_,jdbcType=VARCHAR},
+      </if>
+      <if test="FULL_MSG_ != null">
+        FULL_MSG_ = #{FULL_MSG_,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.example.model.activiti.ActHiComment">
+    update act_hi_comment
+    set TYPE_ = #{TYPE_,jdbcType=VARCHAR},
+      TIME_ = #{TIME_,jdbcType=TIMESTAMP},
+      USER_ID_ = #{USER_ID_,jdbcType=VARCHAR},
+      TASK_ID_ = #{TASK_ID_,jdbcType=VARCHAR},
+      PROC_INST_ID_ = #{PROC_INST_ID_,jdbcType=VARCHAR},
+      ACTION_ = #{ACTION_,jdbcType=VARCHAR},
+      MESSAGE_ = #{MESSAGE_,jdbcType=VARCHAR},
+      FULL_MSG_ = #{FULL_MSG_,jdbcType=LONGVARBINARY}
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.model.activiti.ActHiComment">
+    update act_hi_comment
+    set TYPE_ = #{TYPE_,jdbcType=VARCHAR},
+      TIME_ = #{TIME_,jdbcType=TIMESTAMP},
+      USER_ID_ = #{USER_ID_,jdbcType=VARCHAR},
+      TASK_ID_ = #{TASK_ID_,jdbcType=VARCHAR},
+      PROC_INST_ID_ = #{PROC_INST_ID_,jdbcType=VARCHAR},
+      ACTION_ = #{ACTION_,jdbcType=VARCHAR},
+      MESSAGE_ = #{MESSAGE_,jdbcType=VARCHAR}
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </update>
+</mapper>

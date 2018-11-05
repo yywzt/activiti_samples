@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.activiti.ActHiProcinstMapper">
+  <resultMap id="BaseResultMap" type="com.example.model.activiti.ActHiProcinst">
+    <id column="ID_" jdbcType="VARCHAR" property="ID_" />
+    <result column="PROC_INST_ID_" jdbcType="VARCHAR" property="PROC_INST_ID_" />
+    <result column="BUSINESS_KEY_" jdbcType="VARCHAR" property="BUSINESS_KEY_" />
+    <result column="PROC_DEF_ID_" jdbcType="VARCHAR" property="PROC_DEF_ID_" />
+    <result column="START_TIME_" jdbcType="TIMESTAMP" property="START_TIME_" />
+    <result column="END_TIME_" jdbcType="TIMESTAMP" property="END_TIME_" />
+    <result column="DURATION_" jdbcType="BIGINT" property="DURATION_" />
+    <result column="START_USER_ID_" jdbcType="VARCHAR" property="START_USER_ID_" />
+    <result column="START_ACT_ID_" jdbcType="VARCHAR" property="START_ACT_ID_" />
+    <result column="END_ACT_ID_" jdbcType="VARCHAR" property="END_ACT_ID_" />
+    <result column="SUPER_PROCESS_INSTANCE_ID_" jdbcType="VARCHAR" property="SUPER_PROCESS_INSTANCE_ID_" />
+    <result column="DELETE_REASON_" jdbcType="VARCHAR" property="DELETE_REASON_" />
+    <result column="TENANT_ID_" jdbcType="VARCHAR" property="TENANT_ID_" />
+    <result column="NAME_" jdbcType="VARCHAR" property="NAME_" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID_, PROC_INST_ID_, BUSINESS_KEY_, PROC_DEF_ID_, START_TIME_, END_TIME_, DURATION_, 
+    START_USER_ID_, START_ACT_ID_, END_ACT_ID_, SUPER_PROCESS_INSTANCE_ID_, DELETE_REASON_, 
+    TENANT_ID_, NAME_
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from act_hi_procinst
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from act_hi_procinst
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.model.activiti.ActHiProcinst">
+    insert into act_hi_procinst (ID_, PROC_INST_ID_, BUSINESS_KEY_, 
+      PROC_DEF_ID_, START_TIME_, END_TIME_, 
+      DURATION_, START_USER_ID_, START_ACT_ID_, 
+      END_ACT_ID_, SUPER_PROCESS_INSTANCE_ID_, 
+      DELETE_REASON_, TENANT_ID_, NAME_
+      )
+    values (#{ID_,jdbcType=VARCHAR}, #{PROC_INST_ID_,jdbcType=VARCHAR}, #{BUSINESS_KEY_,jdbcType=VARCHAR}, 
+      #{PROC_DEF_ID_,jdbcType=VARCHAR}, #{START_TIME_,jdbcType=TIMESTAMP}, #{END_TIME_,jdbcType=TIMESTAMP}, 
+      #{DURATION_,jdbcType=BIGINT}, #{START_USER_ID_,jdbcType=VARCHAR}, #{START_ACT_ID_,jdbcType=VARCHAR}, 
+      #{END_ACT_ID_,jdbcType=VARCHAR}, #{SUPER_PROCESS_INSTANCE_ID_,jdbcType=VARCHAR}, 
+      #{DELETE_REASON_,jdbcType=VARCHAR}, #{TENANT_ID_,jdbcType=VARCHAR}, #{NAME_,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.model.activiti.ActHiProcinst">
+    insert into act_hi_procinst
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ID_ != null">
+        ID_,
+      </if>
+      <if test="PROC_INST_ID_ != null">
+        PROC_INST_ID_,
+      </if>
+      <if test="BUSINESS_KEY_ != null">
+        BUSINESS_KEY_,
+      </if>
+      <if test="PROC_DEF_ID_ != null">
+        PROC_DEF_ID_,
+      </if>
+      <if test="START_TIME_ != null">
+        START_TIME_,
+      </if>
+      <if test="END_TIME_ != null">
+        END_TIME_,
+      </if>
+      <if test="DURATION_ != null">
+        DURATION_,
+      </if>
+      <if test="START_USER_ID_ != null">
+        START_USER_ID_,
+      </if>
+      <if test="START_ACT_ID_ != null">
+        START_ACT_ID_,
+      </if>
+      <if test="END_ACT_ID_ != null">
+        END_ACT_ID_,
+      </if>
+      <if test="SUPER_PROCESS_INSTANCE_ID_ != null">
+        SUPER_PROCESS_INSTANCE_ID_,
+      </if>
+      <if test="DELETE_REASON_ != null">
+        DELETE_REASON_,
+      </if>
+      <if test="TENANT_ID_ != null">
+        TENANT_ID_,
+      </if>
+      <if test="NAME_ != null">
+        NAME_,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ID_ != null">
+        #{ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="PROC_INST_ID_ != null">
+        #{PROC_INST_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="BUSINESS_KEY_ != null">
+        #{BUSINESS_KEY_,jdbcType=VARCHAR},
+      </if>
+      <if test="PROC_DEF_ID_ != null">
+        #{PROC_DEF_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="START_TIME_ != null">
+        #{START_TIME_,jdbcType=TIMESTAMP},
+      </if>
+      <if test="END_TIME_ != null">
+        #{END_TIME_,jdbcType=TIMESTAMP},
+      </if>
+      <if test="DURATION_ != null">
+        #{DURATION_,jdbcType=BIGINT},
+      </if>
+      <if test="START_USER_ID_ != null">
+        #{START_USER_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="START_ACT_ID_ != null">
+        #{START_ACT_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="END_ACT_ID_ != null">
+        #{END_ACT_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="SUPER_PROCESS_INSTANCE_ID_ != null">
+        #{SUPER_PROCESS_INSTANCE_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="DELETE_REASON_ != null">
+        #{DELETE_REASON_,jdbcType=VARCHAR},
+      </if>
+      <if test="TENANT_ID_ != null">
+        #{TENANT_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="NAME_ != null">
+        #{NAME_,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.model.activiti.ActHiProcinst">
+    update act_hi_procinst
+    <set>
+      <if test="PROC_INST_ID_ != null">
+        PROC_INST_ID_ = #{PROC_INST_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="BUSINESS_KEY_ != null">
+        BUSINESS_KEY_ = #{BUSINESS_KEY_,jdbcType=VARCHAR},
+      </if>
+      <if test="PROC_DEF_ID_ != null">
+        PROC_DEF_ID_ = #{PROC_DEF_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="START_TIME_ != null">
+        START_TIME_ = #{START_TIME_,jdbcType=TIMESTAMP},
+      </if>
+      <if test="END_TIME_ != null">
+        END_TIME_ = #{END_TIME_,jdbcType=TIMESTAMP},
+      </if>
+      <if test="DURATION_ != null">
+        DURATION_ = #{DURATION_,jdbcType=BIGINT},
+      </if>
+      <if test="START_USER_ID_ != null">
+        START_USER_ID_ = #{START_USER_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="START_ACT_ID_ != null">
+        START_ACT_ID_ = #{START_ACT_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="END_ACT_ID_ != null">
+        END_ACT_ID_ = #{END_ACT_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="SUPER_PROCESS_INSTANCE_ID_ != null">
+        SUPER_PROCESS_INSTANCE_ID_ = #{SUPER_PROCESS_INSTANCE_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="DELETE_REASON_ != null">
+        DELETE_REASON_ = #{DELETE_REASON_,jdbcType=VARCHAR},
+      </if>
+      <if test="TENANT_ID_ != null">
+        TENANT_ID_ = #{TENANT_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="NAME_ != null">
+        NAME_ = #{NAME_,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.model.activiti.ActHiProcinst">
+    update act_hi_procinst
+    set PROC_INST_ID_ = #{PROC_INST_ID_,jdbcType=VARCHAR},
+      BUSINESS_KEY_ = #{BUSINESS_KEY_,jdbcType=VARCHAR},
+      PROC_DEF_ID_ = #{PROC_DEF_ID_,jdbcType=VARCHAR},
+      START_TIME_ = #{START_TIME_,jdbcType=TIMESTAMP},
+      END_TIME_ = #{END_TIME_,jdbcType=TIMESTAMP},
+      DURATION_ = #{DURATION_,jdbcType=BIGINT},
+      START_USER_ID_ = #{START_USER_ID_,jdbcType=VARCHAR},
+      START_ACT_ID_ = #{START_ACT_ID_,jdbcType=VARCHAR},
+      END_ACT_ID_ = #{END_ACT_ID_,jdbcType=VARCHAR},
+      SUPER_PROCESS_INSTANCE_ID_ = #{SUPER_PROCESS_INSTANCE_ID_,jdbcType=VARCHAR},
+      DELETE_REASON_ = #{DELETE_REASON_,jdbcType=VARCHAR},
+      TENANT_ID_ = #{TENANT_ID_,jdbcType=VARCHAR},
+      NAME_ = #{NAME_,jdbcType=VARCHAR}
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </update>
+</mapper>

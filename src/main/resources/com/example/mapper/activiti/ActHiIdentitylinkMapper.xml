@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.activiti.ActHiIdentitylinkMapper">
+  <resultMap id="BaseResultMap" type="com.example.model.activiti.ActHiIdentitylink">
+    <id column="ID_" jdbcType="VARCHAR" property="ID_" />
+    <result column="GROUP_ID_" jdbcType="VARCHAR" property="GROUP_ID_" />
+    <result column="TYPE_" jdbcType="VARCHAR" property="TYPE_" />
+    <result column="USER_ID_" jdbcType="VARCHAR" property="USER_ID_" />
+    <result column="TASK_ID_" jdbcType="VARCHAR" property="TASK_ID_" />
+    <result column="PROC_INST_ID_" jdbcType="VARCHAR" property="PROC_INST_ID_" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID_, GROUP_ID_, TYPE_, USER_ID_, TASK_ID_, PROC_INST_ID_
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from act_hi_identitylink
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from act_hi_identitylink
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.model.activiti.ActHiIdentitylink">
+    insert into act_hi_identitylink (ID_, GROUP_ID_, TYPE_, 
+      USER_ID_, TASK_ID_, PROC_INST_ID_
+      )
+    values (#{ID_,jdbcType=VARCHAR}, #{GROUP_ID_,jdbcType=VARCHAR}, #{TYPE_,jdbcType=VARCHAR}, 
+      #{USER_ID_,jdbcType=VARCHAR}, #{TASK_ID_,jdbcType=VARCHAR}, #{PROC_INST_ID_,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.model.activiti.ActHiIdentitylink">
+    insert into act_hi_identitylink
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ID_ != null">
+        ID_,
+      </if>
+      <if test="GROUP_ID_ != null">
+        GROUP_ID_,
+      </if>
+      <if test="TYPE_ != null">
+        TYPE_,
+      </if>
+      <if test="USER_ID_ != null">
+        USER_ID_,
+      </if>
+      <if test="TASK_ID_ != null">
+        TASK_ID_,
+      </if>
+      <if test="PROC_INST_ID_ != null">
+        PROC_INST_ID_,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ID_ != null">
+        #{ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="GROUP_ID_ != null">
+        #{GROUP_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="TYPE_ != null">
+        #{TYPE_,jdbcType=VARCHAR},
+      </if>
+      <if test="USER_ID_ != null">
+        #{USER_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="TASK_ID_ != null">
+        #{TASK_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="PROC_INST_ID_ != null">
+        #{PROC_INST_ID_,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.model.activiti.ActHiIdentitylink">
+    update act_hi_identitylink
+    <set>
+      <if test="GROUP_ID_ != null">
+        GROUP_ID_ = #{GROUP_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="TYPE_ != null">
+        TYPE_ = #{TYPE_,jdbcType=VARCHAR},
+      </if>
+      <if test="USER_ID_ != null">
+        USER_ID_ = #{USER_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="TASK_ID_ != null">
+        TASK_ID_ = #{TASK_ID_,jdbcType=VARCHAR},
+      </if>
+      <if test="PROC_INST_ID_ != null">
+        PROC_INST_ID_ = #{PROC_INST_ID_,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.model.activiti.ActHiIdentitylink">
+    update act_hi_identitylink
+    set GROUP_ID_ = #{GROUP_ID_,jdbcType=VARCHAR},
+      TYPE_ = #{TYPE_,jdbcType=VARCHAR},
+      USER_ID_ = #{USER_ID_,jdbcType=VARCHAR},
+      TASK_ID_ = #{TASK_ID_,jdbcType=VARCHAR},
+      PROC_INST_ID_ = #{PROC_INST_ID_,jdbcType=VARCHAR}
+    where ID_ = #{ID_,jdbcType=VARCHAR}
+  </update>
+</mapper>
