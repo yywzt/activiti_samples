@@ -31,11 +31,12 @@ public class DemoController {
     @RequestMapping("/firstDemo")
     public void firstDemo(){
         //根据bpm文件部署流程
-        Deployment deployment = repositoryService.createDeployment().addClasspathResource("template/demo1.bpmn").deploy();
-        //获取流程定义
-        ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().deploymentId(deployment.getId()).singleResult();
+//        Deployment deployment = repositoryService.createDeployment().addClasspathResource("processes/demo1.bpmn").deploy();
+//        //获取流程定义
+//        ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().deploymentId(deployment.getId()).singleResult();
         //启动流程定义,返回流程实例
-        ProcessInstance pi = runtimeService.startProcessInstanceById(processDefinition.getId());
+//        ProcessInstance pi = runtimeService.startProcessInstanceById(processDefinition.getId());
+        ProcessInstance pi = runtimeService.startProcessInstanceByKey("myProcess_1");
         String procrssId = pi.getId();
         System.out.println("流程创建成功，当前流程实例ID：" + procrssId);
 
