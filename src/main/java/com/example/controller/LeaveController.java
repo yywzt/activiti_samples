@@ -2,18 +2,17 @@ package com.example.controller;
 
 import com.example.process.Leave;
 import lombok.extern.slf4j.Slf4j;
+import org.activiti.engine.HistoryService;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.history.*;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author ywyw2424@foxmail.com
@@ -121,6 +120,83 @@ public class LeaveController {
         vars.put("leave", origin);
         taskService.complete(leave.getTaskId(), vars);
         return vars;
+    }
+
+    /**
+     * 查看历史任务记录
+     * @param userId
+     * @return
+     */
+    @RequestMapping(value="/findClosed", method = RequestMethod.GET)
+    public List<Leave> findClosed(String userId){
+        HistoryService historyService = processEngine.getHistoryService();
+        List<HistoricTaskInstance> taskInstances = historyService.createHistoricTaskInstanceQuery().taskAssignee(userId).finished().list();
+        List<HistoricVariableInstance> variableInstances = new ArrayList<>();
+        taskInstances.forEach(historicTaskInstance -> {
+            List<HistoricVariableInstance> variableInstanceList = historyService.createHistoricVariableInstanceQuery()
+                    .processInstanceId(historicTaskInstance.getProcessInstanceId()).list();
+            variableInstances.addAll(variableInstanceList);
+        });
+
+        List<Leave> leaves = new ArrayList<>();
+        for (HistoricVariableInstance variableInstance:variableInstances){
+            Leave leave = (Leave) variableInstance.getValue();
+            leaves.add(leave);
+        }
+        return leaves;
+    }
+
+    @RequestMapping(value = "/findAllHistory",method = RequestMethod.GET)
+    public void findAllHistory(){
+        HistoryService historyService = processEngine.getHistoryService();
+        //历史任务查询
+        List<HistoricTaskInstance> taskInstances = historyService.createHistoricTaskInstanceQuery()
+//                .taskAssignee("1")//指定办理人
+//                .processInstanceId("5")//流程实例ID
+                .finished().list();
+        Iterator<HistoricTaskInstance> iterator = taskInstances.iterator();
+        while (iterator.hasNext()){
+            System.out.print(iterator.next()+"---");
+        }
+        System.out.println("");
+
+        //历史流程实例查询
+        List<HistoricProcessInstance> processInstances = historyService.createHistoricProcessInstanceQuery()
+//                .processInstanceId("5")//指定流程实例ID
+                .list();
+        Iterator<HistoricProcessInstance> iterator2 = processInstances.iterator();
+        while (iterator2.hasNext()){
+            HistoricProcessInstance processInstance = iterator2.next();
+            Map<String, Object> processVariables = processInstance.getProcessVariables();
+            System.out.println(processVariables);
+            System.out.print(processInstance+"---");
+        }
+        System.out.println("");
+
+        //历史活动查询
+        List<HistoricActivityInstance> activityInstances = historyService.createHistoricActivityInstanceQuery()
+//                .processInstanceId("5")//指定流程实例ID
+                .finished().list();
+        Iterator<HistoricActivityInstance> iterator3 = activityInstances.iterator();
+        while (iterator3.hasNext()){
+            System.out.print(iterator3.next()+"---");
+        }
+        System.out.println("");
+    }
+
+    /**查询历史流程变量*/
+    @RequestMapping(value = "/findHistoryProcessVariables",method = RequestMethod.GET)
+    public void findHistoryProcessVariables(String processInstanceId){
+        List<HistoricVariableInstance> list = processEngine.getHistoryService()//
+                .createHistoricVariableInstanceQuery()//创建一个历史的流程变量查询对象
+                .processInstanceId(processInstanceId)//流程实例ID
+                .list();
+        if(list!=null && list.size()>0){
+            for(HistoricVariableInstance hvi:list){
+                System.out.println(hvi.getId()+"   "+hvi.getProcessInstanceId()+"   "+hvi.getVariableName()+"   "+hvi.getVariableTypeName()+"    "+hvi.getValue());
+                System.out.println("###############################################");
+            }
+        }
     }
 
 }
