@@ -6,7 +6,7 @@
     <groupId>com.example</groupId>
     <artifactId>activiti_samples</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <name>activiti_samples</name>
     <description>Demo project for Spring Boot</description>
@@ -18,35 +18,43 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
+    <modules>
+        <module>activiti_samples_provider</module>
+        <module>activiti_samples_web</module>
+    </modules>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <activiti.version>5.22.0</activiti.version>
+        <spring-boot.version>2.1.0.RELEASE</spring-boot.version>
+        <mybatis.version>1.3.2</mybatis.version>
+        <mysql.connect.version>8.0.13</mysql.connect.version>
+        <lombok.version>1.16.22</lombok.version>
+        <activiti.modeler.version>5.22.0</activiti.modeler.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-web</artifactId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-test</artifactId>
-                <scope>test</scope>
-            </dependency>
-
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
-                <version>1.3.2</version>
+                <version>${mybatis.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <scope>runtime</scope>
+                <version>${mysql.connect.version}</version>
             </dependency>
 
             <!--activiti工作流引擎-->
@@ -75,7 +83,22 @@
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
             </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.activiti/activiti-modeler -->
+            <dependency>
+                <groupId>org.activiti</groupId>
+                <artifactId>activiti-modeler</artifactId>
+                <version>${activiti.modeler.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.activiti</groupId>
+                <artifactId>activiti-diagram-rest</artifactId>
+                <version>${activiti.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
