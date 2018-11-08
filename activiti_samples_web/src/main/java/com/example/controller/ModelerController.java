@@ -12,9 +12,7 @@ import org.activiti.engine.RepositoryService;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.Model;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
@@ -33,11 +31,6 @@ public class ModelerController {
     ProcessEngine processEngine;
     @Autowired
     ObjectMapper objectMapper;
-
-    @RequestMapping("/index")
-    public ModelAndView index(){
-        return new ModelAndView("modeler");
-    }
 
     /**
      * 新建一个空模型
