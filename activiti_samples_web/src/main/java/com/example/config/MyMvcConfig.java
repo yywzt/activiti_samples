@@ -22,7 +22,10 @@ public class MyMvcConfig implements WebMvcConfigurer {
     }
 
     @Override
+
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/editor-app/**").addResourceLocations("classpath:/static/editor-app/");
+        registry.addResourceHandler("/resources/**").addResourceLocations("classpath:/static/view/resources/");
+        registry.addResourceHandler("/html/**").addResourceLocations("classpath:/static/view/html/");
     }
 }
