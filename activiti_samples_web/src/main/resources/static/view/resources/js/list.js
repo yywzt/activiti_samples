@@ -1,22 +1,8 @@
 new Vue({
     el: '#app',
-export default {
-    methods: {
-        handleClick(row) {
-            console.log(row);
-        },
-        tableRowClassName({row, rowIndex}) {
-            if (rowIndex === 1) {
-                return 'warning-row';
-            } else if (rowIndex === 3) {
-                return 'success-row';
-            }
-            return '';
-        }
-    },
-
-    data() {
+    data: function() {
         return {
+            visible: false ,
             tableData: [{
                 date: '2016-05-03',
                 name: '王小虎',
@@ -47,5 +33,18 @@ export default {
                 zip: 200333
             }]
         }
+    },
+    methods: {
+        tableRowClassName({row, rowIndex}) {
+            if (rowIndex === 1) {
+                return 'warning-row';
+            } else if (rowIndex === 3) {
+                return 'success-row';
+            }
+            return '';
+        },
+        handleClick(row) {
+            console.log(row);
+        }
     }
-}
+})
