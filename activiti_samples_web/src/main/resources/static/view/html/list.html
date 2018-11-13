@@ -5,16 +5,74 @@
     <title>模型列表</title>
     <!-- 引入样式 -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/element-ui/2.4.9/theme-chalk/index.css" rel="stylesheet">
-    <link rel="stylesheet" href="/resources/css/list.css">
+    <link rel="stylesheet" href="/resources/list/list.css">
 </head>
 <body>
 <div id="app">
-
+    <template>
+        <el-container>
+            <el-header>Header</el-header>
+            <el-container>
+                <el-aside width="200px">Aside</el-aside>
+                <el-container>
+                    <el-main>
+                        <el-table
+                                :data="tableData"
+                                border
+                                style="width: 100%"
+                                :row-class-name="tableRowClassName">
+                            <el-table-column
+                                    fixed
+                                    prop="date"
+                                    label="日期"
+                                    width="150">
+                            </el-table-column>
+                            <el-table-column
+                                    prop="name"
+                                    label="姓名"
+                                    width="120">
+                            </el-table-column>
+                            <el-table-column
+                                    prop="province"
+                                    label="省份"
+                                    width="120">
+                            </el-table-column>
+                            <el-table-column
+                                    prop="city"
+                                    label="市区"
+                                    width="120">
+                            </el-table-column>
+                            <el-table-column
+                                    prop="address"
+                                    label="地址"
+                                    width="300">
+                            </el-table-column>
+                            <el-table-column
+                                    prop="zip"
+                                    label="邮编"
+                                    width="120">
+                            </el-table-column>
+                            <el-table-column
+                                    fixed="right"
+                                    label="操作"
+                                    width="100">
+                                <template slot-scope="scope">
+                                    <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+                                    <el-button type="text" size="small">编辑</el-button>
+                                </template>
+                            </el-table-column>
+                        </el-table>
+                    </el-main>
+                    <el-footer>Footer</el-footer>
+                </el-container>
+            </el-container>
+        </el-container>
+    </template>
 </div>
 <!-- 引入组件库 -->
 <script src="https://cdn.bootcss.com/vue/2.5.17/vue.js"></script>
 <!--依赖vue.js  so  需要先引入vue.js-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/element-ui/2.4.9/index.js"></script>
-<script src="/resources/js/list.js" type="application/javascript"></script>
+<script src="/resources/list/list.js" type="application/javascript"></script>
 </body>
 </html>
