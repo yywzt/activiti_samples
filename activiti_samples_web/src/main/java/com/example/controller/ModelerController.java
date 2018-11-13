@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.config.ResponseData;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -31,14 +32,15 @@ public class ModelerController {
     ProcessEngine processEngine;
     @Autowired
     ObjectMapper objectMapper;
-
+    @Autowired
+    RepositoryService repositoryService;
     /**
      * 新建一个空模型
      * @return
      * @throws UnsupportedEncodingException
      */
     @PostMapping
-    public Object newModel() throws UnsupportedEncodingException {
+    public String newModel() throws UnsupportedEncodingException {
         RepositoryService repositoryService = processEngine.getRepositoryService();
         //初始化一个空模型
         Model model = repositoryService.newModel();
@@ -70,7 +72,7 @@ public class ModelerController {
                 "http://b3mn.org/stencilset/bpmn2.0#");
         editorNode.put("stencilset", stencilSetNode);
         repositoryService.addModelEditorSource(id,editorNode.toString().getBytes("utf-8"));
-        return "redirect:/modeler?modelId="+id;
+        return id;
     }
 
     /**
@@ -78,12 +80,9 @@ public class ModelerController {
      * @return
      */
     @GetMapping
-    public Object modelList(){
-        HashMap<String, Object> map = new HashMap<>();
-        RepositoryService repositoryService = processEngine.getRepositoryService();
+    public ResponseData modelList(){
         List<Model> models = repositoryService.createModelQuery().list();
-        map.put("models", models);
-        return map;
+        return ResponseData.success(models);
     }
 
     /**
@@ -91,10 +90,15 @@ public class ModelerController {
      * @param id
      * @return
      */
-    @DeleteMapping("{id}")
-    public void deleteModel(@PathVariable("id")String id){
-        RepositoryService repositoryService = processEngine.getRepositoryService();
+    @RequestMapping(value = "{id}",method = RequestMethod.DELETE)
+    public ResponseData deleteModel(@PathVariable("id")String id){
+//        Model model = repositoryService.createModelQuery().modelId(id).singleResult();
+        Model model = repositoryService.getModel(id);
+        if(model==null){
+            return ResponseData.failure("model不存在");
+        }
         repositoryService.deleteModel(id);
+        return ResponseData.failure("删除模型成功");
     }
 
     /**
@@ -104,26 +108,29 @@ public class ModelerController {
      * @throws Exception
      */
     @PostMapping("{id}/deployment")
-    public void deploy(@PathVariable("id")String id) throws Exception {
+    public ResponseData deploy(@PathVariable("id")String id) throws Exception {
 
         //获取模型
-        RepositoryService repositoryService = processEngine.getRepositoryService();
         Model modelData = repositoryService.getModel(id);
         byte[] bytes = repositoryService.getModelEditorSource(modelData.getId());
 
         if (bytes == null) {
-//            return ToWeb.buildResult().status(Config.FAIL)
-//                    .msg("模型数据为空，请先设计流程并成功保存，再进行发布。");
+            return ResponseData.failure("模型数据为空，请先设计流程并成功保存，再进行发布。");
         }
 
         JsonNode modelNode = new ObjectMapper().readTree(bytes);
 
         BpmnModel model = new BpmnJsonConverter().convertToBpmnModel(modelNode);
         if(model.getProcesses().size()==0){
-//            return ToWeb.buildResult().status(Config.FAIL)
-//                    .msg("数据模型不符要求，请至少设计一条主线流程。");
+            ResponseData.failure("数据模型不符要求，请至少设计一条主线流程。");
         }
-        byte[] bpmnBytes = new BpmnXMLConverter().convertToXML(model);
+        byte[] bpmnBytes = new byte[0];
+        try {
+            bpmnBytes = new BpmnXMLConverter().convertToXML(model);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseData.failure(e.getMessage());
+        }
 
         //发布流程
         String processName = modelData.getName() + ".bpmn20.xml";
@@ -133,6 +140,6 @@ public class ModelerController {
                 .deploy();
         modelData.setDeploymentId(deployment.getId());
         repositoryService.saveModel(modelData);
-
+        return ResponseData.success();
     }
 }

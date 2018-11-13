@@ -31,7 +31,10 @@ new Vue({
                 city: '普陀区',
                 address: '上海市普陀区金沙江路 1518 弄',
                 zip: 200333
-            }]
+            }],
+            activeIndex: '1',
+            activeIndex2: '1',
+            isCollapse: false
         }
     },
     methods: {
@@ -45,6 +48,15 @@ new Vue({
         },
         handleClick(row) {
             console.log(row);
-        }
+        },
+        handleSelect(key, keyPath) {
+            console.log(key, keyPath);
+        },
+        handleOpen(key, keyPath) {
+            console.log(key, keyPath);
+        },
+        handleClose(key, keyPath) {
+            console.log(key, keyPath);
+        },
     }
 })
