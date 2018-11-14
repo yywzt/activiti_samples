@@ -45,7 +45,7 @@
     /*background-color: #E9EEF3;*/
     color: #333;
     text-align: center;
-    line-height: 160px;
+    /*line-height: 160px;*/
 }
 
 body > .el-container {
@@ -68,4 +68,9 @@ body > .el-container {
 .el-menu-vertical-demo:not(.el-menu--collapse) {
     /*width: 200px;*/
     min-height: 100%;
+}
+
+.block{
+    text-align: left;
+    margin: 15px 0px;
 }

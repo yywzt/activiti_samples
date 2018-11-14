@@ -1,10 +1,235 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>流程中心</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
+    <title>Lanai-UI</title>
+    <link href="/resources/common/lanai-ui.css" rel="stylesheet" />
 </head>
-<body>
-首页
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <!-- Main Header -->
+    <header class="main-header">
+        <!-- Logo -->
+        <a href="index.html" class="logo">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini"><b>L</b>AI</span>
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg"><b>Lanai</b>UI</span>
+        </a>
+        <!-- Header Navbar -->
+        <nav class="navbar navbar-static-top" role="navigation">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                <span class="sr-only">Toggle navigation</span>
+            </a>
+            <!-- Navbar Right Menu -->
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown notifications-menu">
+                        <!-- Menu toggle button -->
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-bell-o"></i>
+                            提醒
+                            <span class="label label-warning">1</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="header">警示信息 </li>
+                            <li>
+                                <!-- Inner Menu: contains the notifications -->
+                                <ul class="menu">
+                                    <li>
+                                        <!-- start notification -->
+                                        <a href="#">
+                                            <i class="fa fa-users text-aqua"></i> 库存数量不足，请联系进货
+                                        </a>
+                                    </li>
+                                    <!-- end notification -->
+                                </ul>
+                            </li>
+                            <li class="footer"><a href="#">查看</a></li>
+                        </ul>
+                    </li>
+                    <!-- User Account Menu -->
+                    <li class="user user-menu">
+                        <!-- Menu Toggle Button -->
+                        <a href="#" >
+                            <!-- The user image in the navbar-->
+                            <img src="./resources/images/sl.jpg" class="user-image" alt="User Image" />
+                            <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                            <span class="hidden-xs">索隆</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            <!-- Sidebar Menu -->
+            <ul class="sidebar-menu" data-widget="tree">
+                <li class="active treeview">
+                    <a href="#">
+                        <i class="fa fa-columns"></i> <span>布局</span>
+                        <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="#" data-addtab="grid" data-target="#MasterTabs" data-title="栅格" data-url="/html/layouts/grid.html"><i class="fa fa-circle-o"></i>栅格</a></li>
+                        <li><a href="#" data-addtab="layout" data-target="#MasterTabs" data-title="后台布局" data-url="/html/layouts/layout.html"><i class="fa fa-circle-o"></i> 后台布局</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-fonticons"></i> <span>基本元素</span>
+                        <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="#" data-addtab="buttons" data-target="#MasterTabs" data-title="按钮" data-url="/html/ui/buttons.html"><i class="fa fa-circle-o"></i> 按钮 </a></li>
+                        <li><a href="#" data-addtab="forms" data-target="#MasterTabs" data-title="表单" data-url="/html/ui/forms.html"><i class="fa fa-circle-o"></i> 表单 </a></li>
+                        <li><a href="#" data-addtab="tabs" data-target="#MasterTabs" data-title="选项卡" data-url="/html/ui/tabs.html"><i class="fa fa-circle-o"></i> 选项卡 </a></li>
+                        <li><a href="#" data-addtab="progress" data-target="#MasterTabs" data-title="进度条" data-url="/html/ui/progress.html"><i class="fa fa-circle-o"></i> 进度条 </a></li>
+                        <li><a href="#" data-addtab="panel" data-target="#MasterTabs" data-title="面板" data-url="/html/ui/panel.html"><i class="fa fa-circle-o"></i> 面板 </a></li>
+                        <li><a href="#" data-addtab="icon" data-target="#MasterTabs" data-title="图标" data-url="/html/ui/icons.html"><i class="fa fa-circle-o"></i> 图标 </a></li>
+                        <li><a href="#" data-addtab="timeline" data-target="#MasterTabs" data-title="时间线" data-url="/html/ui/timeline.html"><i class="fa fa-circle-o"></i> 时间线 </a></li>
+                        <li><a href="#" data-addtab="table" data-target="#MasterTabs" data-title="静态表格" data-url="/html/ui/table.html"><i class="fa fa-circle-o"></i> 静态表格 </a></li>
+                        <li><a href="#" data-addtab="auxiliar" data-target="#MasterTabs" data-title="辅助元素" data-url="/html/ui/auxiliar.html"><i class="fa fa-circle-o"></i> 辅助元素 </a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-laptop"></i> <span>组件</span>
+                        <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="#" data-addtab="message" data-target="#MasterTabs" data-title="信息提示" data-url="/html/assembly/message.html"><i class="fa fa-circle-o"></i> 信息提示 </a></li>
+                        <li><a href="#" data-addtab="data" data-target="#MasterTabs" data-title="数据表格" data-url="/html/assembly/data.html"><i class="fa fa-circle-o"></i> 数据表格 </a></li>
+                        <li><a href="#" data-addtab="carousel" data-target="#MasterTabs" data-title="轮播" data-url="/html/assembly/carousel.html"><i class="fa fa-circle-o"></i> 轮播 </a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-folder"></i> <span>页面</span>
+                        <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="#" data-addtab="profile" data-target="#MasterTabs" data-title="个人简介" data-url="/html/page/profile.html"><i class="fa fa-circle-o"></i> 个人简介 </a></li>
+                        <li><a href="/html/page/login.html"><i class="fa fa-circle-o"></i> 登录页 </a></li>
+                        <li><a href="/html/page/register.html"><i class="fa fa-circle-o"></i> 注册页 </a></li>
+                        <li><a href="blank.html"><i class="fa fa-circle-o"></i> 空白页 </a></li>
+                        <li><a href="#" data-addtab="404" data-target="#MasterTabs" data-title="404 Error" data-url="/html/page/404.html"><i class="fa fa-circle-o"></i> 404 Error </a></li>
+                        <li><a href="#" data-addtab="500" data-target="#MasterTabs" data-title="500 Error" data-url="/html/page/500.html"><i class="fa fa-circle-o"></i> 500 Error </a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-folder"></i> <span>activiti</span>
+                        <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="#" data-addtab="list" data-target="#MasterTabs" data-title="模型列表" data-url="/html/list.html"><i class="fa fa-circle-o"></i> 模型列表 </a></li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- /.sidebar-menu -->
+
+            <div class="sidebar-footer hidden-small fadeInLeft animated">
+                <a data-toggle="tooltip" data-placement="top" data-original-title="refresh" data-widget="tooltip-refresh">
+                    <span class="fa fa-refresh" aria-hidden="true"></span>
+                </a>
+                <a id="fullscreen" data-toggle="tooltip" data-placement="top" title="" data-original-title="FullScreen" data-widget="tooltip-fullscreen">
+                    <span class="fa fa-arrows-alt" aria-hidden="true"></span>
+                </a>
+                <a id="lockpage" data-toggle="tooltip" data-placement="top" title="" data-original-title="Lock" data-widget="tooltip-lock">
+                    <span class="fa fa-eye-slash" aria-hidden="true"></span>
+                </a>
+                <a data-toggle="tooltip" data-placement="top" title="" href="#" data-original-title="Logout">
+                    <span class="fa fa-power-off" aria-hidden="true"></span>
+                </a>
+            </div>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Main content -->
+        <section class="content container-fluid" style="padding:0px">
+            <ul class="nav nav-tabs menu-tabs" id="MasterTabs" role="tablist">
+                <li class="nav-tabs-header active" role="presentation">
+                    <a aria-controls="home" data-toggle="tab" href="#home" role="tab">
+                        <i class="fa fa-home"></i> Home
+                    </a>
+                </li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content fixheight">
+                <div class="tab-pane active" id="home" role="tabpanel">
+                </div>
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <!-- To the right -->
+        <div class="pull-right hidden-xs">
+            <b>Version</b> 1.0.0.1
+        </div>
+        <!-- Default to the left -->
+        <strong>Copyright © 2017-2018 .</strong> All rights reserved.
+    </footer>
+</div>
+
+<!-- ./wrapper -->
+<div id="modal" class="hold-transition lockscreen" style="display:none">
+    <div class="lockscreen-wrapper">
+        <div class="lockscreen-logo">
+            <a href="#"><b>Lanai</b>UI</a>
+        </div>
+        <div class="lockscreen-name">索隆</div>
+        <div class="lockscreen-item">
+            <div class="lockscreen-image">
+                <img src="./resources/images/sl.jpg" />
+            </div>
+            <form class="lockscreen-credentials">
+                <div class="input-group">
+                    <input id="tbx_lock_password" type="password" class="form-control" placeholder="password" value="">
+
+                    <div class="input-group-btn">
+                        <button type="button" class="btn" data-widget="tooltip-unlock" data-placement="top" title=""><i class="fa fa-arrow-right text-muted"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="help-block text-center">
+            输入密码解除锁定
+        </div>
+        <div class="lockscreen-footer text-center">
+            Copyright &copy; 2017-2018
+            All rights reserved
+        </div>
+    </div>
+</div>
+<!-- ./ 锁定屏幕 -->
+<script src="/resources/common/jquery.min.js"></script>
+<script src="/resources/common/lanai-ui.js"></script>
+<script type="text/javascript">
+    $(function(){
+        console.log('哈saki！！！')
+    })
+</script>
 </body>
 </html>

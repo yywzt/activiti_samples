@@ -1,6 +1,8 @@
 package com.example.controller;
 
 import com.example.config.ResponseData;
+import com.example.model.ProcessModel;
+import com.example.repository.ProcessRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -13,10 +15,14 @@ import org.activiti.engine.RepositoryService;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.Model;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.BindingResultUtils;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -29,27 +35,37 @@ import java.util.List;
 public class ModelerController {
 
     @Autowired
-    ProcessEngine processEngine;
+    private ProcessEngine processEngine;
     @Autowired
-    ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
     @Autowired
-    RepositoryService repositoryService;
+    private RepositoryService repositoryService;
+
+    @Autowired
+    private ProcessRepository processRepository;
     /**
      * 新建一个空模型
      * @return
      * @throws UnsupportedEncodingException
      */
-    @PostMapping
-    public String newModel() throws UnsupportedEncodingException {
-        RepositoryService repositoryService = processEngine.getRepositoryService();
+    @RequestMapping(value = "/newModel",method = RequestMethod.POST)
+    public ResponseData newModel(@RequestBody @Valid ProcessModel processModel, BindingResult bindingResult) throws UnsupportedEncodingException {
+        if(bindingResult.hasErrors()){
+            List<ObjectError> allErrors = bindingResult.getAllErrors();
+            StringBuffer stringBuffer = new StringBuffer();
+            allErrors.forEach(objectError -> {
+                stringBuffer.append(objectError.getDefaultMessage());
+            });
+            return ResponseData.failure(stringBuffer.toString());
+        }
         //初始化一个空模型
         Model model = repositoryService.newModel();
 
         //设置一些默认信息
-        String name = "new-process";
-        String description = "";
+        String name = processModel.getModelName();
+        String description = processModel.getModelDesc();
         int revision = 1;
-        String key = "process";
+        String key = processModel.getModelCode();
 
         ObjectNode modelNode = objectMapper.createObjectNode();
         modelNode.put(ModelDataJsonConstants.MODEL_NAME, name);
@@ -72,17 +88,32 @@ public class ModelerController {
                 "http://b3mn.org/stencilset/bpmn2.0#");
         editorNode.put("stencilset", stencilSetNode);
         repositoryService.addModelEditorSource(id,editorNode.toString().getBytes("utf-8"));
-        return id;
+
+        processModel.setModelVersion(model.getVersion().longValue());
+        processModel.setActiviModelId(Long.valueOf(id));
+        processRepository.save(processModel);
+        return ResponseData.success(processModel);
     }
 
     /**
      * 获取所有模型
      * @return
      */
-    @GetMapping
-    public ResponseData modelList(){
-        List<Model> models = repositoryService.createModelQuery().list();
-        return ResponseData.success(models);
+    @RequestMapping(value = "/getModelLists",method = RequestMethod.GET)
+    public ResponseData modelList(@RequestParam(value = "pageSize",required = false) Integer pageSize,@RequestParam(value = "pageNumber",required = false) Integer pageNumber){
+        if(pageSize==null) {
+            pageSize = 20;
+        }
+        if(pageNumber==null) {
+            pageNumber = 1;
+        }
+//        List<Model> models = repositoryService.createModelQuery().list();
+        ProcessModel processModel = new ProcessModel();
+        processModel.setEnabledFlag(1L);
+        Example example = Example.of(processModel);
+        Pageable pageable = PageRequest.of(pageNumber,pageSize,new Sort(Sort.Direction.DESC,"creationDate"));
+        Page models = processRepository.findAll(example, pageable);
+        return ResponseData.success(models.getContent());
     }
 
     /**
@@ -90,7 +121,7 @@ public class ModelerController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "{id}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/del/{id}",method = RequestMethod.DELETE)
     public ResponseData deleteModel(@PathVariable("id")String id){
 //        Model model = repositoryService.createModelQuery().modelId(id).singleResult();
         Model model = repositoryService.getModel(id);
@@ -107,7 +138,7 @@ public class ModelerController {
      * @return
      * @throws Exception
      */
-    @PostMapping("{id}/deployment")
+    @RequestMapping(value = "/deployment/{id}",method = RequestMethod.POST)
     public ResponseData deploy(@PathVariable("id")String id) throws Exception {
 
         //获取模型
