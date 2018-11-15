@@ -52,7 +52,8 @@ var vue = new Vue({
             //发送get请求
             axios.get('/models/getModelLists',{params:{"pageSize":pageSize,"pageNumber":pageNumber}})
                 .then(function(res){
-                    this.tableData = res.body.data;
+                    vue.tableData = res.data.data;
+                    console.log(vue.tableData);
                 })
                 .catch(function (error) {
                     console.log(error);

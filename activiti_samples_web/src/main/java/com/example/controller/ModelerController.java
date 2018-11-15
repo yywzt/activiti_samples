@@ -91,6 +91,7 @@ public class ModelerController {
 
         processModel.setModelVersion(model.getVersion().longValue());
         processModel.setActiviModelId(Long.valueOf(id));
+        processModel.setModelStates("0");
         processRepository.save(processModel);
         return ResponseData.success(processModel);
     }
@@ -111,7 +112,7 @@ public class ModelerController {
         ProcessModel processModel = new ProcessModel();
         processModel.setEnabledFlag(1L);
         Example example = Example.of(processModel);
-        Pageable pageable = PageRequest.of(pageNumber,pageSize,new Sort(Sort.Direction.DESC,"creationDate"));
+        Pageable pageable = PageRequest.of(pageNumber-1,pageSize,new Sort(Sort.Direction.DESC,"creationDate"));
         Page models = processRepository.findAll(example, pageable);
         return ResponseData.success(models.getContent());
     }

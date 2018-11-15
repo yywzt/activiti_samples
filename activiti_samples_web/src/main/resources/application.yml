@@ -21,6 +21,8 @@ spring:
 #    processes-definition-location-suffixes: #流程文件后缀
   thymeleaf:
     prefix: classpath:/static/
+  jpa:
+    show-sql: true
 
 ---
 server:
@@ -41,3 +43,5 @@ spring:
 #    processes-definition-location-suffixes: #流程文件后缀
   thymeleaf:
     prefix: classpath:/static/
+  jpa:
+    show-sql: true
