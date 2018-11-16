@@ -3,6 +3,7 @@ package com.example.controller;
 import com.example.config.ResponseData;
 import com.example.model.ProcessModel;
 import com.example.repository.ProcessRepository;
+import com.example.service.ProcessModelService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -17,7 +18,6 @@ import org.activiti.engine.repository.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.BindingResultUtils;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,7 +42,7 @@ public class ModelerController {
     private RepositoryService repositoryService;
 
     @Autowired
-    private ProcessRepository processRepository;
+    private ProcessModelService processModelService;
     /**
      * 新建一个空模型
      * @return
@@ -91,8 +91,7 @@ public class ModelerController {
 
         processModel.setModelVersion(model.getVersion().longValue());
         processModel.setActiviModelId(Long.valueOf(id));
-        processModel.setModelStates("0");
-        processRepository.save(processModel);
+        processModelService.save(processModel);
         return ResponseData.success(processModel);
     }
 
@@ -108,12 +107,7 @@ public class ModelerController {
         if(pageNumber==null) {
             pageNumber = 1;
         }
-//        List<Model> models = repositoryService.createModelQuery().list();
-        ProcessModel processModel = new ProcessModel();
-        processModel.setEnabledFlag(1L);
-        Example example = Example.of(processModel);
-        Pageable pageable = PageRequest.of(pageNumber-1,pageSize,new Sort(Sort.Direction.DESC,"creationDate"));
-        Page models = processRepository.findAll(example, pageable);
+        Page models = processModelService.findAll(pageSize, pageNumber);
         return ResponseData.success(models.getContent());
     }
 

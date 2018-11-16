@@ -48,12 +48,10 @@ var vue = new Vue({
             console.log(`当前页: ${val}`);
         },
         loadData(pageNumber, pageSize){
-            console.log(pageNumber+","+pageSize);
             //发送get请求
             axios.get('/models/getModelLists',{params:{"pageSize":pageSize,"pageNumber":pageNumber}})
                 .then(function(res){
                     vue.tableData = res.data.data;
-                    console.log(vue.tableData);
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -65,7 +63,7 @@ var vue = new Vue({
             //发送get请求
             axios.post('/models/newModel',this.form,{emulateJSON:true})
                 .then(function(res){
-                    console.log(res.body.success);
+                    vue.loadData(vue.pageNumber,vue.pageSize);
                 })
                 .catch(function (error) {
                     console.log(error);

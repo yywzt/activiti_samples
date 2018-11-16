@@ -1,5 +1,6 @@
 package com.example.model;
 
+import com.example.constant.ProcessModelStates;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -20,7 +21,7 @@ import java.io.Serializable;
 public class ProcessModel extends BaseModel<Long> implements Serializable {
 
     @Column(name = "model_states")
-    private String modelStates;
+    private int modelStates;
 
     @NotBlank(message = "模型名称不能为空")
     @Column(name = "model_name")
@@ -63,4 +64,7 @@ public class ProcessModel extends BaseModel<Long> implements Serializable {
     @Column(name = "process_definition_key")
     private String modelDefinitionKey;
 
+    public String getModelStatesName(){
+        return ProcessModelStates.getName(this.getModelStates());
+    }
 }
