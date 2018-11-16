@@ -7,7 +7,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -32,7 +31,7 @@ public class ProcessModel extends BaseModel<Long> implements Serializable {
     private String modelCode;
 
     @Column(name = "activi_model_id")
-    private Long activiModelId;
+    private String activiModelId;
 
     @Column(name = "model_type_code")
     private String modelTypeCode;

@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author ywyw2424@foxmail.com
@@ -90,7 +91,7 @@ public class ModelerController {
         repositoryService.addModelEditorSource(id,editorNode.toString().getBytes("utf-8"));
 
         processModel.setModelVersion(model.getVersion().longValue());
-        processModel.setActiviModelId(Long.valueOf(id));
+        processModel.setActiviModelId(id);
         processModelService.save(processModel);
         return ResponseData.success(processModel);
     }
@@ -108,7 +109,9 @@ public class ModelerController {
             pageNumber = 1;
         }
         Page models = processModelService.findAll(pageSize, pageNumber);
-        return ResponseData.success(models.getContent());
+        models.getTotalPages();//总页数
+        models.getTotalElements();//总数
+        return ResponseData.success(models);
     }
 
     /**
@@ -117,13 +120,18 @@ public class ModelerController {
      * @return
      */
     @RequestMapping(value = "/del/{id}",method = RequestMethod.DELETE)
-    public ResponseData deleteModel(@PathVariable("id")String id){
+    public ResponseData deleteModel(@PathVariable("id")Long id){
 //        Model model = repositoryService.createModelQuery().modelId(id).singleResult();
-        Model model = repositoryService.getModel(id);
-        if(model==null){
+//        Model model = repositoryService.getModel(id);
+        ProcessModel processModel = new ProcessModel();
+        processModel.setId(id);
+        Example example = Example.of(processModel);
+        Optional<ProcessModel> one = processModelService.getProcessRepository().findOne(example);
+        if(!one.isPresent()){
             return ResponseData.failure("model不存在");
         }
-        repositoryService.deleteModel(id);
+        processModelService.getProcessRepository().deleteById(one.get().getId());
+        repositoryService.deleteModel(one.get().getActiviModelId());
         return ResponseData.failure("删除模型成功");
     }
 

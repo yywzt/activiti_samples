@@ -7,10 +7,10 @@ var vue = new Vue({
             activeIndex: '1',
             activeIndex2: '1',
             isCollapse: false,
-            pageSizes: [100, 200, 300, 400],
-            pageSize: 100,
+            pageSizes: [10, 20, 50, 100],
+            pageSize: 10,
             pageNumber: 1,
-            tatal: 400,
+            tatal: 0,
             dialogFormVisible: false,
             form: {
                 modelName: '',
@@ -51,7 +51,8 @@ var vue = new Vue({
             //发送get请求
             axios.get('/models/getModelLists',{params:{"pageSize":pageSize,"pageNumber":pageNumber}})
                 .then(function(res){
-                    vue.tableData = res.data.data;
+                    vue.tatal = res.data.data.totalElements;
+                    vue.tableData = res.data.data.content;
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -68,6 +69,20 @@ var vue = new Vue({
                 .catch(function (error) {
                     console.log(error);
                 });
+        },
+        //删除流程
+        del(){
+            //发送get请求
+            axios.delete('/models/del/'+id,{emulateJSON:true})
+                .then(function(res){
+                    vue.loadData(vue.pageNumber,vue.pageSize);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+        handleSizeChange(){
+            vue.loadData(vue.pageNumber,vue.pageSize);
         }
     }
 });

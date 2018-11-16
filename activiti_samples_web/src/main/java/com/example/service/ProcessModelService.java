@@ -17,6 +17,10 @@ public class ProcessModelService extends BaseService<ProcessModel> {
     @Autowired
     private ProcessRepository processRepository;
 
+    public ProcessRepository getProcessRepository() {
+        return processRepository;
+    }
+
     public boolean save(ProcessModel processModel){
         ProcessModel save = processRepository.save(processModel);
         if(save!=null) {

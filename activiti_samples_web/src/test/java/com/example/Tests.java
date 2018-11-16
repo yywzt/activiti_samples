@@ -3,6 +3,8 @@ package com.example;
 import org.junit.Test;
 
 import java.sql.Date;
+import java.util.Calendar;
+import java.util.regex.Pattern;
 
 /**
  * @author ywyw2424@foxmail.com
@@ -17,4 +19,49 @@ public class Tests {
         System.out.println(date);
     }
 
+    @Test
+    public void test2(){
+        String s = "^\\d{4}(\\-|\\/|\\.)\\d{1,2}\\1\\d{1,2}$";
+        Pattern compile = Pattern.compile(s);
+        String date = "2018-11-01 12:00:12";
+        boolean matches = compile.matcher(date).matches();
+        System.out.println(matches);
+    }
+
+    @Test
+    public void test3(){
+        java.util.Date date = new java.util.Date();
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.set(2018, 8, 01);
+//        java.util.Date time = calendar.getTime();
+//        System.out.println(time);
+//        System.out.println(monthsBetween(date,time));
+
+        java.util.Date lastMonth = getLastMonth(date, 0, -3, 0);
+        System.out.println(lastMonth);
+    }
+
+    public static int monthsBetween(java.util.Date start, java.util.Date end){
+        Calendar startDate = Calendar.getInstance();
+        Calendar endDate = Calendar.getInstance();
+        startDate.setTime(start);
+        endDate.setTime(end);
+        return Math.abs((endDate.get(Calendar.YEAR) - startDate.get(Calendar.YEAR)) * 12 + endDate.get(Calendar.MONTH) - startDate.get(Calendar.MONTH));
+    }
+    public static java.util.Date getLastMonth(java.util.Date dateStr, int addYear, int addMonth, int addDate) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(dateStr);
+        cal.add(Calendar.YEAR,addYear);
+        cal.add(Calendar.MONTH, addMonth);
+        cal.add(Calendar.DATE, addDate);
+
+        return cal.getTime();
+    }
+
+    public static void main(String[] args){
+        int count=100;
+        int limit=100;
+        int l = count%limit == 0 ? count/limit:count/limit+1;
+        System.out.println(l);
+    }
 }

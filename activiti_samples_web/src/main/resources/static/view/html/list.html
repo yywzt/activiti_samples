@@ -16,66 +16,69 @@
                 <el-table
                         :data="tableData"
                         border
-                        style="width: 100%"
-                        :row-class-name="tableRowClassName">
+                        :row-class-name="tableRowClassName"
+                >
                     <el-table-column
                             prop="modelName"
                             label="模型名称"
-                            width="150">
+                    >
                     </el-table-column>
                     <el-table-column
                             prop="modelCode"
                             label="模型编码"
-                            width="120">
+                    >
                     </el-table-column>
                     <el-table-column
                             prop="modelTypeName"
                             label="类型名称"
-                            width="120">
+                    >
                     </el-table-column>
                     <el-table-column
                             prop="modelTypeCode"
                             label="类型编码"
-                            width="120">
+                    >
                     </el-table-column>
                     <el-table-column
                             prop="modelDesc"
                             label="流程描述"
-                            width="120">
+                    >
                     </el-table-column>
-                    <el-table-column
+                    <!--<el-table-column
                             prop="modelOrgName"
                             label="组织名称"
-                            width="120">
+                            width="120"
+                    >
                     </el-table-column>
                     <el-table-column
                             prop="modelOrgCode"
                             label="组织编码"
-                            width="120">
+                            width="120"
+                    >-->
                     </el-table-column>
                     <el-table-column
                             prop="modelCorpName"
                             label="企业名称"
-                            width="120">
+                    >
                     </el-table-column>
                     <el-table-column
                             prop="modelCorpCode"
                             label="企业编码"
-                            width="120">
+                    >
                     </el-table-column>
                     <el-table-column
                             prop="modelVersion"
                             label="版本"
-                            width="50">
+                    >
                     </el-table-column>
                     <el-table-column
                             prop="modelStatesName"
                             label="状态"
-                            width="50">
+                    >
                     </el-table-column>
                     <el-table-column
                             label="创建时间"
-                            width="200">
+                            width="200px"
+                    >
                         <template slot-scope="scope">
                             <i class="el-icon-time"></i>
                             <span style="margin-left: 10px">{{ scope.row.creationDate }}</span>
@@ -83,17 +86,23 @@
                     </el-table-column>
                     <el-table-column
                             label="操作"
-                            width="150">
+                            width="360px"
+                    >
                         <template slot-scope="scope">
-                            <el-button @click="handleClick(scope.row)" size="mini">查看</el-button>
-                            <el-button type="warning" size="mini">编辑</el-button>
+                            <el-button type="warning" @click="" size="mini">编辑</el-button>
+                            <el-button type="primary" @click="handleClick(scope.row)" size="mini">设计</el-button>
+                            <el-button type="info" @click="" size="mini">发布</el-button>
+                            <el-button type="warning" @click="" size="mini">停用</el-button>
+                            <el-button type="danger" @click="" size="mini">删除</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
                 <div class="block">
                     <el-pagination
                             @size-change="handleSizeChange"
-                            @current-change="handleCurrentChange"
+                            @current-change="handleSizeChange"
+                            @prev-click="handleSizeChange"
+                            @next-click="handleSizeChange"
                             :current-page="pageNumber"
                             :page-sizes="pageSizes"
                             :page-size="pageSize"
