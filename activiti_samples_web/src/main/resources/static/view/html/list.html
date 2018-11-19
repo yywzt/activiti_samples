@@ -90,19 +90,19 @@
                     >
                         <template slot-scope="scope">
                             <el-button type="warning" @click="" size="mini">编辑</el-button>
-                            <el-button type="primary" @click="handleClick(scope.row)" size="mini">设计</el-button>
-                            <el-button type="info" @click="" size="mini">发布</el-button>
-                            <el-button type="warning" @click="" size="mini">停用</el-button>
-                            <el-button type="danger" @click="" size="mini">删除</el-button>
+                            <el-button type="primary" @click="handleDesign(scope.row)" size="mini">设计</el-button>
+                            <el-button type="info" @click="handleDeployment(scope.row)" size="mini">发布</el-button>
+                            <el-button type="warning" @click="" size="mini"><p v-if="scope.row.modelStates == '1'">停用</p><p else>启用</p></el-button>
+                            <el-button type="danger" @click="handelDel(scope.row)" size="mini">删除</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
                 <div class="block">
                     <el-pagination
-                            @size-change="handleSizeChange"
-                            @current-change="handleSizeChange"
-                            @prev-click="handleSizeChange"
-                            @next-click="handleSizeChange"
+                            @size-change="handlePaginationChange"
+                            @current-change="handlePaginationChange"
+                            @prev-click="handlePaginationChange"
+                            @next-click="handlePaginationChange"
                             :current-page="pageNumber"
                             :page-sizes="pageSizes"
                             :page-size="pageSize"
@@ -137,6 +137,10 @@
 <!--依赖vue.js  so  需要先引入vue.js-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/element-ui/2.4.9/index.js"></script>
 <script src="https://cdn.bootcss.com/axios/0.18.0/axios.min.js"></script>
-<script src="/resources/list/list.js" type="application/javascript"></script>
+<script src="list.js" type="application/javascript"></script>
+<script src="/resources/common/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/layer/2.3/layer.js"></script>
+<!--<script src="../resources/layui/lay/modules/layer.js" type="application/javascript"></script>-->
+<!--<script src="/resources/layui/lay/modules/layer.js" type="application/javascript"></script>-->
 </body>
 </html>

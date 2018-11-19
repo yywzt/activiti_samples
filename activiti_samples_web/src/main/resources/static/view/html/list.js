@@ -71,18 +71,63 @@ var vue = new Vue({
                 });
         },
         //删除流程
-        del(){
-            //发送get请求
-            axios.delete('/models/del/'+id,{emulateJSON:true})
+        handelDel(row){
+            layer.confirm('删除就抹得了啊！！！', {icon: 2, title:'警告'}, function(index){
+                var index2 = layer.load(0);
+                //do something
+                var id = row.id;
+                //发送get请求
+                axios.delete('/models/del/'+id,{emulateJSON:true})
+                    .then(function(res){
+                        layer.close(index2);
+                        layer.msg('删除好了啊', {
+                            icon: 1,
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function(){
+                            //do something
+                        });
+                        vue.loadData(vue.pageNumber,vue.pageSize);
+                    })
+                    .catch(function (error) {
+                        layer.close(index2);
+                        console.log(error);
+                    });
+                layer.close(index);
+            });
+        },
+        //分页参数变化，重新加载数据
+        handlePaginationChange(){
+            vue.loadData(vue.pageNumber,vue.pageSize);
+        },
+        //设计流程
+        handleDesign(row){
+            var modelId = row.activiModelId;
+            var frameSrc = "/index?modelId=" + modelId + "&t=" + new Date();
+            var index = layer.open({
+                type: 2,
+                title: '流程定义设计',
+                maxmin: false,
+                shadeClose: true, //点击遮罩关闭层
+                area : ['100%' , '100%'],
+                content: frameSrc
+
+            });
+        },
+        //发布
+        handleDeployment(row){
+            var modelId = row.activiModelId;
+            axios.post('/deployment/'+modelId,{emulateJSON:true})
                 .then(function(res){
-                    vue.loadData(vue.pageNumber,vue.pageSize);
+                    layer.msg('发布成功', {
+                        icon: 1,
+                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                    }, function(){
+                        //do something
+                    });
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
-        },
-        handleSizeChange(){
-            vue.loadData(vue.pageNumber,vue.pageSize);
         }
     }
 });

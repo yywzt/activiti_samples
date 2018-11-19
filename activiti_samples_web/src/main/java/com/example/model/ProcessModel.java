@@ -20,7 +20,7 @@ import java.io.Serializable;
 public class ProcessModel extends BaseModel<Long> implements Serializable {
 
     @Column(name = "model_states")
-    private int modelStates;
+    private String modelStates;
 
     @NotBlank(message = "模型名称不能为空")
     @Column(name = "model_name")
@@ -64,6 +64,6 @@ public class ProcessModel extends BaseModel<Long> implements Serializable {
     private String modelDefinitionKey;
 
     public String getModelStatesName(){
-        return ProcessModelStates.getName(this.getModelStates());
+        return ProcessModelStates.getName(Integer.valueOf(this.getModelStates()));
     }
 }

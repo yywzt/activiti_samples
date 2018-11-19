@@ -22,6 +22,7 @@ public class ProcessModelService extends BaseService<ProcessModel> {
     }
 
     public boolean save(ProcessModel processModel){
+        this.setDefault(processModel,true);
         ProcessModel save = processRepository.save(processModel);
         if(save!=null) {
             return true;

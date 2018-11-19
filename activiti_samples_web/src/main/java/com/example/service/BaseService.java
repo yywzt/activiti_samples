@@ -17,7 +17,7 @@ public class BaseService<T> {
      *
      * @param data
      */
-    private void setDefault(T data, boolean isNew) {
+    protected void setDefault(T data, boolean isNew) {
         if (data instanceof BaseModel) {
             BaseModel model = (BaseModel) data;
 
