@@ -4,7 +4,7 @@ spring:
 
 ---
 server:
-  port: 18082
+  port: 18081
 
 spring:
   profiles: dev
@@ -27,7 +27,7 @@ mybatis:
 
 ---
 server:
-  port: 18082
+  port: 18081
 
 spring:
   profiles: prod

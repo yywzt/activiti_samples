@@ -92,7 +92,7 @@
                             <el-button type="warning" @click="" size="mini">编辑</el-button>
                             <el-button type="primary" @click="handleDesign(scope.row)" size="mini">设计</el-button>
                             <el-button type="info" @click="handleDeployment(scope.row)" size="mini">发布</el-button>
-                            <el-button type="warning" @click="" size="mini"><p v-if="scope.row.modelStates == '1'">停用</p><p else>启用</p></el-button>
+                            <el-button type="warning" @click="" size="mini"><p v-if="scope.row.modelStates === '1'">停用</p><p v-else>启用</p></el-button>
                             <el-button type="danger" @click="handelDel(scope.row)" size="mini">删除</el-button>
                         </template>
                     </el-table-column>

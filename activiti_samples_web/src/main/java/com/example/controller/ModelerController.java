@@ -1,8 +1,8 @@
 package com.example.controller;
 
 import com.example.config.ResponseData;
+import com.example.constant.ProcessModelStates;
 import com.example.model.ProcessModel;
-import com.example.repository.ProcessRepository;
 import com.example.service.ProcessModelService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,12 +11,16 @@ import org.activiti.bpmn.converter.BpmnXMLConverter;
 import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.editor.constants.ModelDataJsonConstants;
 import org.activiti.editor.language.json.converter.BpmnJsonConverter;
+import org.activiti.engine.FormService;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.RepositoryService;
+import org.activiti.engine.impl.form.StartFormDataImpl;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.Model;
+import org.activiti.engine.repository.ProcessDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
@@ -36,14 +40,15 @@ import java.util.Optional;
 public class ModelerController {
 
     @Autowired
-    private ProcessEngine processEngine;
-    @Autowired
     private ObjectMapper objectMapper;
     @Autowired
     private RepositoryService repositoryService;
 
     @Autowired
     private ProcessModelService processModelService;
+
+    @Autowired
+    private FormService formService;
     /**
      * 新建一个空模型
      * @return
@@ -92,7 +97,7 @@ public class ModelerController {
 
         processModel.setModelVersion(model.getVersion().longValue());
         processModel.setActiviModelId(id);
-        processModel.setModelStates("0");
+        processModel.setModelStates(0);
         processModelService.save(processModel);
         return ResponseData.success(processModel);
     }
@@ -144,7 +149,7 @@ public class ModelerController {
      */
     @RequestMapping(value = "/deployment/{id}",method = RequestMethod.POST)
     public ResponseData deploy(@PathVariable("id")String id) throws Exception {
-
+        ProcessModel processModel = processModelService.findByActivitiId(id);
         //获取模型
         Model modelData = repositoryService.getModel(id);
         byte[] bytes = repositoryService.getModelEditorSource(modelData.getId());
@@ -157,7 +162,7 @@ public class ModelerController {
 
         BpmnModel model = new BpmnJsonConverter().convertToBpmnModel(modelNode);
         if(model.getProcesses().size()==0){
-            ResponseData.failure("数据模型不符要求，请至少设计一条主线流程。");
+            return ResponseData.failure("数据模型不符要求，请至少设计一条主线流程。");
         }
         byte[] bpmnBytes = new byte[0];
         try {
@@ -175,6 +180,21 @@ public class ModelerController {
                 .deploy();
         modelData.setDeploymentId(deployment.getId());
         repositoryService.saveModel(modelData);
+
+        ProcessDefinition pd = repositoryService.
+                createProcessDefinitionQuery().
+                deploymentId(deployment.getId()).
+                orderByProcessDefinitionVersion().
+                desc().singleResult();
+        if (pd != null) {
+            processModel.setModelDefinitionId(pd.getId());
+            processModel.setModelDefinitionKey(pd.getKey());
+            processModel.setModelVersion(Long.valueOf(pd.getVersion()));
+            if (processModel.getModelStates() == ProcessModelStates.SAVE.getState()) {
+                processModel.setModelStates(ProcessModelStates.ENBLED.getState());
+            }
+            this.processModelService.getProcessRepository().save(processModel);
+        }
         return ResponseData.success();
     }
 }

@@ -116,16 +116,28 @@ var vue = new Vue({
         //发布
         handleDeployment(row){
             var modelId = row.activiModelId;
-            axios.post('/deployment/'+modelId,{emulateJSON:true})
+            var index2 = layer.load(0);
+            axios.post('/models/deployment/'+modelId,{emulateJSON:true})
                 .then(function(res){
-                    layer.msg('发布成功', {
-                        icon: 1,
-                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
-                    }, function(){
-                        //do something
-                    });
+                    layer.close(index2);
+                    if(res.data.success) {
+                        layer.msg('发布成功', {
+                            icon: 1,
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function () {
+                            //do something
+                        });
+                    }else{
+                        layer.msg(res.data.message, {
+                            icon: 1,
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function () {
+                            //do something
+                        });
+                    }
                 })
                 .catch(function (error) {
+                    layer.close(index2);
                     console.log(error);
                 });
         }

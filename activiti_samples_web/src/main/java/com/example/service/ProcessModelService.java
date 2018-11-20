@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 /**
  * @author ywyw2424@foxmail.com
  * @date 2018/11/16 11:23
@@ -36,5 +38,14 @@ public class ProcessModelService extends BaseService<ProcessModel> {
         Example example = Example.of(processModel);
         Pageable pageable = PageRequest.of(pageNumber-1,pageSize,new Sort(Sort.Direction.DESC,"creationDate"));
         return processRepository.findAll(example, pageable);
+    }
+
+    public ProcessModel findByActivitiId(String activitiId){
+        ProcessModel processModel = new ProcessModel();
+        processModel.setActiviModelId(activitiId);
+        processModel.setEnabledFlag(1L);
+        Example example = Example.of(processModel);
+        Optional<ProcessModel> one = processRepository.findOne(example);
+        return one.isPresent()?one.get():null;
     }
 }
