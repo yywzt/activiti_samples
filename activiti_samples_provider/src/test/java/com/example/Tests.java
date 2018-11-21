@@ -64,4 +64,12 @@ public class Tests {
         int l = count%limit == 0 ? count/limit:count/limit+1;
         System.out.println(l);
     }
+
+    @Test
+    public void test4(){
+        String bang_account = "0302 0704 1930 0088 707";
+        String new_bang_account = bang_account.replace(" ", "");
+        System.out.println("bang_account: " + bang_account);
+        System.out.println("new_bang_account: " + new_bang_account);
+    }
 }

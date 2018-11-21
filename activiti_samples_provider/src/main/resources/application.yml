@@ -1,10 +1,10 @@
 spring:
   profiles:
-    active: dev
+    active: prod
 
 ---
 server:
-  port: 18081
+  port: 18082
 
 spring:
   profiles: dev
@@ -15,19 +15,18 @@ spring:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.jdbc.Driver
   activiti:
-#    check-process-definitions: true #自动检查、部署流程定义文件
-#    database-schema-update: "true" #自动更新数据库结构
-#    processes-definition-location-prefix: #流程定义文件路径 默认 classpath:/processes/
-#    processes-definition-location-suffixes: #流程文件后缀
-
-mybatis:
-  mapper-locations: classpath*:com.example.mapper.activiti/*.xml
-  type-aliases-package: com.example.model.activiti
-
+    check-process-definitions: false #自动检查、部署流程定义文件
+    database-schema-update: "true" #自动更新数据库结构
+  #    processes-definition-location-prefix: #流程定义文件路径 默认 classpath:/processes/
+  #    processes-definition-location-suffixes: #流程文件后缀
+  thymeleaf:
+    prefix: classpath:/static/
+  jpa:
+    show-sql: true
 
 ---
 server:
-  port: 18081
+  port: 18082
 
 spring:
   profiles: prod
@@ -38,11 +37,11 @@ spring:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.jdbc.Driver
   activiti:
-#    check-process-definitions: true #自动检查、部署流程定义文件
-#    database-schema-update: "true" #自动更新数据库结构
-#    processes-definition-location-prefix: #流程定义文件路径 默认 classpath:/processes/
-#    processes-definition-location-suffixes: #流程文件后缀
-
-mybatis:
-  mapper-locations: classpath*:com.example.mapper.activiti/*.xml
-  type-aliases-package: com.example.model.activiti
+    check-process-definitions: false #自动检查、部署流程定义文件
+    database-schema-update: "true" #自动更新数据库结构
+  #    processes-definition-location-prefix: #流程定义文件路径 默认 classpath:/processes/
+  #    processes-definition-location-suffixes: #流程文件后缀
+  thymeleaf:
+    prefix: classpath:/static/
+  jpa:
+    show-sql: true
