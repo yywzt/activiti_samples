@@ -62,6 +62,10 @@ public class ModelerController {
             });
             return ResponseData.failure(stringBuffer.toString());
         }
+        List<ProcessModel> processModels = processModelService.getProcessRepository().findByModelCode(processModel.getModelCode());
+        if(processModels!=null && processModels.size()>0){
+            return ResponseData.failure("模型编码已经存在了的啊！");
+        }
         //初始化一个空模型
         Model model = repositoryService.newModel();
 
@@ -113,8 +117,6 @@ public class ModelerController {
             pageNumber = 1;
         }
         Page models = processModelService.findAll(pageSize, pageNumber);
-        models.getTotalPages();//总页数
-        models.getTotalElements();//总数
         return ResponseData.success(models);
     }
 
@@ -185,6 +187,7 @@ public class ModelerController {
                 orderByProcessDefinitionVersion().
                 desc().singleResult();
         if (pd != null) {
+            processModel.setDeploymentId(pd.getDeploymentId());
             processModel.setModelDefinitionId(pd.getId());
             processModel.setModelDefinitionKey(pd.getKey());
             processModel.setModelVersion(Long.valueOf(pd.getVersion()));
