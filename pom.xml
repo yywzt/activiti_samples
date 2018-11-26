@@ -21,7 +21,6 @@
     <modules>
         <module>activiti_samples_provider</module>
         <module>activiti_simples_simples</module>
-        <module>activiti_samples_web</module>
     </modules>
 
     <properties>
