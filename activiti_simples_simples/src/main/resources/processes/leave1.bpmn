@@ -30,7 +30,7 @@
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${leave.submit==false}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_21" sourceRef="_17" targetRef="_3">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${leave.agree2==true}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${leave.agree2==false}]]></conditionExpression>
     </sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram documentation="background=#3C3F41;count=1;horizontalcount=1;orientation=0;width=842.4;height=1195.2;imageableWidth=832.4;imageableHeight=1185.2;imageableX=5.0;imageableY=5.0" id="Diagram-_1" name="New Diagram">
@@ -150,7 +150,7 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_21" id="BPMNEdge__21" sourceElement="_17" targetElement="_3">
         <omgdi:waypoint x="697.0" y="436.0"/>
-        <omgdi:waypoint x="770.0" y="315.0"/>
+        <omgdi:waypoint x="770.0" y="328.0"/>
         <omgdi:waypoint x="115.0" y="152.5"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>

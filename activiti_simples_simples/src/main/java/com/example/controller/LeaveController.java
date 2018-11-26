@@ -99,11 +99,14 @@ public class LeaveController {
     @RequestMapping(value = "/approve1", method = RequestMethod.POST)
     public Map<String,Object> approve1(@RequestBody Leave leave){
         Task task = taskService.createTaskQuery().taskId(leave.getTaskId()).singleResult();
+        String processInstanceId = task.getProcessInstanceId();
         Map<String, Object> vars = new HashMap<>();
         Leave origin = (Leave) taskService.getVariable(leave.getTaskId(), "leave");
         origin.setApproveDesc1(leave.getApproveDesc1());
         origin.setAgree1(leave.getAgree1());
         vars.put("leave", origin);
+        // 添加批注信息
+        taskService.addComment(task.getId(), processInstanceId, leave.getApproveDesc1());
         taskService.complete(leave.getTaskId(),vars);
         return vars;
     }
@@ -121,6 +124,8 @@ public class LeaveController {
         origin.setApproveDesc2(leave.getApproveDesc2());
         origin.setAgree2(leave.getAgree2());
         vars.put("leave", origin);
+        // 添加批注信息
+        taskService.addComment(task.getId(), task.getProcessInstanceId(), leave.getApproveDesc2());
         taskService.complete(leave.getTaskId(), vars);
         return vars;
     }
