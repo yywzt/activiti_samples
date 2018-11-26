@@ -16,14 +16,19 @@ import org.activiti.engine.RepositoryService;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.Model;
 import org.activiti.engine.repository.ProcessDefinition;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
+import org.springframework.util.FileSystemUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Optional;
@@ -61,6 +66,10 @@ public class ModelerController {
                 stringBuffer.append(objectError.getDefaultMessage());
             });
             return ResponseData.failure(stringBuffer.toString());
+        }
+        List<ProcessModel> processModels = processModelService.getProcessRepository().findByModelCode(processModel.getModelCode());
+        if(processModels!=null && processModels.size()>0){
+            return ResponseData.failure("模型编码已经存在了的啊！");
         }
         //初始化一个空模型
         Model model = repositoryService.newModel();
@@ -113,8 +122,6 @@ public class ModelerController {
             pageNumber = 1;
         }
         Page models = processModelService.findAll(pageSize, pageNumber);
-        models.getTotalPages();//总页数
-        models.getTotalElements();//总数
         return ResponseData.success(models);
     }
 
@@ -185,6 +192,7 @@ public class ModelerController {
                 orderByProcessDefinitionVersion().
                 desc().singleResult();
         if (pd != null) {
+            processModel.setDeploymentId(pd.getDeploymentId());
             processModel.setModelDefinitionId(pd.getId());
             processModel.setModelDefinitionKey(pd.getKey());
             processModel.setModelVersion(Long.valueOf(pd.getVersion()));
@@ -194,5 +202,27 @@ public class ModelerController {
             this.processModelService.getProcessRepository().save(processModel);
         }
         return ResponseData.success();
+    }
+
+    /**
+     * 查看流程图（流程定义文档的资源）
+     * */
+    @RequestMapping("/viewImage")
+    public void viewImage(String deploymentId) throws IOException {
+        List<String> names = repositoryService.getDeploymentResourceNames(deploymentId);
+        String imageName = null;
+        for(String s:names){
+            System.out.println("name: " + s);
+            if(s.indexOf(".png")>=0){
+                imageName = s;
+            }
+        }
+        System.out.println("imageName: " + imageName);
+        if(imageName!=null){
+            File file = new File("e:/" + imageName);
+            InputStream in = repositoryService.getResourceAsStream(deploymentId, imageName);
+            FileUtils.copyInputStreamToFile(in,file);
+        }
+
     }
 }

@@ -63,6 +63,9 @@ public class ProcessModel extends BaseModel<Long> implements Serializable {
     @Column(name = "process_definition_key")
     private String modelDefinitionKey;
 
+    @Column(name = "deployment_id")
+    private String deploymentId;
+
     public String getModelStatesName(){
         return ProcessModelStates.getName(this.getModelStates());
     }
