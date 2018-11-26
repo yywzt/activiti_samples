@@ -12,5 +12,5 @@ import java.util.List;
 public interface ProcessRepository extends BaseRepository<ProcessModel,Long>  {
 
     ProcessModel findByActiviModelId(String activitiModelId);
-    List<ProcessModel> findByModelCode(String modelCode);
+    ProcessModel findByModelCode(String modelCode);
 }

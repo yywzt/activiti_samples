@@ -44,6 +44,9 @@ public class ProcessInstanceController {
     @Autowired
     private HistoryService historyService;
 
+    /**
+     * 启动某个流程定义
+     * */
     @RequestMapping(value = "/start",method = RequestMethod.POST)
     public ResponseData start(@RequestParam("activitiModelId") String activitiModelId){
         try {

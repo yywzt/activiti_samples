@@ -67,8 +67,8 @@ public class ModelerController {
             });
             return ResponseData.failure(stringBuffer.toString());
         }
-        List<ProcessModel> processModels = processModelService.getProcessRepository().findByModelCode(processModel.getModelCode());
-        if(processModels!=null && processModels.size()>0){
+        ProcessModel processModels = processModelService.getProcessRepository().findByModelCode(processModel.getModelCode());
+        if(processModels!=null){
             return ResponseData.failure("模型编码已经存在了的啊！");
         }
         //初始化一个空模型

@@ -23,6 +23,9 @@ public class ProcessModelService extends BaseService<ProcessModel> {
         return processRepository;
     }
 
+    /**
+     * 保存流程模型
+     * */
     public boolean save(ProcessModel processModel){
         this.setDefault(processModel,true);
         ProcessModel save = processRepository.save(processModel);
@@ -32,9 +35,11 @@ public class ProcessModelService extends BaseService<ProcessModel> {
         return false;
     }
 
+    /**
+     * 流程模型列表
+     * */
     public Page findAll(Integer pageSize,Integer pageNumber){
         ProcessModel processModel = new ProcessModel();
-        processModel.setEnabledFlag(1L);
         Example example = Example.of(processModel);
         Pageable pageable = PageRequest.of(pageNumber-1,pageSize,new Sort(Sort.Direction.DESC,"creationDate"));
         return processRepository.findAll(example, pageable);

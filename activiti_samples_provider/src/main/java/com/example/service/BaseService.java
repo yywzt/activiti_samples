@@ -1,6 +1,7 @@
 package com.example.service;
 
 import com.example.model.BaseModel;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -10,6 +11,7 @@ import java.util.Date;
  * @date 2018/11/16 11:24
  * @desc
  */
+@Transactional
 public class BaseService<T> {
 
     /**
