@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
@@ -150,7 +151,7 @@ public abstract class BaseService<T,PK> {
     }
 
     public Page<T> search(Pagination<T> pagination){
-        Pageable pageable = PageRequest.of(pagination.getPageNumber(),pagination.getPageSize());
+        Pageable pageable = PageRequest.of(pagination.getPageNumber(),pagination.getPageSize(),new Sort(Sort.Direction.DESC,"creationDate"));
         return baseRepository.findAll(pageable);
     }
 

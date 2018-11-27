@@ -25,7 +25,7 @@ public class Pagination<T> {
     }
 
     public Pagination(int pageNumber, int pageSize) {
-        setPageNumber(pageNumber);
+        setPageNumber(pageNumber-1);//page从0开始不是从1开始
         setPageSize(pageSize);
     }
 
@@ -34,7 +34,7 @@ public class Pagination<T> {
     }
 
     public static Pagination getInstance2Top(int top) {
-        return new Pagination(0, top);
+        return new Pagination(1, top);
     }
 
     public List<T> getRows() {

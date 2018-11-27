@@ -1,6 +1,7 @@
 package com.example.model;
 
 import com.example.constant.LeaveStates;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -17,19 +18,19 @@ import java.util.Date;
  */
 @Data
 @Entity
-@Table(name = "leave")
-public class Leave extends BaseModel<Long> implements Serializable {
+@Table(name = "process_leave")
+public class ProcessLeave extends BaseModel<Long> implements Serializable {
 
-    @NotEmpty(message = "用户id为空")
     @Column(name = "userId")
     private String userId;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     @Column(name = "leaveDate")
     private Date leaveDate;
 
     @NotEmpty(message = "请假时长为空")
     @Column(name = "leaveDays")
-    private Long leaveDays;
+    private String leaveDays;
 
     @NotEmpty(message = "请假缘由为空")
     @Column(name = "leaveReason")

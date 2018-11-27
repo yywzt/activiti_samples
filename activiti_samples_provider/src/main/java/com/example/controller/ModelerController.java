@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.config.ResponseData;
+import com.example.constant.Pagination;
 import com.example.constant.ProcessModelStates;
 import com.example.model.ProcessModel;
 import com.example.service.ProcessModelService;
@@ -115,13 +116,8 @@ public class ModelerController {
      */
     @RequestMapping(value = "/getModelLists",method = RequestMethod.GET)
     public ResponseData modelList(@RequestParam(value = "pageSize",required = false) Integer pageSize,@RequestParam(value = "pageNumber",required = false) Integer pageNumber){
-        if(pageSize==null) {
-            pageSize = 20;
-        }
-        if(pageNumber==null) {
-            pageNumber = 1;
-        }
-        Page models = processModelService.findAll(pageSize, pageNumber);
+        Pagination pagination = new Pagination(pageNumber,pageSize);
+        Page models = processModelService.search(pagination);
         return ResponseData.success(models);
     }
 

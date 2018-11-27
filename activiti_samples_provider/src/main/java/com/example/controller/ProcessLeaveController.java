@@ -1,17 +1,13 @@
 package com.example.controller;
 
 import com.example.config.ResponseData;
-import com.example.constant.LeaveStates;
 import com.example.constant.Pagination;
-import com.example.model.Leave;
+import com.example.model.ProcessLeave;
 import com.example.model.ProcessModel;
-import com.example.service.LeaveService;
+import com.example.service.ProcessLeaveService;
 import com.example.service.ProcessModelService;
-import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
-import org.activiti.engine.repository.Model;
-import org.activiti.engine.repository.ModelQuery;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Date;
-import java.util.List;
-import java.util.Optional;
 
 /**
  * @author ywyw2424@foxmail.com
@@ -30,11 +24,11 @@ import java.util.Optional;
  * @desc 请假单申请
  */
 @RestController
-@RequestMapping("/leave")
-public class LeaveController {
+@RequestMapping("/processLeave")
+public class ProcessLeaveController {
 
     @Autowired
-    private LeaveService leaveService;
+    private ProcessLeaveService processLeaveService;
 
     @Autowired
     private RuntimeService runtimeService;
@@ -49,17 +43,17 @@ public class LeaveController {
      * 请假单列表
      * */
     @RequestMapping(value = "/page",method = RequestMethod.GET)
-    public ResponseData page(@RequestParam("pageNumber") int pageNumber,@RequestParam("pageSize") int pageSize){
+    public ResponseData page(@RequestParam(value = "pageNumber",required = false) int pageNumber,@RequestParam(value = "pageSize",required = false) int pageSize){
         Pagination pagination = new Pagination(pageNumber,pageSize);
-        Page page = leaveService.search(pagination);
+        Page page = processLeaveService.search(pagination);
         return ResponseData.success(page);
     }
 
     /**
      * 新增请假单
      * */
-    @RequestMapping(value = "/newLeave",method = RequestMethod.POST)
-    public ResponseData newLeave(@RequestBody @Valid Leave leave, BindingResult result){
+    @RequestMapping(value = "/newProcessLeave",method = RequestMethod.POST)
+    public ResponseData newProcessLeave(@RequestBody @Valid ProcessLeave processLeave, BindingResult result){
         if(result.hasErrors()){
             StringBuffer msg = new StringBuffer();
             result.getAllErrors().forEach(objectError -> {
@@ -67,9 +61,9 @@ public class LeaveController {
             });
             return ResponseData.failure(msg.toString());
         }
-        leave.setLeaveDate(new Date());
-        leave.setState("0");
-        leaveService.insert(leave);
+        processLeave.setLeaveDate(new Date());
+        processLeave.setState("0");
+        processLeaveService.insert(processLeave);
         return ResponseData.success();
     }
 
@@ -85,12 +79,12 @@ public class LeaveController {
         Task task = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
         taskService.complete(task.getId());
 
-        Leave leave = leaveService.get(leaveId).get();
-        leave.setState("1");//状态更改为审核中
-        leave.setProcessInstanceId(processInstanceId);
-        leaveService.update(leave);
+        ProcessLeave processLeave = processLeaveService.get(leaveId).get();
+        processLeave.setState("1");//状态更改为审核中
+        processLeave.setProcessInstanceId(processInstanceId);
+        processLeaveService.update(processLeave);
 
-        taskService.addComment(task.getId(),processInstanceId,leave.getLeaveReason());
+        taskService.addComment(task.getId(),processInstanceId,processLeave.getLeaveReason());
 
         return ResponseData.success();
     }

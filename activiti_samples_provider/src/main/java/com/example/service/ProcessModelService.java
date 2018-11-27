@@ -39,12 +39,12 @@ public class ProcessModelService extends BaseService<ProcessModel,Long> {
     /**
      * 流程模型列表
      * */
-    public Page findAll(Integer pageSize,Integer pageNumber){
+    /*public Page findAll(Integer pageSize,Integer pageNumber){
         ProcessModel processModel = new ProcessModel();
         Example example = Example.of(processModel);
         Pageable pageable = PageRequest.of(pageNumber-1,pageSize,new Sort(Sort.Direction.DESC,"creationDate"));
         return getProcessRepository().findAll(example, pageable);
-    }
+    }*/
 
     public ProcessModel findByActivitiId(String activitiId){
         ProcessModel processModel = new ProcessModel();

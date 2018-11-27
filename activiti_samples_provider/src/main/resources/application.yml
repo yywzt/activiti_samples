@@ -28,6 +28,10 @@ spring:
     prefix: classpath:/static/
   jpa:
     show-sql: true
+    hibernate:
+      naming:
+        # 默认使用的命名策略是下划线分隔 ImprovedNamingStrategy
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 
 ---
 server:
@@ -55,3 +59,7 @@ spring:
     prefix: classpath:/static/
   jpa:
     show-sql: true
+    hibernate:
+      naming:
+        # 默认使用的命名策略是下划线分隔 ImprovedNamingStrategy
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
