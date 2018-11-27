@@ -33,6 +33,6 @@ public class MyMvcConfig implements WebMvcConfigurer {
                 .allowedMethods("GET","POST","PUT","DELETE","OPTIONS")
                 .allowCredentials(true)
                 .allowedHeaders("Content-Type","X-Token")
-                .maxAge(3600L);
+                .maxAge(3600L);//预检请求的有效期，单位为秒。
     }
 }
