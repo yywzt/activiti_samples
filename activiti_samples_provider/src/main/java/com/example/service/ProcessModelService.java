@@ -14,26 +14,27 @@ import java.util.Optional;
  * @desc
  */
 @Service
-public class ProcessModelService extends BaseService<ProcessModel> {
+public class ProcessModelService extends BaseService<ProcessModel,Long> {
 
-    @Autowired
-    private ProcessRepository processRepository;
+    public ProcessModelService(@Autowired ProcessRepository processRepository) {
+        super(processRepository);
+    }
 
     public ProcessRepository getProcessRepository() {
-        return processRepository;
+        return (ProcessRepository) super.baseRepository;
     }
 
     /**
      * 保存流程模型
      * */
-    public boolean save(ProcessModel processModel){
+    /*public boolean save(ProcessModel processModel){
         this.setDefault(processModel,true);
         ProcessModel save = processRepository.save(processModel);
         if(save!=null) {
             return true;
         }
         return false;
-    }
+    }*/
 
     /**
      * 流程模型列表
@@ -42,7 +43,7 @@ public class ProcessModelService extends BaseService<ProcessModel> {
         ProcessModel processModel = new ProcessModel();
         Example example = Example.of(processModel);
         Pageable pageable = PageRequest.of(pageNumber-1,pageSize,new Sort(Sort.Direction.DESC,"creationDate"));
-        return processRepository.findAll(example, pageable);
+        return getProcessRepository().findAll(example, pageable);
     }
 
     public ProcessModel findByActivitiId(String activitiId){
@@ -50,7 +51,7 @@ public class ProcessModelService extends BaseService<ProcessModel> {
         processModel.setActiviModelId(activitiId);
         processModel.setEnabledFlag(1L);
         Example example = Example.of(processModel);
-        Optional<ProcessModel> one = processRepository.findOne(example);
+        Optional<ProcessModel> one = getProcessRepository().findOne(example);
         return one.isPresent()?one.get():null;
     }
 }

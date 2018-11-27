@@ -105,7 +105,7 @@ public class ModelerController {
         processModel.setModelVersion(model.getVersion().longValue());
         processModel.setActiviModelId(id);
         processModel.setModelStates(0);
-        processModelService.save(processModel);
+        processModelService.insert(processModel);
         return ResponseData.success(processModel);
     }
 

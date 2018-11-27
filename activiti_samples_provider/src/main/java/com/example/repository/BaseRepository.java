@@ -11,5 +11,5 @@ import java.io.Serializable;
  * @desc
  */
 @NoRepositoryBean
-public interface BaseRepository<T,PK extends Serializable> extends JpaRepository<T,PK> {
+public interface BaseRepository<T,PK> extends JpaRepository<T,PK> {
 }

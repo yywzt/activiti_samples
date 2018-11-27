@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.example.config.ResponseData;
 import com.example.constant.LeaveStates;
+import com.example.constant.Pagination;
 import com.example.model.Leave;
 import com.example.model.ProcessModel;
 import com.example.service.LeaveService;
@@ -48,14 +49,9 @@ public class LeaveController {
      * 请假单列表
      * */
     @RequestMapping(value = "/page",method = RequestMethod.GET)
-    public ResponseData page(@RequestParam(value = "pageSize",required = false) Integer pageSize, @RequestParam(value = "pageNumber",required = false) Integer pageNumber){
-        if(pageSize==null) {
-            pageSize = 20;
-        }
-        if(pageNumber==null) {
-            pageNumber = 1;
-        }
-        Page page = leaveService.findAll(pageSize, pageNumber);
+    public ResponseData page(@RequestParam("pageNumber") int pageNumber,@RequestParam("pageSize") int pageSize){
+        Pagination pagination = new Pagination(pageNumber,pageSize);
+        Page page = leaveService.search(pagination);
         return ResponseData.success(page);
     }
 
@@ -73,7 +69,7 @@ public class LeaveController {
         }
         leave.setLeaveDate(new Date());
         leave.setState("0");
-        leaveService.getLeaveRepository().save(leave);
+        leaveService.insert(leave);
         return ResponseData.success();
     }
 
@@ -89,8 +85,8 @@ public class LeaveController {
         Task task = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
         taskService.complete(task.getId());
 
-        Leave leave = leaveService.getLeaveRepository().findById(leaveId).get();
-        leave.setState("1");
+        Leave leave = leaveService.get(leaveId).get();
+        leave.setState("1");//状态更改为审核中
         leave.setProcessInstanceId(processInstanceId);
         leaveService.update(leave);
 

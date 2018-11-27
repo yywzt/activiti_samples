@@ -3,7 +3,6 @@ package com.example.service;
 import com.example.model.Leave;
 import com.example.repository.LeaveRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,24 +11,14 @@ import org.springframework.stereotype.Service;
  * @desc
  */
 @Service
-public class LeaveService extends BaseService<Leave> {
+public class LeaveService extends BaseService<Leave,Long> {
 
-    @Autowired
-    private LeaveRepository leaveRepository;
-
-    public LeaveRepository getLeaveRepository() {
-        return leaveRepository;
+    public LeaveService(@Autowired LeaveRepository leaveRepository) {
+        super(leaveRepository);
     }
 
-    public Page findAll(Integer pageSize, Integer pageNumber){
-        Leave leave = new Leave();
-        Example example = Example.of(leave);
-        Pageable pageable = PageRequest.of(pageNumber-1,pageSize,new Sort(Sort.Direction.DESC,"creationDate"));
-        return leaveRepository.findAll(example, pageable);
+    public LeaveRepository getRepository(){
+        return (LeaveRepository) super.baseRepository;
     }
 
-    public boolean update(Leave leave){
-        getLeaveRepository().save(leave);
-        return true;
-    }
 }
