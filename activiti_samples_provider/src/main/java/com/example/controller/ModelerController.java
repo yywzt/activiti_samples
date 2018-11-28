@@ -3,8 +3,8 @@ package com.example.controller;
 import com.example.config.ResponseData;
 import com.example.constant.Pagination;
 import com.example.constant.ProcessModelStates;
-import com.example.model.ProcessModel;
-import com.example.service.ProcessModelService;
+import com.example.model.activiti.ProcessModel;
+import com.example.service.activiti.ProcessModelService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -21,7 +21,6 @@ import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
-import org.springframework.util.FileSystemUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
@@ -68,7 +67,7 @@ public class ModelerController {
             });
             return ResponseData.failure(stringBuffer.toString());
         }
-        ProcessModel processModels = processModelService.getProcessRepository().findByModelCode(processModel.getModelCode());
+        ProcessModel processModels = processModelService.getRepository().findByModelCode(processModel.getModelCode());
         if(processModels!=null){
             return ResponseData.failure("模型编码已经存在了的啊！");
         }
@@ -133,11 +132,11 @@ public class ModelerController {
         ProcessModel processModel = new ProcessModel();
         processModel.setId(id);
         Example example = Example.of(processModel);
-        Optional<ProcessModel> one = processModelService.getProcessRepository().findOne(example);
+        Optional<ProcessModel> one = processModelService.getRepository().findOne(example);
         if(!one.isPresent()){
             return ResponseData.failure("model不存在");
         }
-        processModelService.getProcessRepository().deleteById(one.get().getId());
+        processModelService.getRepository().deleteById(one.get().getId());
         repositoryService.deleteModel(one.get().getActiviModelId());
         return ResponseData.failure("删除模型成功");
     }
@@ -195,7 +194,7 @@ public class ModelerController {
             if (processModel.getModelStates() == ProcessModelStates.SAVE.getState()) {
                 processModel.setModelStates(ProcessModelStates.ENBLED.getState());
             }
-            this.processModelService.getProcessRepository().save(processModel);
+            this.processModelService.getRepository().save(processModel);
         }
         return ResponseData.success();
     }

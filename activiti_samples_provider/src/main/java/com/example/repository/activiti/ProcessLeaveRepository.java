@@ -1,6 +1,7 @@
-package com.example.repository;
+package com.example.repository.activiti;
 
-import com.example.model.ProcessLeave;
+import com.example.model.activiti.ProcessLeave;
+import com.example.repository.BaseRepository;
 
 /**
  * @author ywyw2424@foxmail.com

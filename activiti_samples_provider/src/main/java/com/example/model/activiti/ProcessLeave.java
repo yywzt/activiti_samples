@@ -1,6 +1,7 @@
-package com.example.model;
+package com.example.model.activiti;
 
 import com.example.constant.LeaveStates;
+import com.example.model.BaseModel;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 

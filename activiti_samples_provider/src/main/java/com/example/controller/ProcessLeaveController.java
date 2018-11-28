@@ -2,10 +2,10 @@ package com.example.controller;
 
 import com.example.config.ResponseData;
 import com.example.constant.Pagination;
-import com.example.model.ProcessLeave;
-import com.example.model.ProcessModel;
-import com.example.service.ProcessLeaveService;
-import com.example.service.ProcessModelService;
+import com.example.model.activiti.ProcessLeave;
+import com.example.model.activiti.ProcessModel;
+import com.example.service.activiti.ProcessLeaveService;
+import com.example.service.activiti.ProcessModelService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.runtime.ProcessInstance;
@@ -72,7 +72,7 @@ public class ProcessLeaveController {
      * */
     @RequestMapping(value = "/start",method = RequestMethod.POST)
     public ResponseData start(Long leaveId){
-        ProcessModel processModel = processModelService.getProcessRepository().findByModelCode("process");
+        ProcessModel processModel = processModelService.getRepository().findByModelCode("process");
         ProcessInstance processInstance = runtimeService.startProcessInstanceById(processModel.getModelDefinitionId());
 
         String processInstanceId = processInstance.getId();

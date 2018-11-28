@@ -1,6 +1,7 @@
-package com.example.model;
+package com.example.model.activiti;
 
 import com.example.constant.ProcessModelStates;
+import com.example.model.BaseModel;
 import lombok.Data;
 
 import javax.persistence.Column;

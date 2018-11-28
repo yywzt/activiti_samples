@@ -1,7 +1,8 @@
-package com.example.service;
+package com.example.service.activiti;
 
-import com.example.model.ProcessLeave;
-import com.example.repository.ProcessLeaveRepository;
+import com.example.model.activiti.ProcessLeave;
+import com.example.repository.activiti.ProcessLeaveRepository;
+import com.example.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

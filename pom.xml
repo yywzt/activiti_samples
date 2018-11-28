@@ -34,6 +34,7 @@
         <lombok.version>1.16.22</lombok.version>
         <activiti.modeler.version>5.22.0</activiti.modeler.version>
         <thymeleaf-version>2.1.0.RELEASE</thymeleaf-version>
+        <redis.version>2.0.2.RELEASE</redis.version>
     </properties>
 
     <dependencyManagement>
@@ -110,7 +111,11 @@
                 <artifactId>commons-fileupload</artifactId>
                 <version>1.3.1</version>
             </dependency>
-
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-redis</artifactId>
+                <version>${redis.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

@@ -1,8 +1,8 @@
 package com.example.controller;
 
 import com.example.config.ResponseData;
-import com.example.model.ProcessModel;
-import com.example.repository.ProcessRepository;
+import com.example.model.activiti.ProcessModel;
+import com.example.repository.activiti.ProcessRepository;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
