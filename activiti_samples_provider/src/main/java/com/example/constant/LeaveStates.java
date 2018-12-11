@@ -31,7 +31,7 @@ public enum LeaveStates {
         this.name = name;
     }
 
-    private LeaveStates(String state, String name) {
+    LeaveStates(String state, String name) {
         this.setState(state);
         this.setName(name);
     }
@@ -39,7 +39,7 @@ public enum LeaveStates {
     public static String getName(String state)
     {
         for (LeaveStates e : LeaveStates.values()) {
-            if(e.state==state)
+            if(e.state.equals(state))
                 return  e.name;
         }
         return NO_COMMIT.name;

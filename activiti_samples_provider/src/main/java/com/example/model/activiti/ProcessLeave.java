@@ -50,4 +50,5 @@ public class ProcessLeave extends BaseModel<Long> implements Serializable {
     public String getLeaveState(){
         return LeaveStates.getName(getState());
     }
+
 }

@@ -9,4 +9,6 @@ import com.example.repository.BaseRepository;
  * @desc
  */
 public interface ProcessLeaveRepository extends BaseRepository<ProcessLeave,Long> {
+
+    public ProcessLeave findByProcessInstanceId(String processInstanceId);
 }

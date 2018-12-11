@@ -58,6 +58,12 @@
                 <scope>runtime</scope>
                 <version>${mysql.connect.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-devtools</artifactId>
+                <scope>runtime</scope>
+                <version>${spring-boot.version}</version>
+            </dependency>
 
             <!--activiti工作流引擎-->
             <!-- https://mvnrepository.com/artifact/org.activiti/activiti-spring-boot-starter-basic -->

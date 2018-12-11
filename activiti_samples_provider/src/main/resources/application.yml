@@ -18,7 +18,7 @@ spring:
       hikari:
         idle-timeout: 10000
         #      auto-commit: false
-        maximum-pool-size: 20
+        maximum-pool-size: 5
         connection-init-sql: select 1
     ssm:
       jdbcUrl: jdbc:mysql://127.0.0.1:3306/ssm?characterEncoding=utf8&useSSL=true&serverTimezone=GMT%2B8
@@ -29,7 +29,7 @@ spring:
       hikari:
         idle-timeout: 10000
         #      auto-commit: false
-        maximum-pool-size: 20
+        maximum-pool-size: 5
         connection-init-sql: select 1
 
   activiti:
@@ -45,8 +45,11 @@ spring:
       naming:
         # 默认使用的命名策略是下划线分隔 ImprovedNamingStrategy
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        format_sql: true
   redis:
-    host: 139.199.179.164
+    host: 127.0.0.1
     port: 6379
     jedis:
       pool:
@@ -74,7 +77,7 @@ spring:
       hikari:
         idle-timeout: 10000
         #      auto-commit: false
-        maximum-pool-size: 20
+        maximum-pool-size: 5
         connection-init-sql: select 1
     ssm:
       jdbcUrl: jdbc:mysql://139.199.179.164:3306/ssm?characterEncoding=utf8&useSSL=true&serverTimezone=GMT%2B8
@@ -85,7 +88,7 @@ spring:
       hikari:
         idle-timeout: 10000
         #      auto-commit: false
-        maximum-pool-size: 20
+        maximum-pool-size: 5
         connection-init-sql: select 1
 
   activiti:
@@ -101,3 +104,19 @@ spring:
       naming:
         # 默认使用的命名策略是下划线分隔 ImprovedNamingStrategy
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        format_sql: true
+
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: 1
+        max-idle: 8
+        min-idle: 0
+    timeout: 5000
+    database: 2
+    password: root

@@ -10,5 +10,5 @@ import com.example.repository.BaseRepository;
  */
 public interface UserInfRepository extends BaseRepository<UserInf,Long> {
 
-    UserInf findByUserName(String userName);
+    UserInf findByUsername(String username);
 }

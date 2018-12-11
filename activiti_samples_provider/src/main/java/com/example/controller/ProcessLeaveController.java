@@ -1,22 +1,30 @@
 package com.example.controller;
 
 import com.example.config.ResponseData;
+import com.example.constant.LeaveStates;
 import com.example.constant.Pagination;
 import com.example.model.activiti.ProcessLeave;
 import com.example.model.activiti.ProcessModel;
+import com.example.response.CommentResponse;
 import com.example.service.activiti.ProcessLeaveService;
 import com.example.service.activiti.ProcessModelService;
+import com.example.util.SessionUtil;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.impl.identity.Authentication;
 import org.activiti.engine.runtime.ProcessInstance;
+import org.activiti.engine.task.Comment;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
-import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author ywyw2424@foxmail.com
@@ -43,9 +51,12 @@ public class ProcessLeaveController {
      * 请假单列表
      * */
     @RequestMapping(value = "/page",method = RequestMethod.GET)
-    public ResponseData page(@RequestParam(value = "pageNumber",required = false) int pageNumber,@RequestParam(value = "pageSize",required = false) int pageSize){
-        Pagination pagination = new Pagination(pageNumber,pageSize);
-        Page page = processLeaveService.search(pagination);
+    public ResponseData page(HttpServletRequest request,Pagination pagination){
+        String userId = SessionUtil.getUserId(request.getSession());
+        ProcessLeave processLeave = new ProcessLeave();
+        processLeave.setUserId(userId);
+        Example<Object> example = Example.of(processLeave);
+        Page page = processLeaveService.search(example,pagination);
         return ResponseData.success(page);
     }
 
@@ -53,14 +64,9 @@ public class ProcessLeaveController {
      * 新增请假单
      * */
     @RequestMapping(value = "/newProcessLeave",method = RequestMethod.POST)
-    public ResponseData newProcessLeave(@RequestBody @Valid ProcessLeave processLeave, BindingResult result){
-        if(result.hasErrors()){
-            StringBuffer msg = new StringBuffer();
-            result.getAllErrors().forEach(objectError -> {
-                msg.append(objectError.getDefaultMessage());
-            });
-            return ResponseData.failure(msg.toString());
-        }
+    public ResponseData newProcessLeave(HttpServletRequest request, @RequestBody @Validated ProcessLeave processLeave){
+        String userId = SessionUtil.getUserId(request.getSession());
+        processLeave.setUserId(userId);
         processLeave.setLeaveDate(new Date());
         processLeave.setState("0");
         processLeaveService.insert(processLeave);
@@ -71,21 +77,46 @@ public class ProcessLeaveController {
      * 提交申请
      * */
     @RequestMapping(value = "/start",method = RequestMethod.POST)
-    public ResponseData start(Long leaveId){
-        ProcessModel processModel = processModelService.getRepository().findByModelCode("process");
+    public ResponseData start(HttpServletRequest request, @RequestParam(value = "leaveId") String leaveId){
+        ProcessLeave processLeave = processLeaveService.get(Long.valueOf(leaveId)).get();
+        if(!processLeave.getState().equals(LeaveStates.NO_COMMIT.getState())){
+            return ResponseData.failure("已经提交过了啊，请耐心等候");
+        }
+        ProcessModel processModel = processModelService.getRepository().findByModelCode("leave");
         ProcessInstance processInstance = runtimeService.startProcessInstanceById(processModel.getModelDefinitionId());
 
         String processInstanceId = processInstance.getId();
         Task task = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
+
+        //设置用户id
+        Authentication.setAuthenticatedUserId(SessionUtil.getUserName(request.getSession()));
+        //添加批注信息
+        taskService.addComment(task.getId(),processInstanceId,processLeave.getLeaveReason());
         taskService.complete(task.getId());
 
-        ProcessLeave processLeave = processLeaveService.get(leaveId).get();
         processLeave.setState("1");//状态更改为审核中
         processLeave.setProcessInstanceId(processInstanceId);
         processLeaveService.update(processLeave);
 
-        taskService.addComment(task.getId(),processInstanceId,processLeave.getLeaveReason());
-
         return ResponseData.success();
+    }
+
+    /**
+     * 查看历史流程批注
+     * @param processInstanceId 流程实例ID
+     * */
+    @RequestMapping(value = "/showHisComment",method = RequestMethod.GET)
+    public ResponseData showHisComment(@RequestParam("processInstanceId") String processInstanceId){
+        List<Comment> comments = taskService.getProcessInstanceComments(processInstanceId);
+        List<CommentResponse> commentResponses = new ArrayList<>(comments.size());
+        for (Comment comment:comments){
+            CommentResponse commentResponse = new CommentResponse();
+            commentResponse.setUserId(comment.getUserId());
+            commentResponse.setMessage(comment.getFullMessage());
+            commentResponse.setTime(comment.getTime());
+            commentResponses.add(commentResponse);
+        }
+        System.out.println("commentResponses: " + commentResponses);
+        return ResponseData.success(commentResponses);
     }
 }

@@ -116,7 +116,7 @@ public class ModelerController {
     @RequestMapping(value = "/getModelLists",method = RequestMethod.GET)
     public ResponseData modelList(@RequestParam(value = "pageSize",required = false) Integer pageSize,@RequestParam(value = "pageNumber",required = false) Integer pageNumber){
         Pagination pagination = new Pagination(pageNumber,pageSize);
-        Page models = processModelService.search(pagination);
+        Page models = processModelService.search(null,pagination);
         return ResponseData.success(models);
     }
 

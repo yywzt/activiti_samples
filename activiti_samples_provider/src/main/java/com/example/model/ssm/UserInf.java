@@ -4,6 +4,7 @@ import com.example.model.BaseModel;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -17,9 +18,11 @@ import java.util.Set;
 @Table(name = "user_inf")
 public class UserInf extends BaseModel<Long> implements Serializable {
 
+    @NotEmpty(message = "用户名不能为空")
     @Column(name = "uname")
-    private String userName;
+    private String username;
 
+    @NotEmpty(message = "密码不能为空")
     @Column(name = "passwd")
     private String password;
 
@@ -40,7 +43,7 @@ public class UserInf extends BaseModel<Long> implements Serializable {
     //关联到主表的外键名：主表名+下划线+主表中的主键列名,即user_id
     //关联到从表的外键名：主表中用于关联的属性名+下划线+从表的主键列名,即authority_id
     //主表就是关系维护端对应的表，从表就是关系被维护端对应的表
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Roles> rolesSet;

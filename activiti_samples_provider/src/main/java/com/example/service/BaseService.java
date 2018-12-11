@@ -6,10 +6,7 @@ import com.example.repository.BaseRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
@@ -150,9 +147,12 @@ public abstract class BaseService<T,PK> {
         return result;
     }
 
-    public Page<T> search(Pagination<T> pagination){
+    public Page<T> search(Example example,Pagination<T> pagination){
         Pageable pageable = PageRequest.of(pagination.getPageNumber(),pagination.getPageSize(),new Sort(Sort.Direction.DESC,"creationDate"));
-        return baseRepository.findAll(pageable);
+        if(example==null){
+            return baseRepository.findAll(pageable);
+        }
+        return baseRepository.findAll(example,pageable);
     }
 
     /**

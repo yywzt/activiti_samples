@@ -25,7 +25,7 @@ public class Pagination<T> {
     }
 
     public Pagination(int pageNumber, int pageSize) {
-        setPageNumber(pageNumber-1);//page从0开始不是从1开始
+        setPageNumber(pageNumber);//page从0开始不是从1开始
         setPageSize(pageSize);
     }
 
@@ -62,7 +62,7 @@ public class Pagination<T> {
     }
 
     public int getPageNumber() {
-        return pageNumber;
+        return pageNumber-1;
     }
 
     public void setPageNumber(int pageNumber) {

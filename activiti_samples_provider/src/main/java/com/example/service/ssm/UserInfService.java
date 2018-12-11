@@ -23,7 +23,7 @@ public class UserInfService extends BaseService<UserInf,Long> {
         return (UserInfRepository) baseRepository;
     }
 
-    public UserInf findUserInfByUname(String userName){
-        return getRepository().findByUserName(userName);
+    public UserInf findByUsername(String username){
+        return getRepository().findByUsername(username);
     }
 }
