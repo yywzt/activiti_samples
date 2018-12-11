@@ -2,8 +2,10 @@
 spring boot整合activiti工作流
 
 activiti-simples
-    --- activiti-simples-provider 
-    --- activiti-simples-simples 
+
+    *** activiti-simples-provider 
+    
+    *** activiti-simples-simples 
     
     activiti-simples-provider:
     
