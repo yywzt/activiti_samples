@@ -5,9 +5,9 @@ spring boot整合activiti工作流
 使用springboot2.1.0整合activiti5.22.0实现
 
 主要使用技术：
-  springboot2.1.0
-  activiti5.22.0
-  springDataJpa
+  springboot2.1.0 + 
+  activiti5.22.0 + 
+  springDataJpa + 
   redis
   
   该项目为restful风格的接口
