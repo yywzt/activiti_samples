@@ -47,6 +47,10 @@ public class ProcessLeave extends BaseModel<Long> implements Serializable {
     @Column(name = "processInstanceId")
     private String processInstanceId;
 
+    //流程定义ID
+    @Column(name = "processDefinitionId")
+    private String processDefinitionId;
+
     public String getLeaveState(){
         return LeaveStates.getName(getState());
     }

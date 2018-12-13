@@ -86,6 +86,7 @@ public class ProcessLeaveController {
         ProcessInstance processInstance = runtimeService.startProcessInstanceById(processModel.getModelDefinitionId());
 
         String processInstanceId = processInstance.getId();
+        String processDefinitionId = processInstance.getProcessDefinitionId();
         Task task = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
 
         //设置用户id
@@ -96,6 +97,7 @@ public class ProcessLeaveController {
 
         processLeave.setState("1");//状态更改为审核中
         processLeave.setProcessInstanceId(processInstanceId);
+        processLeave.setProcessDefinitionId(processDefinitionId);
         processLeaveService.update(processLeave);
 
         return ResponseData.success();

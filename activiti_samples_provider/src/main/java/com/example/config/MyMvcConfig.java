@@ -1,10 +1,12 @@
 package com.example.config;
 
+import com.example.servlet.JsonpCallbackFilter;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.*;
+
+import javax.servlet.Filter;
 
 /**
  * @author ywyw2424@foxmail.com
@@ -34,5 +36,15 @@ public class MyMvcConfig implements WebMvcConfigurer {
                 .allowCredentials(true)
                 .allowedHeaders("Content-Type","X-Token")
                 .maxAge(3600L);//预检请求的有效期，单位为秒。
+    }
+
+    @Bean
+    public FilterRegistrationBean filterRegistrationBean(){
+        FilterRegistrationBean<Filter> filterFilterRegistrationBean = new FilterRegistrationBean<>();
+        filterFilterRegistrationBean.setFilter(new JsonpCallbackFilter());
+        filterFilterRegistrationBean.addUrlPatterns("/*");
+        filterFilterRegistrationBean.setName("jsonpCallbackFilter");
+        filterFilterRegistrationBean.setOrder(1);
+        return  filterFilterRegistrationBean;
     }
 }

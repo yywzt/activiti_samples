@@ -23,7 +23,10 @@ public class Tests {
     public void test2(){
         String s = "^\\d{4}(\\-|\\/|\\.)\\d{1,2}\\1\\d{1,2}$";
         Pattern compile = Pattern.compile(s);
-        String date = "2018-11-01 12:00:12";
+//        String date = "2018-11-01 12:00:12";//false
+//        String date = "2018-11-01";//true
+//        String date = "2018/11/01";//true
+        String date = "2018.11.01";//true
         boolean matches = compile.matcher(date).matches();
         System.out.println(matches);
     }

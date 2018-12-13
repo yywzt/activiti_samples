@@ -8,8 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication(exclude = {
         org.activiti.spring.boot.SecurityAutoConfiguration.class,
         org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class})
-//@ComponentScan({"org.activiti.rest.editor","com.example"})
-@ComponentScan("com.example")
+@ComponentScan({"com.example","org.activiti.rest.diagram"})
 public class ActivitiSamplesProviderApplication {
 
     public static void main(String[] args) {

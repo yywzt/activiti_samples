@@ -5,7 +5,7 @@ var ActivitiRest = {
 		
 		$.ajax({
 			url: url,
-			dataType: 'jsonp',
+			dataType: 'json',
 			cache: false,
 			async: true,
 			success: function(data, textStatus) {
