@@ -14,10 +14,20 @@ import java.util.Date;
 @Data
 public class MyTaskResponse implements Serializable {
 
-    private String id; // 任务id
-    private String name; // 任务名称
+    // 任务id
+    private String id;
+
+    // 任务名称
+    private String name;
+
+    // 创建日期
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
-    private Date createTime;  // 创建日期
+    private Date createTime;
+
+    // 结束日期
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
-    private Date endTime; // 结束日期
+    private Date endTime;
+
+    //是否认领任务 true：已认领为个人任务   false：待认领
+    private boolean isClaim;
 }

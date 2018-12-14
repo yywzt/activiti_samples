@@ -10,7 +10,6 @@ import com.example.response.ActivitiInstResponse;
 import com.example.response.CommentResponse;
 import com.example.response.MyTaskResponse;
 import com.example.service.activiti.ProcessLeaveService;
-import com.example.service.ssm.UserInfService;
 import com.example.util.SessionUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.activiti.engine.HistoryService;
@@ -27,12 +26,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * @author ywyw2424@foxmail.com
@@ -53,16 +50,13 @@ public class TaskController {
     @Autowired
     private ProcessLeaveService processLeaveService;
 
-    @Autowired
-    private UserInfService userInfService;
-
     /**
      * 代办任务
      * */
     @RequestMapping(value = "/taskPage",method = RequestMethod.POST)
     public ResponseData taskPage(HttpServletRequest request,@RequestBody Pagination pagination){
         String userId = SessionUtil.getUserId(request.getSession());
-        TaskQuery taskQuery = taskService.createTaskQuery().taskCandidateUser(userId);
+        TaskQuery taskQuery = taskService.createTaskQuery().taskCandidateOrAssigned(userId);
         long total = taskQuery.count();
         List<Task> tasks = taskQuery.listPage(pagination.getPageNumber(), pagination.getPageSize());
         log.info("当前代办任务：{}条---{}",total,tasks);
@@ -74,6 +68,7 @@ public class TaskController {
             myTaskResponse.setId(task.getId());
             myTaskResponse.setName(task.getName());
             myTaskResponse.setCreateTime(task.getCreateTime());
+            myTaskResponse.setClaim(task.getAssignee()!=null);
             list.add(myTaskResponse);
         }
         pagination.setRows(list);
@@ -110,19 +105,42 @@ public class TaskController {
     }
 
     /**
+     * 任务认领
+     * 将组任务分配到个人
+     * */
+    @RequestMapping("/claim")
+    public ResponseData claimTask(HttpServletRequest request,@RequestParam("taskId") String taskId){
+        String userId = SessionUtil.getUserId(request.getSession());
+        taskService.claim(taskId,userId);
+        return ResponseData.success();
+    }
+    /**
+     * 将个人任务回退到组任务（前提：之前组任务）
+     * */
+    @RequestMapping("/backClaim")
+    public ResponseData backClaimTask(HttpServletRequest request,@RequestParam("taskId") String taskId){
+        taskService.setAssignee(taskId,null);
+        return ResponseData.success();
+    }
+
+    /**
      * 审批
      * 完成任务
      * */
     @RequestMapping(value = "/complete",method = RequestMethod.POST)
     public ResponseData complete(HttpServletRequest request, @RequestBody @Validated ApprovalRequest approvalRequest){
+        String userId = SessionUtil.getUserId(request.getSession());
         Task task = taskService.createTaskQuery()
+                .taskCandidateOrAssigned(userId)
                 .taskId(approvalRequest.getId())
                 .singleResult();
         if(task==null){
-            return ResponseData.failure("当前任务不存在啊");
+            return ResponseData.failure("当前不存在待办理任务啊");
+        }
+        if(task.getAssignee()==null){
+            return ResponseData.failure("认领任务之后才可以办理任务喔");
         }
         Map<String,Object> variables=new HashMap<String,Object>();
-        String userId = SessionUtil.getUserId(request.getSession());
         String processInstanceId = task.getProcessInstanceId();
 
         ProcessLeave processLeave = processLeaveService.getRepository().findByProcessInstanceId(processInstanceId);

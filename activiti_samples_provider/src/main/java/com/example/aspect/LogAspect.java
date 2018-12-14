@@ -78,6 +78,7 @@ public class LogAspect {
             }
         } catch (IOException e) {
             e.printStackTrace();
+            return e.getMessage();
         }
 
         return sb.toString();
