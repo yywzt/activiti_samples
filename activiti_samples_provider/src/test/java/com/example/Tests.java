@@ -4,6 +4,8 @@ import org.junit.Test;
 
 import java.sql.Date;
 import java.util.Arrays;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -123,5 +125,24 @@ public class Tests {
             String msg = i<0?"":s.substring(i+1);
             System.out.println("no: " + no + ",msg: " + msg);
         });
+    }
+
+    @Test
+    public void test8() throws ParseException {
+        SimpleDateFormat yyyymmdDhhmmss = new SimpleDateFormat("yyyyMMddHHmmss");
+        java.util.Date parse = yyyymmdDhhmmss.parse("20181204140100");
+        System.out.println(parse);
+        String format = yyyymmdDhhmmss.format(parse);
+        System.out.println(format);
+        System.out.println("2017"+"1204");
+    }
+
+    @Test
+    public void test9(){
+        String s = "asd_bvnhj_123123";
+        String substring = s.substring(s.lastIndexOf("_")+1);
+        String substring2 = s.substring(0,s.lastIndexOf("_"));
+        System.out.println(substring);
+        System.out.println(substring2);
     }
 }
