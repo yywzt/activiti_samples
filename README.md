@@ -21,7 +21,7 @@ activiti-simples
           
         该项目为restful风格的接口
           
-        前端页面见 https://github.com/yywzt/activiti_simples_web
+        前端页面见 [activiti_simples_web](https://github.com/yywzt/activiti_simples_web)
         
     activiti-simples-simples 
     
