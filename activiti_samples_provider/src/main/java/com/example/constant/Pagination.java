@@ -62,7 +62,7 @@ public class Pagination<T> {
     }
 
     public int getPageNumber() {
-        return pageNumber-1;
+        return pageNumber;
     }
 
     public void setPageNumber(int pageNumber) {
@@ -75,5 +75,12 @@ public class Pagination<T> {
 
     public void setPageSize(int pageSize) {
         this.pageSize = pageSize;
+    }
+
+    public int getStart(){
+        return (getPageNumber()-1)*getPageSize();
+    }
+    public int getEnd(){
+        return getStart() + getPageSize();
     }
 }

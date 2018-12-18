@@ -1,16 +1,25 @@
 package com.example.controller;
 
 import com.example.config.ResponseData;
+import com.example.constant.Pagination;
 import com.example.model.activiti.ProcessModel;
 import com.example.repository.activiti.ProcessRepository;
+import com.example.response.InstanceMonitorResponse;
+import com.example.service.activiti.ProcessModelService;
+import lombok.extern.slf4j.Slf4j;
+import org.activiti.bpmn.model.BpmnModel;
+import org.activiti.bpmn.model.FlowElement;
 import org.activiti.engine.HistoryService;
+import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.history.HistoricVariableInstance;
 import org.activiti.engine.runtime.ProcessInstance;
+import org.activiti.engine.runtime.ProcessInstanceQuery;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,10 +27,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author ywyw2424@foxmail.com
@@ -30,6 +36,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/processInstance")
+@Slf4j
 public class ProcessInstanceController {
 
     @Autowired
@@ -43,6 +50,12 @@ public class ProcessInstanceController {
 
     @Autowired
     private HistoryService historyService;
+
+    @Autowired
+    private ProcessModelService processModelService;
+
+    @Autowired
+    private RepositoryService repositoryService;
 
     /**
      * 启动某个流程定义
@@ -99,5 +112,69 @@ public class ProcessInstanceController {
             values.add(value);
         }
         return values;
+    }
+
+    /**
+     * 流程监控、正在执行的流程
+     * */
+    @RequestMapping(value = "/getInstancePage",method = RequestMethod.GET)
+    public ResponseData getInstancePage(@RequestParam(value = "pageSize",required = false) Integer pageSize,@RequestParam(value = "pageNumber",required = false) Integer pageNumber) {
+
+        Pagination pagination = new Pagination(pageNumber,pageSize);
+
+        ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery();
+
+        List<ProcessModel> processModelList = processModelService.getRepository().findAll(Example.of(new ProcessModel()));
+        if(processModelList.size()>0){
+            Set<String> setProDefId = new HashSet<String>();
+            for (ProcessModel model:
+                    processModelList) {
+                setProDefId.add(model.getModelDefinitionId());
+            }
+            processInstanceQuery.processDefinitionIds(setProDefId);
+        }else{
+            return ResponseData.success();
+        }
+
+        int totalCount = (int) processInstanceQuery.count();
+
+        List<ProcessInstance> insList =
+                processInstanceQuery
+                        .orderByProcessDefinitionKey()
+                        .asc().listPage(pagination.getStart(),pagination.getEnd());
+
+        log.info("流程实例监控：{}条---{}",totalCount,insList);
+
+        List<InstanceMonitorResponse> instanceMonitorResponses = new ArrayList<InstanceMonitorResponse>();
+        for (ProcessInstance ins:insList) {
+            InstanceMonitorResponse insRes = new InstanceMonitorResponse();
+            String processDefinitionId = ins.getProcessDefinitionId();
+            String activityId = ins.getActivityId();
+            String processInstanceId = ins.getProcessInstanceId();
+
+            insRes.setProcessDefinitionName(ins.getProcessDefinitionName());
+            insRes.setProcessDefinitionVersion(ins.getProcessDefinitionVersion());
+            insRes.setProcessDefinitionId(ins.getProcessDefinitionId());
+            insRes.setProcessDefinitionKey(ins.getProcessDefinitionKey());
+            insRes.setProcessInstanceId(ins.getProcessInstanceId());
+
+            BpmnModel model = repositoryService.getBpmnModel(processDefinitionId);
+            FlowElement element =  model.getMainProcess().getFlowElement(activityId);
+            insRes.setCurrentNode(element.getName());
+            insRes.setCurrentNodeId(element.getId());
+
+            Task task = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
+            if(task!=null){
+                insRes.setTaskId(task.getId());
+                insRes.setInstanceName(task.getName());
+                if(!StringUtils.isEmpty(task.getAssignee())){
+                    insRes.setAssigneeName(task.getAssignee());
+                }
+            }
+            instanceMonitorResponses.add(insRes);
+        }
+        pagination.setRows(instanceMonitorResponses);
+        pagination.setRowTotal(totalCount);
+        return ResponseData.success(pagination);
     }
 }

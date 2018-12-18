@@ -58,7 +58,7 @@ public class TaskController {
         String userId = SessionUtil.getUserId(request.getSession());
         TaskQuery taskQuery = taskService.createTaskQuery().taskCandidateOrAssigned(userId);
         long total = taskQuery.count();
-        List<Task> tasks = taskQuery.listPage(pagination.getPageNumber(), pagination.getPageSize());
+        List<Task> tasks = taskQuery.listPage(pagination.getStart(), pagination.getEnd());
         log.info("当前代办任务：{}条---{}",total,tasks);
         List<MyTaskResponse> list = new ArrayList<>(pagination.getPageSize());
         for (Task task:tasks) {
@@ -87,7 +87,7 @@ public class TaskController {
         List<HistoricTaskInstance> list1 = historicTaskInstanceQuery2.list();
         System.out.println(list1);
         long total = historicTaskInstanceQuery.count();
-        List<HistoricTaskInstance> taskInstances = historicTaskInstanceQuery.listPage(pagination.getPageNumber(), pagination.getPageSize());
+        List<HistoricTaskInstance> taskInstances = historicTaskInstanceQuery.listPage(pagination.getStart(), pagination.getEnd());
         log.info("当前已办任务：{}条---{}",total,taskInstances);
         List<MyTaskResponse> list = new ArrayList<>(pagination.getPageSize());
         for (HistoricTaskInstance historicTaskInstance:taskInstances) {

@@ -148,7 +148,7 @@ public abstract class BaseService<T,PK> {
     }
 
     public Page<T> search(Example example,Pagination<T> pagination){
-        Pageable pageable = PageRequest.of(pagination.getPageNumber(),pagination.getPageSize(),new Sort(Sort.Direction.DESC,"creationDate"));
+        Pageable pageable = PageRequest.of(pagination.getStart(),pagination.getEnd(),new Sort(Sort.Direction.DESC,"creationDate"));
         if(example==null){
             return baseRepository.findAll(pageable);
         }

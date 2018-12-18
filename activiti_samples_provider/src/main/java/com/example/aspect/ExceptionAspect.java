@@ -124,7 +124,7 @@ public class ExceptionAspect {
 	}
 
 	/**
-	 * 500 - Internal Server Error
+	 * 403 - Internal Server Error
 	 */
 	@ResponseStatus(HttpStatus.FORBIDDEN)
 	@ExceptionHandler(NoLoginException.class)
