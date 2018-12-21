@@ -1,5 +1,6 @@
 package com.example.config;
 
+import com.example.interceptor.LogingInterceptor;
 import com.example.servlet.JsonpCallbackFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -46,5 +47,10 @@ public class MyMvcConfig implements WebMvcConfigurer {
         filterFilterRegistrationBean.setName("jsonpCallbackFilter");
         filterFilterRegistrationBean.setOrder(1);
         return  filterFilterRegistrationBean;
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(new LogingInterceptor()).addPathPatterns("/**").excludePathPatterns("/register","/doLoging");
     }
 }

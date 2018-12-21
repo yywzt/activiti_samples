@@ -10,7 +10,8 @@ public enum LeaveStates {
     NO_COMMIT("0","未提交"),
     IN_APPROVAL("1","审核中 "),
     PASS_APPROVAL("2","审核通过 "),
-    FAILED_APPROVAL("3","审核未通过");
+    FAILED_APPROVAL("3","审核未通过"),
+    END_APPROVAL("4","流程终止");
 
     private String state;
     private String name;

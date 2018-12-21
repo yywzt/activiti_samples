@@ -8,6 +8,7 @@ import com.example.model.activiti.ProcessModel;
 import com.example.response.CommentResponse;
 import com.example.service.activiti.ProcessLeaveService;
 import com.example.service.activiti.ProcessModelService;
+import com.example.service.ssm.UserInfService;
 import com.example.util.SessionUtil;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
@@ -46,6 +47,9 @@ public class ProcessLeaveController {
 
     @Autowired
     private ProcessModelService processModelService;
+
+    @Autowired
+    private UserInfService userInfService;
 
     /**
      * 请假单列表
@@ -88,9 +92,10 @@ public class ProcessLeaveController {
         String processInstanceId = processInstance.getId();
         String processDefinitionId = processInstance.getProcessDefinitionId();
         Task task = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
+        taskService.setAssignee(task.getId(),processLeave.getUserId());
 
         //设置用户id
-        Authentication.setAuthenticatedUserId(SessionUtil.getUserName(request.getSession()));
+        Authentication.setAuthenticatedUserId(SessionUtil.getUserId(request.getSession()));
         //添加批注信息
         taskService.addComment(task.getId(),processInstanceId,processLeave.getLeaveReason());
         taskService.complete(task.getId());
@@ -114,6 +119,7 @@ public class ProcessLeaveController {
         for (Comment comment:comments){
             CommentResponse commentResponse = new CommentResponse();
             commentResponse.setUserId(comment.getUserId());
+            commentResponse.setUserName(userInfService.getUserNameByUserId(Long.valueOf(comment.getUserId())));
             commentResponse.setMessage(comment.getFullMessage());
             commentResponse.setTime(comment.getTime());
             commentResponses.add(commentResponse);

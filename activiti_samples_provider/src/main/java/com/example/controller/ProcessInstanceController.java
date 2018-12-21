@@ -6,6 +6,7 @@ import com.example.model.activiti.ProcessModel;
 import com.example.repository.activiti.ProcessRepository;
 import com.example.response.InstanceMonitorResponse;
 import com.example.service.activiti.ProcessModelService;
+import com.example.service.ssm.UserInfService;
 import lombok.extern.slf4j.Slf4j;
 import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.bpmn.model.FlowElement;
@@ -56,6 +57,9 @@ public class ProcessInstanceController {
 
     @Autowired
     private RepositoryService repositoryService;
+
+    @Autowired
+    private UserInfService userInfService;
 
     /**
      * 启动某个流程定义
@@ -167,8 +171,9 @@ public class ProcessInstanceController {
             if(task!=null){
                 insRes.setTaskId(task.getId());
                 insRes.setInstanceName(task.getName());
-                if(!StringUtils.isEmpty(task.getAssignee())){
-                    insRes.setAssigneeName(task.getAssignee());
+                String assignee = task.getAssignee();
+                if(!StringUtils.isEmpty(assignee)){
+                    insRes.setAssigneeName(userInfService.getUserNameByUserId(Long.valueOf(assignee)));
                 }
             }
             instanceMonitorResponses.add(insRes);

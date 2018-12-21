@@ -53,7 +53,7 @@ public class LoginController {
                 map.put(Constants.SESSION_ID,sessionId);
                 map.put(Constants.USER,userInf);
                 SessionUtil.setAttribute(session,Constants.SESSION_ID_KEY,map,Constants.SESSION_EXPIRES_MIN*60);
-//                redisUtil.set(new StringBuffer(Constants.SESSION_ID_KEY).append("_").append(userInf.getId()).toString() ,map,Constants.SESSION_EXPIRES_MIN, TimeUnit.MINUTES);
+                redisUtil.set(new StringBuffer(Constants.SESSION_ID_KEY).append("_").append(userInf.getId()).toString() ,map,Constants.SESSION_EXPIRES_MIN, TimeUnit.MINUTES);
 //                redisUtil.set(Constants.SESSION_ID_KEY,sessionId,Constants.SESSION_EXPIRES_MIN, TimeUnit.MINUTES);
                 return ResponseData.success();
             }else{
@@ -79,13 +79,4 @@ public class LoginController {
         return ResponseData.success();
     }
 
-    @RequestMapping("/findByUsername")
-    public UserInf selectById(@RequestParam("username") String username){
-        return userInfService.findByUsername(username);
-    }
-
-    @RequestMapping("/findById")
-    public Optional<UserInf> selectById(@RequestParam("id") Long id){
-        return userInfService.getRepository().findById(id);
-    }
 }

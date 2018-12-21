@@ -1,18 +1,19 @@
 package com.example.controller;
 
+import com.example.bo.TaskDoForm;
 import com.example.config.ResponseData;
-import com.example.constant.ApprovalState;
-import com.example.constant.LeaveStates;
-import com.example.constant.Pagination;
+import com.example.constant.*;
 import com.example.model.activiti.ProcessLeave;
-import com.example.request.ApprovalRequest;
 import com.example.response.ActivitiInstResponse;
 import com.example.response.CommentResponse;
 import com.example.response.MyTaskResponse;
 import com.example.service.activiti.ProcessLeaveService;
+import com.example.service.activiti.ProcessTaskService;
+import com.example.service.ssm.UserInfService;
 import com.example.util.SessionUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.activiti.engine.HistoryService;
+import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.history.HistoricActivityInstance;
 import org.activiti.engine.history.HistoricTaskInstance;
@@ -22,6 +23,7 @@ import org.activiti.engine.task.Comment;
 import org.activiti.engine.task.Task;
 import org.activiti.engine.task.TaskQuery;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,6 +51,15 @@ public class TaskController {
 
     @Autowired
     private ProcessLeaveService processLeaveService;
+
+    @Autowired
+    private UserInfService userInfService;
+
+    @Autowired
+    private ProcessTaskService processTaskService;
+
+    @Autowired
+    private RuntimeService runtimeService;
 
     /**
      * 代办任务
@@ -82,10 +93,7 @@ public class TaskController {
     @RequestMapping(value = "/finishedList",method = RequestMethod.POST)
     public ResponseData finishedList(HttpServletRequest request,@RequestBody Pagination pagination){
         String userId = SessionUtil.getUserId(request.getSession());
-        HistoricTaskInstanceQuery historicTaskInstanceQuery = historyService.createHistoricTaskInstanceQuery().taskCandidateUser(userId);
-        HistoricTaskInstanceQuery historicTaskInstanceQuery2 = historyService.createHistoricTaskInstanceQuery().taskAssignee(userId);
-        List<HistoricTaskInstance> list1 = historicTaskInstanceQuery2.list();
-        System.out.println(list1);
+        HistoricTaskInstanceQuery historicTaskInstanceQuery = historyService.createHistoricTaskInstanceQuery().taskAssignee(userId).finished();
         long total = historicTaskInstanceQuery.count();
         List<HistoricTaskInstance> taskInstances = historicTaskInstanceQuery.listPage(pagination.getStart(), pagination.getEnd());
         log.info("当前已办任务：{}条---{}",total,taskInstances);
@@ -128,11 +136,11 @@ public class TaskController {
      * 完成任务
      * */
     @RequestMapping(value = "/complete",method = RequestMethod.POST)
-    public ResponseData complete(HttpServletRequest request, @RequestBody @Validated ApprovalRequest approvalRequest){
+    public ResponseData complete(HttpServletRequest request, @RequestBody @Validated TaskDoForm taskDoForm){
         String userId = SessionUtil.getUserId(request.getSession());
         Task task = taskService.createTaskQuery()
                 .taskCandidateOrAssigned(userId)
-                .taskId(approvalRequest.getId())
+                .taskId(taskDoForm.getTaskId())
                 .singleResult();
         if(task==null){
             return ResponseData.failure("当前不存在待办理任务啊");
@@ -144,21 +152,22 @@ public class TaskController {
         String processInstanceId = task.getProcessInstanceId();
 
         ProcessLeave processLeave = processLeaveService.getRepository().findByProcessInstanceId(processInstanceId);
-        if(approvalRequest.getState().equals(ApprovalState.PASS.getState())){
+        if(taskDoForm.getState().equals(ApprovalState.PASS.getState())){
             //通过
+            taskDoForm.setOperate(ProcessOperator.AGREE.getValue());
             processLeave.setState(LeaveStates.PASS_APPROVAL.getState());
             variables.put("msg",true);
-        }else if(approvalRequest.getState().equals(ApprovalState.ADOPT.getState())){
+        }else if(taskDoForm.getState().equals(ApprovalState.ADOPT.getState())){
+            taskDoForm.setOperate(ProcessOperator.DISAGREE.getValue());
             processLeave.setState(LeaveStates.FAILED_APPROVAL.getState());
             variables.put("msg",false);
         }else{
             return ResponseData.failure("审批状态错误，请重新审批");
         }
-        //设置用户id
-        Authentication.setAuthenticatedUserId(SessionUtil.getUserName(request.getSession()));
-        //添加批注信息
-        taskService.addComment(task.getId(),processInstanceId,approvalRequest.getComment());
-        taskService.complete(task.getId(),variables);
+        if (StringUtils.isEmpty(taskDoForm.getUserId())) {
+            taskDoForm.setUserId(userId);
+        }
+        processTaskService.submitTask(taskDoForm);
         processLeaveService.update(processLeave);
 
         return ResponseData.success();
@@ -188,6 +197,7 @@ public class TaskController {
         for (Comment comment:comments){
             CommentResponse commentResponse = new CommentResponse();
             commentResponse.setUserId(comment.getUserId());
+            commentResponse.setUserName(comment.getUserId()==null?null:userInfService.getUserNameByUserId(Long.valueOf(comment.getUserId())));
             commentResponse.setMessage(comment.getFullMessage());
             commentResponse.setTime(comment.getTime());
             commentResponses.add(commentResponse);
@@ -220,5 +230,58 @@ public class TaskController {
         }
         System.out.println("activitiInstResponses: " + activitiInstResponses);
         return ResponseData.success(activitiInstResponses);
+    }
+
+    /**
+     * 结束流程
+     * @param taskDoForm
+     * @return
+     */
+    @RequestMapping(value = "/endTask", method = RequestMethod.POST)
+    public ResponseData endTask(HttpServletRequest request,@RequestBody TaskDoForm taskDoForm){
+        if (StringUtils.isEmpty(taskDoForm.getUserId())) {
+            taskDoForm.setUserId(SessionUtil.getUserId(request.getSession()));
+        }
+        taskDoForm.setOperate(ProcessOperator.END.getValue());
+        this.processTaskService.submitTask(taskDoForm);
+        ProcessLeave processLeave = processLeaveService.getRepository().findByProcessInstanceId(taskDoForm.getProcessInstanceId());
+        processLeave.setState(LeaveStates.END_APPROVAL.getState());
+        processLeaveService.update(processLeave);
+        return ResponseData.success();
+    }
+
+
+    /**
+     * 流程跳转
+     * @param taskDoForm
+     * @return
+     */
+    @RequestMapping(value = "/jumpTask", method = RequestMethod.POST)
+    public ResponseData jumpTask(HttpServletRequest request,@RequestBody TaskDoForm taskDoForm){
+        if(StringUtils.isEmpty(taskDoForm.getTargetNodeId())){
+            return ResponseData.failure(ProcessCode.PLATFORM_ARG_ERROR.format("没有要跳转的节点!").getMessage());
+        }
+
+        if(taskDoForm.getTargetNodeId().equals(taskDoForm.getCurrentNodeId())){
+            return ResponseData.failure(ProcessCode.PLATFORM_ARG_ERROR.format("目标节点与当前节点相同!").getMessage());
+        }
+
+        if (StringUtils.isEmpty(taskDoForm.getUserId())) {
+            taskDoForm.setUserId(SessionUtil.getUserId(request.getSession()));
+        }
+        taskDoForm.setOperate(ProcessOperator.JUMP.getValue());
+        this.processTaskService.submitTask(taskDoForm);
+        return ResponseData.success();
+    }
+
+    /**
+     * 任务催办
+     * @param processInstanceId
+     * @return
+     */
+    @RequestMapping(value = "/reminder/{processInstanceId}", method = RequestMethod.POST)
+    public ResponseData reminder(@PathVariable("processInstanceId") String processInstanceId){
+        this.processTaskService.reminder(processInstanceId);
+        return ResponseData.success();
     }
 }

@@ -1,6 +1,7 @@
 package com.example.model.ssm;
 
 import com.example.model.BaseModel;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -43,7 +44,8 @@ public class UserInf extends BaseModel<Long> implements Serializable {
     //关联到主表的外键名：主表名+下划线+主表中的主键列名,即user_id
     //关联到从表的外键名：主表中用于关联的属性名+下划线+从表的主键列名,即authority_id
     //主表就是关系维护端对应的表，从表就是关系被维护端对应的表
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
+    @JsonIgnore
     @JoinTable(name = "user_roles",joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Roles> rolesSet;

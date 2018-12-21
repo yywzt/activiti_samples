@@ -61,6 +61,10 @@ spring:
     database: 2
     password: root
 
+  data:
+    redis:
+      repositories:
+        enabled: false
 ---
 server:
   port: 18082
@@ -120,3 +124,8 @@ spring:
     timeout: 5000
     database: 2
     password: root
+
+  data:
+    redis:
+      repositories:
+        enabled: false

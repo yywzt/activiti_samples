@@ -192,6 +192,16 @@ public class RedisUtil {
         }
         return true;
     }
+    /**
+     * HashSet并设置时间
+     */
+    public boolean hmset(String key, Map<String, Object> map, long time,TimeUnit timeUnit) {
+        redisTemplate.opsForHash().putAll(key, map);
+        if (time > 0) {
+            redisTemplate.expire(key,time,timeUnit);
+        }
+        return true;
+    }
 
     /**
      * 向一张Hash表中放入数据，如果不存在则创建

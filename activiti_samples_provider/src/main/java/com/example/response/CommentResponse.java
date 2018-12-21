@@ -15,6 +15,8 @@ public class CommentResponse {
 
     private String userId;
 
+    private String userName;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date time;
 
