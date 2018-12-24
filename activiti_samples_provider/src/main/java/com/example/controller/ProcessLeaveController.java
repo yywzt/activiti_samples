@@ -1,13 +1,16 @@
 package com.example.controller;
 
+import com.example.bo.TaskDoForm;
 import com.example.config.ResponseData;
 import com.example.constant.LeaveStates;
 import com.example.constant.Pagination;
+import com.example.constant.ProcessOperator;
 import com.example.model.activiti.ProcessLeave;
 import com.example.model.activiti.ProcessModel;
 import com.example.response.CommentResponse;
 import com.example.service.activiti.ProcessLeaveService;
 import com.example.service.activiti.ProcessModelService;
+import com.example.service.activiti.ProcessTaskService;
 import com.example.service.ssm.UserInfService;
 import com.example.util.SessionUtil;
 import org.activiti.engine.RuntimeService;
@@ -23,9 +26,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author ywyw2424@foxmail.com
@@ -50,6 +51,9 @@ public class ProcessLeaveController {
 
     @Autowired
     private UserInfService userInfService;
+
+    @Autowired
+    private ProcessTaskService processTaskService;
 
     /**
      * 请假单列表
@@ -86,19 +90,29 @@ public class ProcessLeaveController {
         if(!processLeave.getState().equals(LeaveStates.NO_COMMIT.getState())){
             return ResponseData.failure("已经提交过了啊，请耐心等候");
         }
+        String userId = SessionUtil.getUserId(request.getSession());
+        Map<String,Object> variables=new HashMap<String,Object>();
+        //设置流程变量
+        variables.put("submitter",userId);
         ProcessModel processModel = processModelService.getRepository().findByModelCode("leave");
-        ProcessInstance processInstance = runtimeService.startProcessInstanceById(processModel.getModelDefinitionId());
+        ProcessInstance processInstance = runtimeService.startProcessInstanceById(processModel.getModelDefinitionId(),variables);
 
         String processInstanceId = processInstance.getId();
         String processDefinitionId = processInstance.getProcessDefinitionId();
         Task task = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
-        taskService.setAssignee(task.getId(),processLeave.getUserId());
+//        taskService.setAssignee(task.getId(),processLeave.getUserId());
 
+        TaskDoForm taskDoForm = new TaskDoForm();
         //设置用户id
-        Authentication.setAuthenticatedUserId(SessionUtil.getUserId(request.getSession()));
+        taskDoForm.setUserId(userId);
         //添加批注信息
-        taskService.addComment(task.getId(),processInstanceId,processLeave.getLeaveReason());
-        taskService.complete(task.getId());
+        taskDoForm.setTaskId(task.getId());
+        taskDoForm.setProcessInstanceId(processInstanceId);
+        taskDoForm.setMessage(processLeave.getLeaveReason());
+        //设置流程变量
+        taskDoForm.setVariables(variables);
+        taskDoForm.setOperate(ProcessOperator.AGREE.getValue());
+        processTaskService.submitTask(taskDoForm);
 
         processLeave.setState("1");//状态更改为审核中
         processLeave.setProcessInstanceId(processInstanceId);

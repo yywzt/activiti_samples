@@ -19,6 +19,6 @@ public class CompleteTaskHandler implements TaskHandler {
 
     @Override
     public void doHandler(TaskEntity taskEntity, TaskDoForm taskDoForm) {
-        taskService.complete(taskDoForm.getTaskId(),taskDoForm.getVariables(),true);
+        taskService.complete(taskDoForm.getTaskId(),taskDoForm.getVariables());
     }
 }

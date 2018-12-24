@@ -167,6 +167,7 @@ public class TaskController {
         if (StringUtils.isEmpty(taskDoForm.getUserId())) {
             taskDoForm.setUserId(userId);
         }
+        taskDoForm.setVariables(variables);
         processTaskService.submitTask(taskDoForm);
         processLeaveService.update(processLeave);
 
