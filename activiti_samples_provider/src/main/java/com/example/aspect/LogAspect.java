@@ -40,7 +40,7 @@ public class LogAspect {
         log.info("CLASS_METHOD : " + joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
         if ("application/json".equals(request.getHeader("Content-Type"))) {
         // 记录application/json时的传参，SpringMVC中使用@RequestBody接收的值
-            log.info(getRequestPayload(request));
+//            log.info(getRequestPayload(request));
         } else {
             //记录请求的键值对
             for (String key : request.getParameterMap().keySet()) {

@@ -49,4 +49,21 @@ public class UserInf extends BaseModel<Long> implements Serializable {
     @JoinTable(name = "user_roles",joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Roles> rolesSet;
+
+    @Override
+    public String toString() {
+        return "UserInf{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", gentel='" + gentel + '\'' +
+                ", email='" + email + '\'' +
+                ", city='" + city + '\'' +
+                ", id=" + id +
+                ", createdBy='" + createdBy + '\'' +
+                ", creationDate=" + creationDate +
+                ", updatedBy='" + updatedBy + '\'' +
+                ", updationDate=" + updationDate +
+                ", enabledFlag=" + enabledFlag +
+                '}';
+    }
 }

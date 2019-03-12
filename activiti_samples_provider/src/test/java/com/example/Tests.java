@@ -1,6 +1,7 @@
 package com.example;
 
 import org.junit.Test;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.sql.Date;
 import java.util.Arrays;
@@ -144,5 +145,19 @@ public class Tests {
         String substring2 = s.substring(0,s.lastIndexOf("_"));
         System.out.println(substring);
         System.out.println(substring2);
+        String ss = " as d ";
+        String trim = ss.trim();
+        System.out.println(ss);
+        System.out.println(trim);
+    }
+
+    @Test
+    public void test10(){
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        String s = "$2a$10$V1VtKl.2hhczpRY.6n205.KTTxbrgONIBdDbu7C05.lgx.TgVYS7u";
+        String encode = bCryptPasswordEncoder.encode("123");
+        System.out.println(encode);
+        boolean matches = bCryptPasswordEncoder.matches("123", s);
+        System.out.println(matches);
     }
 }
